@@ -4,6 +4,7 @@
   "repository": "",
   "scripts": {
     "lint": "eslint ./",
+    "lint --fix":"eslint --fix",
     "format": "prettier --write \"**/*.{js,jsx}\"",
     "postinstall": "husky install"
   },
@@ -11,6 +12,8 @@
   "author": "Trịnh Xuân Phương <t.xuanphuong1404@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^18.4.4",
+    "@commitlint/config-conventional": "^18.4.4",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
@@ -22,15 +25,15 @@
     "prettier": "^3.2.2"
   },
   "lint-staged": {
-    "*.js": [      
+    "*.js": [
       "npm run lint",
       "npm run format",
       "git add ."
     ],
-    "*.jsx": [      
-        "npm run lint",
-        "npm run format",
-        "git add ."
+    "*.jsx": [
+      "npm run lint",
+      "npm run format",
+      "git add ."
     ]
   }
 }
