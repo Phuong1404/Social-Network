@@ -3,12 +3,15 @@ const bcrypt = require('bcrypt');
 const moment = require('moment');
 const Joi = require('joi');
 const createError = require('http-errors');
+const speakeasy = require('speakeasy');
 const mongoose = require('mongoose');
 const { responseError } = require('../utils/Response/error');
 const redisClient = require('../configs/redis/index');
-const { User, labelOfGender } = require('../models/User');
+const { User, labelOfGender } = require('../models/User.model');
+const Token = require('../models/Token.model');
 const authMethod = require('../auth/auth.method');
 const { populateUserByEmail } = require('../utils/Populate/User.populate');
+const { sendEmail, sendMailOTP } = require('../utils/Mail/sendMail');
 
 const hostClient = process.env.HOST_CLIENT;
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
@@ -304,43 +307,120 @@ class AuthController {
 		}
 	}
 
-	// async sendLinkForgottenPassword(req, res, next) {
-	// 	try {
-	// 		const schema = Joi.object({
-	// 			email: Joi.string().email().required(),
-	// 		}).unknown();
-	// 		const { error } = schema.validate(req.body);
-	// 		if (error) {
-	// 			return responseError(res, 400, error.details[0].message);
-	// 		}
+	async sendOTP(req, res, next) {
+		try {
+			// Tạo một bí mật ngẫu nhiên
+			const secret = speakeasy.generateSecret({ length: 20 });
 
-	// 		const user = await User.findOne({ email: req.body.email });
-	// 		if (!user) {
-	// 			return responseError(res, 400, 'Email không tồn tại!!!');
-	// 		}
+			// Tạo mã OTP
+			const otp = speakeasy.totp({
+				secret: secret.base32,
+				encoding: 'base32',
+			});
 
-	// 		let token = await Token.findOne({ userId: user._id });
-	// 		if (!token) {
-	// 			token = await new Token({
-	// 				userId: user._id,
-	// 				token: crypto.randomBytes(32).toString('hex'),
-	// 			}).save();
-	// 		}
+			// save otp to redis set time expire 5m
+			await redisClient.set(`comfirm:${req.user._id}`, otp, 'EX', 60 * 5);
 
-	// 		const link = `${process.env.BASE_URL}?id=${user._id}&token=${token.token}`;
-	// 		const status = await sendEmail(user.email, 'Password reset', link, user);
-	// 		// check status
-	// 		if (!status) {
-	// 			return responseError(res, 400, 'Gửi email thất bại!!!');
-	// 		}
-	// 		res.send('Link reset mật khẩu đã được gửi qua email của bạn');
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 		return next(
-	// 			createError.InternalServerError(`${error.message} in method: ${req.method} of ${req.originalUrl} `)
-	// 		);
-	// 	}
-	// }
+			// Gửi mã OTP đến email
+			const status = await sendMailOTP(req.user.email, 'OTP Comfirm Set Password', otp, req.user.fullname);
+			// check status
+			if (!status) {
+				// delete in redis
+				await redisClient.del(`comfirm:${req.user._id}`);
+				return responseError(res, 400, 'Gửi email thất bại!!!');
+			}
+
+			res.json('Mã OTP đã được gửi qua email của bạn');
+		} catch (error) {
+			console.log(error);
+			return next(
+				createError.InternalServerError(`${error.message} in method: ${req.method} of ${req.originalUrl} `)
+			);
+		}
+	}
+
+	async sendOTPverify(req, res, next) {
+		try {
+			const schema = Joi.object({
+				email: Joi.string().email().required(),
+				fullname: Joi.string().required(),
+			}).unknown();
+			const { error } = schema.validate(req.body);
+			if (error) {
+				return responseError(res, 400, error.details[0].message);
+			}
+
+			// check email exsit
+			const user = await User.findOne({ email: req.body.email });
+			if (user) return responseError(res, 400, 'Email đã tồn tại');
+
+			// Tạo một bí mật ngẫu nhiên
+			const secret = speakeasy.generateSecret({ length: 20 });
+
+			// Tạo mã OTP
+			const otp = speakeasy.totp({
+				secret: secret.base32,
+				encoding: 'base32',
+			});
+
+			// save otp to redis set time expire 5m
+			await redisClient.set(`verify:${req.body.email}`, otp, 'EX', 60 * 5);
+
+			// Gửi mã OTP đến email
+			const status = await sendMailOTP(req.body.email, 'OTP Verify Account', otp, req.body.fullname);
+			// check status
+			if (!status) {
+				// delete in redis
+				await redisClient.del(`verify:${req.body.email}`);
+				return responseError(res, 400, 'Gửi email thất bại!!!');
+			}
+
+			res.json('Mã OTP đã được gửi qua email của bạn');
+		} catch (error) {
+			console.log(error);
+			return next(
+				createError.InternalServerError(`${error.message} in method: ${req.method} of ${req.originalUrl} `)
+			);
+		}
+	}
+
+	async sendLinkForgottenPassword(req, res, next) {
+		try {
+			const schema = Joi.object({
+				email: Joi.string().email().required(),
+			}).unknown();
+			const { error } = schema.validate(req.body);
+			if (error) {
+				return responseError(res, 400, error.details[0].message);
+			}
+
+			const user = await User.findOne({ email: req.body.email });
+			if (!user) {
+				return responseError(res, 400, 'Email không tồn tại!!!');
+			}
+
+			let token = await Token.findOne({ userId: user._id });
+			if (!token) {
+				token = await new Token({
+					userId: user._id,
+					token: crypto.randomBytes(32).toString('hex'),
+				}).save();
+			}
+
+			const link = `${process.env.BASE_URL}?id=${user._id}&token=${token.token}`;
+			const status = await sendEmail(user.email, 'Password reset', link, user);
+			// check status
+			if (!status) {
+				return responseError(res, 400, 'Gửi email thất bại!!!');
+			}
+			res.send('Link reset mật khẩu đã được gửi qua email của bạn');
+		} catch (error) {
+			console.log(error);
+			return next(
+				createError.InternalServerError(`${error.message} in method: ${req.method} of ${req.originalUrl} `)
+			);
+		}
+	}
 
 	async setPassword(req, res, next) {
 		try {
@@ -391,6 +471,48 @@ class AuthController {
 			return next(
 				createError.InternalServerError(
 					`${error.message} \nin method: ${req.method} of ${req.originalUrl} \nwith body: ${JSON.stringify(
+						req.body,
+						null,
+						2
+					)} `
+				)
+			);
+		}
+	}
+
+	async resetPassword(req, res, next) {
+		try {
+			const schema = Joi.object({ password: Joi.string().required() }).unknown();
+			const { error } = schema.validate(req.body);
+			if (error) {
+				return responseError(res, 400, error.details[0].message);
+			}
+
+			const user = await User.findById(req.params.userId);
+			if (!user) {
+				return responseError(res, 400, 'Không tìm thấy người dùng');
+			}
+
+			const token = await Token.findOne({
+				userId: user._id,
+				token: req.params.token,
+			});
+			if (!token) {
+				return responseError(res, 400, 'Link không đúng hoặc đã hết hạn');
+			}
+
+			// hash password
+			const salt = await bcrypt.genSalt(10);
+			user.password = await bcrypt.hash(req.body.password, salt);
+			await user.save();
+			await token.delete();
+
+			res.send('Reset mật khẩu thành công!!.');
+		} catch (err) {
+			console.log(err);
+			return next(
+				createError.InternalServerError(
+					`${err.message} \nin method: ${req.method} of ${req.originalUrl} \nwith body: ${JSON.stringify(
 						req.body,
 						null,
 						2
