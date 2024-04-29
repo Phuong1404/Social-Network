@@ -25,6 +25,9 @@ app.use(
 );
 // log in console
 app.use(morgan('dev'));
+const routes = require('./routes/index.route');
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // handle send data
 app.use(express.json());
@@ -43,4 +46,5 @@ app.use(
 		},
 	})
 );
+routes(app);
 module.exports = app;

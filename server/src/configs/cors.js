@@ -1,4 +1,3 @@
-// Chặn cors của Client
 const isProd = require('./env');
 
 const PRODUCTION_HOST = [process.env.HOST_ADMIN, process.env.HOST_CLIENT];

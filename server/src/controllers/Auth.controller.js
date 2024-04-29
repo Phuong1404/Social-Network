@@ -20,7 +20,6 @@ const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE;
 const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
 
 class AuthController {
-	// Dang ky
 	async registerUser(req, res, next) {
 		try {
 			const schema = Joi.object({
@@ -38,22 +37,18 @@ class AuthController {
 				return responseError(res, 400, error.details[0].message);
 			}
 
-			// get OTP from redis
 			const otp = await redisClient.get(`verify:${req.body.email}`);
 			if (!otp) {
 				return responseError(res, 400, 'OTP không tồn tại!');
 			}
 
-			// check OTP
 			if (req.body.otp !== otp) {
 				return responseError(res, 400, 'OTP không chính xác!');
 			}
 
-			// generate new password
 			const salt = await bcrypt.genSalt(10);
 			const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-			// create new user
 			const newUser = new User({
 				fullname: req.body.fullname,
 				email: req.body.email,
@@ -88,15 +83,7 @@ class AuthController {
 			if (err.code === 11000) {
 				return responseError(res, 400, 'Email đã tồn tại!');
 			}
-			return next(
-				createError.InternalServerError(
-					`${err.message}\nin method: ${req.method} of ${req.originalUrl}\nwith body: ${JSON.stringify(
-						req.body,
-						null,
-						2
-					)}`
-				)
-			);
+			return next(createError.InternalServerError(err.message));
 		}
 	}
 
@@ -127,21 +114,12 @@ class AuthController {
 				`${hostClient}/auth/login/google?accessToken=${accessToken}&refreshToken=${refreshToken}`
 			);
 		} catch (err) {
-			return next(
-				createError.InternalServerError(
-					`${err.message}\nin method: ${req.method} of ${req.originalUrl}\nwith body: ${JSON.stringify(
-						req.body,
-						null,
-						2
-					)}`
-				)
-			);
+			return next(createError.InternalServerError(err.message));
 		}
 	}
 
 	async login(req, res, next) {
 		try {
-			// validate
 			const schema = Joi.object({
 				email: Joi.string().min(6).max(255).required().email(),
 				password: Joi.string().min(6).max(1024).required(),
@@ -163,8 +141,6 @@ class AuthController {
 					'Tài khoản chưa đặt mật khẩu. Vui lòng đăng nhập bằng Google, và đặt mật khẩu mới!!!'
 				);
 			}
-
-			// check account is being blocked (LockTime - current time > 0)
 			if (user.lockTime - Date.now() > 0 || user.isPermanentlyLocked === true) {
 				if (user.isPermanentlyLocked) return responseError(res, 401, 'Tài khoản của bạn đã bị khóa vĩnh viễn');
 				return responseError(
@@ -176,17 +152,15 @@ class AuthController {
 
 			const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
 			if (!isPasswordValid) {
-				// increase login attempt
 				user.loginAttempts++;
-				// eslint-disable-next-line eqeqeq
+				// eslint-disable-next-line
 				if (user.loginAttempts == 3) {
-					// lock account after 5 minutes
 					user.lockTime = Date.now() + 5 * 60 * 1000;
 					await user.save();
 					return responseError(res, 401, 'Tài khoản đã bị khóa. Vui lòng thử lại sau 5 phút!!!');
 				}
 				if (user.loginAttempts > 3) {
-					// lock account forever
+					// lock account
 					user.lockTime = Date.now() + 100 * 365 * 24 * 60 * 60 * 1000;
 					await user.save();
 					return responseError(
@@ -214,11 +188,6 @@ class AuthController {
 			const refreshToken = await authMethod.generateToken(dataToken, refreshTokenSecret, refreshTokenLife);
 			user.refreshToken = refreshToken;
 			await user.save();
-
-			// save refresh token to redis and set expire time
-			// await redisClient.set(user._id, refreshToken);
-			// await redisClient.expire(user._id, 7 * 24 * 60 * 60);
-
 			return res.status(200).json({
 				msg: 'Đăng nhập thành công.',
 				accessToken,
@@ -227,21 +196,12 @@ class AuthController {
 			});
 		} catch (err) {
 			console.log(err);
-			return next(
-				createError.InternalServerError(
-					`${err.message}\nin method: ${req.method} of ${req.originalUrl}\nwith body: ${JSON.stringify(
-						req.body,
-						null,
-						2
-					)}`
-				)
-			);
+			return next(createError.InternalServerError(err.message));
 		}
 	}
 
 	async refreshToken(req, res, next) {
 		try {
-			// validate token
 			const schema = Joi.object({
 				refreshToken: Joi.string().required(),
 			}).unknown();
@@ -250,19 +210,16 @@ class AuthController {
 				return responseError(res, 400, error.details[0].message);
 			}
 
-			// get refresh token from body
 			const refreshTokenFromBody = req.body.refreshToken;
 			if (!refreshTokenFromBody) {
 				return responseError(res, 400, 'Không tìm thấy refresh token.');
 			}
 
-			// Decode access token đó
 			const decoded = await authMethod.decodeToken(refreshTokenFromBody, refreshTokenSecret);
 			if (!decoded) {
 				return responseError(res, 400, 'Refresh token không hợp lệ.');
 			}
 			const { userId } = decoded.payload;
-			// Check refreshToken with database
 			const user = await User.findById(mongoose.Types.ObjectId(userId));
 			if (!user) {
 				return responseError(res, 400, 'Không tìm thấy người dùng.');
@@ -279,8 +236,6 @@ class AuthController {
 			if (user.refreshToken !== refreshTokenFromBody) {
 				return responseError(res, 401, 'Refresh token không hợp lệ hoặc đã hết hạn');
 			}
-
-			// Generate new access token
 			const dataToken = {
 				userId,
 				role: user.role.name,
@@ -295,37 +250,21 @@ class AuthController {
 			});
 		} catch (err) {
 			console.log(err.message);
-			return next(
-				createError.InternalServerError(
-					`${err.message} \nin method: ${req.method} of ${req.originalUrl} \nwith body: ${JSON.stringify(
-						req.body,
-						null,
-						2
-					)} `
-				)
-			);
+			return next(createError.InternalServerError(err.message));
 		}
 	}
 
 	async sendOTP(req, res, next) {
 		try {
-			// Tạo một bí mật ngẫu nhiên
 			const secret = speakeasy.generateSecret({ length: 20 });
-
-			// Tạo mã OTP
 			const otp = speakeasy.totp({
 				secret: secret.base32,
 				encoding: 'base32',
 			});
-
-			// save otp to redis set time expire 5m
 			await redisClient.set(`comfirm:${req.user._id}`, otp, 'EX', 60 * 5);
 
-			// Gửi mã OTP đến email
 			const status = await sendMailOTP(req.user.email, 'OTP Comfirm Set Password', otp, req.user.fullname);
-			// check status
 			if (!status) {
-				// delete in redis
 				await redisClient.del(`comfirm:${req.user._id}`);
 				return responseError(res, 400, 'Gửi email thất bại!!!');
 			}
@@ -333,9 +272,7 @@ class AuthController {
 			res.json('Mã OTP đã được gửi qua email của bạn');
 		} catch (error) {
 			console.log(error);
-			return next(
-				createError.InternalServerError(`${error.message} in method: ${req.method} of ${req.originalUrl} `)
-			);
+			return next(createError.InternalServerError(error.message));
 		}
 	}
 
@@ -350,27 +287,20 @@ class AuthController {
 				return responseError(res, 400, error.details[0].message);
 			}
 
-			// check email exsit
 			const user = await User.findOne({ email: req.body.email });
 			if (user) return responseError(res, 400, 'Email đã tồn tại');
 
-			// Tạo một bí mật ngẫu nhiên
 			const secret = speakeasy.generateSecret({ length: 20 });
 
-			// Tạo mã OTP
 			const otp = speakeasy.totp({
 				secret: secret.base32,
 				encoding: 'base32',
 			});
 
-			// save otp to redis set time expire 5m
 			await redisClient.set(`verify:${req.body.email}`, otp, 'EX', 60 * 5);
 
-			// Gửi mã OTP đến email
 			const status = await sendMailOTP(req.body.email, 'OTP Verify Account', otp, req.body.fullname);
-			// check status
 			if (!status) {
-				// delete in redis
 				await redisClient.del(`verify:${req.body.email}`);
 				return responseError(res, 400, 'Gửi email thất bại!!!');
 			}
@@ -378,9 +308,7 @@ class AuthController {
 			res.json('Mã OTP đã được gửi qua email của bạn');
 		} catch (error) {
 			console.log(error);
-			return next(
-				createError.InternalServerError(`${error.message} in method: ${req.method} of ${req.originalUrl} `)
-			);
+			return next(createError.InternalServerError(error.message));
 		}
 	}
 
@@ -416,9 +344,7 @@ class AuthController {
 			res.send('Link reset mật khẩu đã được gửi qua email của bạn');
 		} catch (error) {
 			console.log(error);
-			return next(
-				createError.InternalServerError(`${error.message} in method: ${req.method} of ${req.originalUrl} `)
-			);
+			return next(createError.InternalServerError(error.message));
 		}
 	}
 
@@ -508,6 +434,51 @@ class AuthController {
 			await token.delete();
 
 			res.send('Reset mật khẩu thành công!!.');
+		} catch (err) {
+			console.log(err);
+			return next(
+				createError.InternalServerError(
+					`${err.message} \nin method: ${req.method} of ${req.originalUrl} \nwith body: ${JSON.stringify(
+						req.body,
+						null,
+						2
+					)} `
+				)
+			);
+		}
+	}
+
+	async changePassword(req, res, next) {
+		try {
+			const schema = Joi.object({
+				oldPassword: Joi.string().required(),
+				newPassword: Joi.string().required(),
+				confirmPassword: Joi.string().required(),
+			}).unknown();
+			const { error } = schema.validate(req.body);
+			if (error) {
+				return responseError(res, 400, error.details[0].message);
+			}
+
+			const user = await User.findById(req.user._id);
+			if (!user) {
+				return responseError(res, 400, 'Không tìm thấy người dùng');
+			}
+
+			const isPasswordValid = bcrypt.compareSync(req.body.oldPassword, user.password);
+			if (!isPasswordValid) {
+				return responseError(res, 400, 'Mật khẩu cũ không đúng');
+			}
+
+			if (req.body.newPassword !== req.body.confirmPassword) {
+				return responseError(res, 400, 'Mật khẩu mới và xác nhận mật khẩu không khớp');
+			}
+
+			const salt = await bcrypt.genSalt(10);
+			const hashedPassword = await bcrypt.hash(req.body.newPassword, salt);
+			user.password = hashedPassword;
+			await user.save();
+			return res.status(200).json('Thay đổi mật khẩu thành công!!');
 		} catch (err) {
 			console.log(err);
 			return next(
