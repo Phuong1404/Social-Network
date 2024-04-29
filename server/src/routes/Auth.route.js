@@ -25,10 +25,10 @@ router.post('/register', AuthController.registerUser);
 
 router.post('/login', AuthController.login);
 
-// router.post('/password-reset', AuthController.sendLinkForgottenPassword);
+router.post('/password-reset', AuthController.sendLinkForgottenPassword);
 
-// router.post('/password-reset/:userId/:token', AuthController.resetPassword);
+router.post('/password-reset/:userId/:token', AuthController.resetPassword);
 
-// router.put('/change-password', AuthMiddleware.isAuth, AuthController.changePassword);
+router.put('/change-password', AuthMiddleware.isAuth, AuthController.changePassword);
 
 router.put('/set-password', AuthMiddleware.isAuth, AuthController.setPassword);
