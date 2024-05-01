@@ -7,7 +7,7 @@ const { User, validate } = require('../models/User.model');
 const Hobby = require('../models/Hobby.model');
 const { getPagination } = require('../utils/mongoose.utils');
 const { populateUser } = require('../utils/Populate/User.populate');
-const { getUserWithPrivacy } = require('../utils/Privacy/inforUser');
+const { getUserWithPrivacy } = require('../utils/Privacy/inforUser.util');
 const { getListUser, getListData, getListPost } = require('../utils/Response/listData');
 const { notificationRequestFriend, notificationAcceptFriend } = require('../utils/Notification/Friend.notification');
 const {

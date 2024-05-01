@@ -4,7 +4,7 @@ require('dotenv').config();
 const app = require('./app');
 const server = http.createServer(app);
 
-// connect DB
+
 const db = require('./configs/db/index');
 db.connectMongoDB();
 

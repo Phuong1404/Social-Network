@@ -123,7 +123,7 @@ class ConversationController {
 				});
 				await messageSystem.save();
 
-				// eslint-disable-next-line no-undef
+
 				const conversation = await populateConversation(savedConversation._id);
 
 				res.status(200).json(conversation);
@@ -991,7 +991,7 @@ class ConversationController {
 					'Content-Type': 'application/json',
 				},
 			};
-			const url = `https://api.videosdk.live/v2/rooms`;
+
 			const response = await axios(url, options);
 			return res.json(response.data);
 		} catch (err) {

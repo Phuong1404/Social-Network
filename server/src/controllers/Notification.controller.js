@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 const Notification = require('../models/Notification.model');
-const { getPagination } = require('../utils/Pagination');
+const { getPagination } = require('../utils/mongoose.utils');
 const { responseError } = require('../utils/Response/error');
 
 class NotificationController {

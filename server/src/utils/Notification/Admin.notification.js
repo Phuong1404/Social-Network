@@ -1,7 +1,7 @@
-const Notification = require('../../app/models/Notification');
-const SocketManager = require('../../socket/SocketManager');
-const { eventName, notificationType } = require('../../socket/constant');
-const { populateNotification } = require('../Populate/Notification');
+const Notification = require('../../models/Notification.model');
+const SocketManager = require('../../socket/socket.manager.socket');
+const { eventName, notificationType } = require('../../socket/constant.socket');
+const { populateNotification } = require('../Populate/Notification.populate');
 
 async function notificationToAuthorOfComment(post, comment, admin) {
 	const receiver = [comment.author._id];

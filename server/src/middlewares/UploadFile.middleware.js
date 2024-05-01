@@ -41,7 +41,7 @@ const filter = (req, file, callback) => {
 const uploadFile = multer({
 	storage: diskStorage,
 	fileFilter: filter,
-	limits: { fileSize: 1024 * 1024 * 20 }, // 10MB
+
 }).single('file');
 
 const uploadFileMiddleware = util.promisify(uploadFile);

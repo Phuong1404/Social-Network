@@ -52,7 +52,7 @@ const emailTemplate = (link, name) => `<body
     leftmargin="0"
 >
     <style>
-        @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700);
+
     </style>
     <!--100% body table-->
     <table
@@ -194,7 +194,7 @@ const emailTemplate = (link, name) => `<body
                     <tr>
                         <td style="text-align: center">
                             <a
-                                href="https://tana.social"
+
                                 style="
                                     font-size: 14px;
                                     color: rgba(69, 80, 86, 0.7411764705882353);
@@ -221,7 +221,7 @@ const sendEmail = async (email, subject, link, user) => {
 	try {
 		const transporter = nodemailer.createTransport({
 			host: process.env.HOST,
-			service: process.env.SERVICE,
+			// service: process.env.SERVICE,
 			port: 587,
 			secure: true,
 			auth: {
@@ -249,7 +249,7 @@ const sendEmailVerify = async (email, subject, link, user) => {
 	try {
 		const transporter = nodemailer.createTransport({
 			host: process.env.HOST,
-			service: process.env.SERVICE,
+			// service: process.env.SERVICE,
 			port: 587,
 			secure: true,
 			auth: {
@@ -275,7 +275,7 @@ const sendMailOTP = async (email, subject, otp, name) => {
 	try {
 		const transporter = nodemailer.createTransport({
 			host: process.env.HOST,
-			service: process.env.SERVICE,
+			// service: process.env.SERVICE,
 			port: 587,
 			secure: true,
 			auth: {

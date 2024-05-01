@@ -14,8 +14,8 @@ async function getUserWithPrivacy(req, res) {
 		const fields = Object.keys(user._doc);
 		const privacyFields = [];
 		fields.forEach((field) => {
-			// eslint-disable-next-line eqeqeq
-			if (field == 'hobbies') {
+
+			if (field === 'hobbies') {
 				return;
 			}
 			if (typeof user[field] === 'object') {
@@ -45,58 +45,58 @@ async function getUserWithPrivacy(req, res) {
 		if (req.user._id.toString() === req.params.id.toString()) {
 			return user;
 		}
-		// eslint-disable-next-line eqeqeq
-		const isFriend = user.friends.some((friend) => friend.user._id.toString() == req.user._id.toString());
+
+		const isFriend = user.friends.some((friend) => friend.user._id.toString() === req.user._id.toString());
 		privacyFields.forEach((field) => {
-			// check if field is array
+
 			if (Array.isArray(user[field])) {
 				user[field] = user[field].filter((item) => {
-					// check privacy of field
-					// eslint-disable-next-line eqeqeq
-					if (item.privacy.value == 'public') return true;
-					// eslint-disable-next-line eqeqeq
-					if (item.privacy.value == 'private') return false;
-					// eslint-disable-next-line eqeqeq
-					if (item.privacy.value == 'friends' && isFriend) return true;
+
+
+					if (item.privacy.value === 'public') return true;
+
+					if (item.privacy.value === 'private') return false;
+
+					if (item.privacy.value === 'friends' && isFriend) return true;
 					if (
-						// eslint-disable-next-line eqeqeq
-						item.privacy.value == 'includes' &&
-						// eslint-disable-next-line eqeqeq
-						item.privacy.includes.some((id) => id.toString() == req.user._id.toString()) &&
+
+						item.privacy.value === 'includes' &&
+
+						item.privacy.includes.some((id) => id.toString() === req.user._id.toString()) &&
 						isFriend
 					)
 						return true;
 					if (
-						// eslint-disable-next-line eqeqeq
-						item.privacy.value == 'excludes' &&
-						// eslint-disable-next-line eqeqeq
-						!item.privacy.excludes.some((id) => id.toString() == req.user._id.toString()) &&
+
+						item.privacy.value === 'excludes' &&
+
+						!item.privacy.excludes.some((id) => id.toString() === req.user._id.toString()) &&
 						isFriend
 					)
 						return true;
 					return false;
 				});
 			} else {
-				// check privacy of field
+
 				const { privacy } = user[field];
-				// eslint-disable-next-line eqeqeq
-				if (privacy.value == 'public') {
-					// eslint-disable-next-line eqeqeq
-					if (privacy.excludes.some((id) => id.toString() == req.user._id.toString())) user[field] = null;
-					// eslint-disable-next-line eqeqeq
-				} else if (privacy.value == 'private') {
+
+				if (privacy.value === 'public') {
+
+					if (privacy.excludes.some((id) => id.toString() === req.user._id.toString())) user[field] = null;
+
+				} else if (privacy.value === 'private') {
 					user[field] = null;
-					// eslint-disable-next-line eqeqeq
-				} else if (privacy.value == 'friends') {
+
+				} else if (privacy.value === 'friends') {
 					if (!isFriend) user[field] = null;
-					// eslint-disable-next-line eqeqeq
-				} else if (privacy.value == 'includes') {
-					// eslint-disable-next-line eqeqeq
-					if (!privacy.includes.some((u) => u._id.toString() == req.user._id.toString())) user[field] = null;
-					// eslint-disable-next-line eqeqeq
-				} else if (privacy.value == 'excludes') {
-					// eslint-disable-next-line eqeqeq
-					if (privacy.exclues.some((u) => u._id.toString() == req.user._id.toString()) && !isFriend)
+
+				} else if (privacy.value === 'includes') {
+
+					if (!privacy.includes.some((u) => u._id.toString() === req.user._id.toString())) user[field] = null;
+
+				} else if (privacy.value === 'excludes') {
+
+					if (privacy.exclues.some((u) => u._id.toString() === req.user._id.toString()) && !isFriend)
 						user[field] = null;
 				}
 			}

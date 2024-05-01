@@ -86,7 +86,7 @@ class FileController {
 				}
 			)
 				.then((data) => {
-					// eslint-disable-next-line array-callback-return
+
 					data.docs = data.docs.filter((file) => {
 						if (!req.user) {
 							if (file.album || (file.album && file.album.privacy.value === 'private')) {

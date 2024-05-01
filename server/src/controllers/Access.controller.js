@@ -79,8 +79,8 @@ class AccessController {
 		try {
 			const access = await Access.findOne({
 				day: {
-					$gte: moment().startOf('day').toDate(), // start of day
-					$lte: moment().endOf('day').toDate(), // end of day
+
+
 				},
 			});
 			return access ? access.totalAccess : 0;

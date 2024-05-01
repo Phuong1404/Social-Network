@@ -1,4 +1,4 @@
-// const crypto = require('crypto');
+
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 const Joi = require('joi');
@@ -134,7 +134,7 @@ class AuthController {
 				return responseError(res, 401, 'Email không tồn tại.');
 			}
 
-			if (user.password == null) {
+			if (user.password === null) {
 				return responseError(
 					res,
 					401,
@@ -153,14 +153,14 @@ class AuthController {
 			const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
 			if (!isPasswordValid) {
 				user.loginAttempts++;
-				// eslint-disable-next-line
-				if (user.loginAttempts == 3) {
+
+				if (user.loginAttempts === 3) {
 					user.lockTime = Date.now() + 5 * 60 * 1000;
 					await user.save();
 					return responseError(res, 401, 'Tài khoản đã bị khóa. Vui lòng thử lại sau 5 phút!!!');
 				}
 				if (user.loginAttempts > 3) {
-					// lock account
+
 					user.lockTime = Date.now() + 100 * 365 * 24 * 60 * 60 * 1000;
 					await user.save();
 					return responseError(
@@ -172,7 +172,7 @@ class AuthController {
 				await user.save();
 				return responseError(res, 401, 'Mật khẩu không chính xác.');
 			}
-			// reset login attempt
+
 			user.loginAttempts = 0;
 
 			const dataToken = {
@@ -337,7 +337,7 @@ class AuthController {
 
 			const link = `${process.env.BASE_URL}?id=${user._id}&token=${token.token}`;
 			const status = await sendEmail(user.email, 'Password reset', link, user);
-			// check status
+
 			if (!status) {
 				return responseError(res, 400, 'Gửi email thất bại!!!');
 			}
@@ -365,31 +365,31 @@ class AuthController {
 				return responseError(res, 400, 'Không tìm thấy người dùng');
 			}
 
-			// check newPassword and confirmPassword
+
 			if (req.body.newPassword !== req.body.confirmPassword) {
 				return responseError(res, 400, 'Mật khẩu mới và xác nhận mật khẩu không khớp');
 			}
 
-			// generate new password
+
 			const salt = await bcrypt.genSalt(10);
 			const hashedPassword = await bcrypt.hash(req.body.newPassword, salt);
 
-			// get opt from redis
+
 			const otp = await redisClient.get(`comfirm:${req.user._id}`);
 			if (!otp) {
 				return responseError(res, 400, 'Mã OTP đã hết hạn');
 			}
 
-			// verify opt
+
 			const isVerify = otp.toString() === req.body.otp.toString();
 			if (!isVerify) {
 				return responseError(res, 400, 'Mã OTP không đúng');
 			}
 
-			// save new password
+
 			user.password = hashedPassword;
 			await user.save();
-			redisClient.del(`comfirm:${req.user._id}`); // delete otp
+
 
 			return res.status(200).json('Đặt mật khẩu thành công!!!');
 		} catch (error) {
@@ -427,7 +427,7 @@ class AuthController {
 				return responseError(res, 400, 'Link không đúng hoặc đã hết hạn');
 			}
 
-			// hash password
+
 			const salt = await bcrypt.genSalt(10);
 			user.password = await bcrypt.hash(req.body.password, salt);
 			await user.save();

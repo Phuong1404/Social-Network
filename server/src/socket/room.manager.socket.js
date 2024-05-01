@@ -22,7 +22,7 @@ function RoomMagager(socket, io) {
 				autoCloseConfig: 'see example',
 			}),
 		};
-		const url = `https://api.videosdk.live/v2/rooms`;
+
 		const response = await axios(url, options);
 		const caller = await populateUser(data.caller);
 

@@ -2,7 +2,7 @@ const Joi = require('joi');
 const moment = require('moment');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
-const UserController = require('./');
+const UserController = require('./User.controller');
 const AccessController = require('./Access.controller');
 const { User } = require('../models/User.model');
 const authMethod = require('../auth/auth.method');
@@ -44,12 +44,12 @@ class AdminController {
 				return responseError(res, 401, 'Email không tồn tại.');
 			}
 
-			// eslint-disable-next-line eqeqeq
-			if (user.role.name != 'ADMIN') {
+
+			if (user.role.name !== 'ADMIN') {
 				return responseError(res, 401, 'Bạn không có quyền truy cập tính năng này.');
 			}
 
-			if (user.password == null) {
+			if (user.password === null) {
 				return responseError(
 					res,
 					401,
@@ -67,8 +67,8 @@ class AdminController {
 			const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
 			if (!isPasswordValid) {
 				user.loginAttempts++;
-				// eslint-disable-next-line eqeqeq
-				if (user.loginAttempts == 3) {
+
+				if (user.loginAttempts === 3) {
 					user.lockTime = Date.now() + 5 * 60 * 1000;
 					await user.save();
 					return responseError(res, 401, 'Tài khoản đã bị khóa. Vui lòng thử lại sau 5 phút!!!');
@@ -85,7 +85,7 @@ class AdminController {
 				await user.save();
 				return responseError(res, 401, 'Mật khẩu không chính xác.');
 			}
-			// reset login attempt
+
 			user.loginAttempts = 0;
 			await user.save();
 

@@ -4,7 +4,6 @@ const { User } = require('../models/User.model');
 const File = require('../models/File.model');
 
 module.exports = function passportConfig(passport) {
-	// Google
 	passport.use(
 		new GoogleStrategy(
 			{
@@ -48,7 +47,7 @@ module.exports = function passportConfig(passport) {
 		)
 	);
 
-	// Github
+
 	passport.use(
 		new GithubStrategy(
 			{

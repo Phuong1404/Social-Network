@@ -5,7 +5,7 @@ const accessTokenSecret = process.env.TOKEN_SECRET;
 
 exports.isAuth = async (req, res, next) => {
 	try {
-		// Lấy access token từ header
+
 		const accessTokenFromHeader = req.headers.authorization;
 		const accessToken = accessTokenFromHeader?.replace('Bearer ', '');
 		if (!accessToken) {
@@ -36,7 +36,7 @@ exports.isAuth = async (req, res, next) => {
 
 exports.getUserFromToken = async (req, res, next) => {
 	try {
-		// Lấy access token từ header
+
 		const accessTokenFromHeader = req.headers.authorization;
 		const accessToken = accessTokenFromHeader?.replace('Bearer ', '');
 		if (!accessToken) {

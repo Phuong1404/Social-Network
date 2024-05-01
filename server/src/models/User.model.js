@@ -176,7 +176,7 @@ const UserSchema = new mongoose.Schema(
 		profilePicture: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'File',
-			// default: '649fdbbf25bcc0c94aeb8d04',
+
 		},
 		coverPicture: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -210,7 +210,7 @@ const UserSchema = new mongoose.Schema(
 		role: {
 			type: mongoose.SchemaTypes.ObjectId,
 			ref: 'Role',
-			// default: '6389667eb7991bdd04987103',
+
 		},
 		refreshToken: {
 			type: String,
@@ -219,7 +219,7 @@ const UserSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-// User
+
 const hiddenField = ['password', 'refreshToken'];
 const User = mongoose.model(
 	'User',
@@ -231,16 +231,16 @@ const User = mongoose.model(
 	})
 );
 
-// delete
+
 UserSchema.plugin(mongooseDelete, {
 	deletedAt: true,
 	overrideMethods: 'all',
 });
 
-// paginate
+
 UserSchema.plugin(mongoosePaginate);
 
-// validate
+
 const validate = (user) => {
 	const schema = Joi.object({
 		fullname: Joi.string().min(1).max(50),

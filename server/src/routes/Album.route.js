@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const AlbumController = require('../controllers/Auth.controller');
+const AlbumController = require('../controllers/Album.controller');
 const AuthoMiddleware = require('../middlewares/Auth.middleware');
 
 const { isAuth } = AuthoMiddleware;

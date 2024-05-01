@@ -1,4 +1,4 @@
-const Role = require('../models/Role');
+const Role = require('../models/Role.models');
 const { getPagination } = require('../utils/mongoose.utils');
 const { getListData } = require('../utils/Response/listData');
 const { responseError } = require('../utils/Response/error');
