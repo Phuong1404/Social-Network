@@ -1,0 +1,115 @@
+import { swrFetcher } from '@/common/api';
+import Layout, { withLayout } from '@/layout/components';
+import { withAuth } from '@/views/auth/components';
+import { useAuth } from '@/views/auth/hooks';
+import { UserProvider } from '@/views/user/hooks';
+import { Card, Menu, Spin } from 'antd';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { HiInformationCircle, HiPhotograph, HiShieldExclamation, HiUsers, HiViewGrid } from 'react-icons/hi';
+import useSWR from 'swr';
+import { ActivityTab, AlbumTab, FriendTab, InfoTab, PostTab, SecurityTab } from './tabs';
+import SEO from '@/common/components/SEO';
+import { BiHistory } from 'react-icons/bi';
+
+function Index() {
+	const { authUser } = useAuth();
+	const router = useRouter();
+	const { id = authUser?._id, tab = 'posts' } = router.query;
+
+	const { isLoading, data: user } = useSWR(`/users/${id}`, swrFetcher);
+
+	const tabList = [
+		{
+			label: 'Bài viết',
+			Icon: HiViewGrid,
+			tab: 'posts',
+			component: <PostTab />,
+		},
+		{
+			label: 'Bạn bè',
+			Icon: HiUsers,
+			tab: 'friends',
+			component: <FriendTab />,
+		},
+		{
+			label: 'Thông tin',
+			Icon: HiInformationCircle,
+			tab: 'about',
+			component: <InfoTab />,
+		},
+		{
+			label: 'Bộ sưu tập',
+			Icon: HiPhotograph,
+			tab: 'album',
+			component: <AlbumTab />,
+		},
+	];
+	const isAuthUser = authUser?._id === id;
+	if (isAuthUser) {
+		tabList.push(
+			{
+				label: 'Hoạt động',
+				Icon: BiHistory,
+				tab: 'activity',
+				component: <ActivityTab />,
+			},
+			{
+				label: 'Bảo mật',
+				Icon: HiShieldExclamation,
+				tab: 'security',
+				component: <SecurityTab />,
+			}
+		);
+	}
+
+	const tabItem = tabList.find((item) => item.tab === tab);
+	const changeTab = async (tab) => {
+		const query = router.query;
+		query.tab = tab;
+		await router.push({ pathname: router.pathname, query });
+	};
+
+	if (!user)
+		return (
+			<>
+				<SEO title="Không tìm thấy người dùng" />
+
+				<Layout.Content
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
+					{isLoading ? <Spin size="large" /> : 'Không tìm thấy người dùng'}
+				</Layout.Content>
+			</>
+		);
+
+	return (
+		<UserProvider value={{ user }}>
+			<SEO title={[user.fullname, tabItem?.label].filter(Boolean).join(' - ')} />
+
+			<Layout.Sider align="left">
+				<Card bodyStyle={{ padding: 8 }}>
+					<Menu
+						mode="vertical"
+						style={{ width: '100%', border: 'none' }}
+						items={tabList.map(({ tab, label, Icon }) => ({
+							key: tab,
+							icon: <Icon size={20} />,
+							label: label,
+						}))}
+						selectedKeys={[tab]}
+						onClick={({ key }) => changeTab(key)}
+					/>
+				</Card>
+			</Layout.Sider>
+
+			<Layout.Content>{tabItem?.component}</Layout.Content>
+		</UserProvider>
+	);
+}
+
+export default withAuth(withLayout(Index));

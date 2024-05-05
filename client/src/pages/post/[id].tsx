@@ -1,5 +1,5 @@
-import { getPostApi } from '@/modules/post/api';
-import PostPage, { PostSEO } from '@/modules/post/pages/PostPage';
+import { getPostApi } from '@/views/post/api';
+import PostPage, { PostSEO } from '@/views/post/pages/PostPage';
 import { ApiError } from '@/common/api';
 
 export const getServerSideProps = async ({ params }) => {

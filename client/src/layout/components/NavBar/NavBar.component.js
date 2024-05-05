@@ -1,5 +1,5 @@
 import Layout from '@/layout/components';
-import { useAuth } from '@/modules/auth/hooks';
+import { useAuth } from '@/views/auth/hooks';
 import { App, Button, theme, Tooltip, Typography } from 'antd';
 import { useRouter } from 'next/router';
 import { FiHome, FiMessageSquare, FiUser, FiUsers } from 'react-icons/fi';

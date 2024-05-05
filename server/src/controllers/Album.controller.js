@@ -207,12 +207,12 @@ class AlbumController {
 				return next(createError.NotFound('Không tìm thấy album'));
 			}
 
-			if (album.author.toString() !== req.user._id.toString()) {
+			if (album.author.toString() != req.user._id.toString()) {
 				return next(createError.Forbidden('Bạn không có quyền sửa media của album này'));
 			}
 
-			const index = album.media.findIndex((item) => item.toString() === mid.toString());
-			if (index === -1) {
+			const index = album.media.findIndex((item) => item.toString() == mid.toString());
+			if (index == -1) {
 				return next(createError.NotFound('Media không tồn tại trong album'));
 			}
 
@@ -253,7 +253,7 @@ class AlbumController {
 				return next(createError(404, 'Album not found'));
 			}
 
-			if (album.author.toString() !== req.user._id.toString())
+			if (album.author.toString() != req.user._id.toString())
 				return next(createError(403, 'Bạn không có quyền chỉnh sửa album này'));
 
 			const albumUpdated = await Album.findByIdAndUpdate(
@@ -324,7 +324,7 @@ class AlbumController {
 			if (!album) {
 				return next(createError.NotFound('Không tìm thấy album'));
 			}
-			if (album.author.toString() !== req.user._id.toString()) {
+			if (album.author.toString() != req.user._id.toString()) {
 				return next(createError.Forbidden('Bạn không có quyền thêm media vào album này'));
 			}
 
@@ -369,16 +369,16 @@ class AlbumController {
 				return next(createError.NotFound('Không tìm thấy album'));
 			}
 
-			if (album.author.toString() !== req.user._id.toString()) {
+			if (album.author.toString() != req.user._id.toString()) {
 				return next(createError.Forbidden('Bạn không có quyền xóa media của album này'));
 			}
 
-			const index = album.media.findIndex((item) => item.toString() === mid.toString());
-			if (index === -1) {
+			const index = album.media.findIndex((item) => item.toString() == mid.toString());
+			if (index == -1) {
 				return next(createError.NotFound('Media không tồn tại trong album'));
 			}
 
-			if (index === album.media.length - 1) album.cover = album.media[index - 1];
+			if (index == album.media.length - 1) album.cover = album.media[index - 1];
 
 			album.media.splice(index, 1);
 			await album.save();
@@ -404,7 +404,7 @@ class AlbumController {
 				return next(createError(404, 'Album not found'));
 			}
 
-			if (album.author.toString() !== req.user._id.toString())
+			if (album.author.toString() != req.user._id.toString())
 				return next(createError(403, 'Bạn không có quyền xóa album nàyy'));
 
 			await album.delete();

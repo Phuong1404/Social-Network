@@ -45,11 +45,11 @@ async function SearchSuggestFriends(req, next) {
 
 		const friendsOfFriendsFilter = uniqueFriendsOfFriends.filter(
 			(friendId) =>
-				friendId.toString() !== req.user._id.toString() &&
-				!listRequestsOfUser.some((requestID) => requestID && requestID.toString() === friendId.toString()) &&
-				!listFriendsOfUser.some((friendID) => friendID && friendID.toString() === friendId.toString()) &&
+				friendId.toString() != req.user._id.toString() &&
+				!listRequestsOfUser.some((requestID) => requestID && requestID.toString() == friendId.toString()) &&
+				!listFriendsOfUser.some((friendID) => friendID && friendID.toString() == friendId.toString()) &&
 				!listSentRequestsOfUser.some(
-					(sentRequestID) => sentRequestID && sentRequestID.toString() === friendId.toString()
+					(sentRequestID) => sentRequestID && sentRequestID.toString() == friendId.toString()
 				)
 		);
 
@@ -285,23 +285,23 @@ class UserController {
 				userObj.relationship = 'none';
 			} else {
 				if (
-					req.user.friends.some((friend) => friend.user && friend.user._id.toString() === user._id.toString())
+					req.user.friends.some((friend) => friend.user && friend.user._id.toString() == user._id.toString())
 				) {
 					userObj.relationship = 'friend';
 				} else if (
 					req.user.sentRequests.some(
-						(sentRequest) => sentRequest.user && sentRequest.user._id.toString() === user._id.toString()
+						(sentRequest) => sentRequest.user && sentRequest.user._id.toString() == user._id.toString()
 					)
 				) {
 					userObj.relationship = 'sent';
 				} else if (
 					req.user.friendRequests.some(
 						(friendRequest) =>
-							friendRequest.user && friendRequest.user._id.toString() === user._id.toString()
+							friendRequest.user && friendRequest.user._id.toString() == user._id.toString()
 					)
 				) {
 					userObj.relationship = 'received';
-				} else if (req.user._id.toString() === user._id.toString()) {
+				} else if (req.user._id.toString() == user._id.toString()) {
 					userObj.relationship = 'self';
 				} else {
 					userObj.relationship = 'none';
@@ -354,7 +354,7 @@ class UserController {
 
 	async setPassword(req, res, next) {
 		try {
-			if (req.params.id.toString() === req.user._id.toString()) {
+			if (req.params.id.toString() == req.user._id.toString()) {
 				const user = await User.findById(req.params.id);
 				if (user.password) {
 					return res
@@ -391,7 +391,7 @@ class UserController {
 
 	async updatePassword(req, res, next) {
 		try {
-			if (req.params.id.toString() === req.user._id.toString()) {
+			if (req.params.id.toString() == req.user._id.toString()) {
 				const user = await User.findById(req.params.id);
 				const validPassword = await bcrypt.compare(req.body.oldPassword, user.password);
 				if (!validPassword) {
@@ -420,7 +420,7 @@ class UserController {
 	}
 
 	async delete(req, res, next) {
-		if (req.user._id === req.params.id || req.user.role.name === 'ADMIN') {
+		if (req.user._id == req.params.id || req.user.role.name == 'ADMIN') {
 			try {
 				const user = await User.findByIdAndDelete(req.params.id);
 				res.status(200).send({
@@ -449,7 +449,7 @@ class UserController {
 			const user = await populateUser(req.params.id);
 
 			let listFriendsOfUser = [];
-			if (req.query.sort === 'desc') {
+			if (req.query.sort == 'desc') {
 				user.friends.sort((a, b) => b.date - a.date);
 			} else {
 				user.friends.sort((a, b) => a.date - b.date);
@@ -536,19 +536,19 @@ class UserController {
 										userObj.relationship = 'none';
 									} else if (
 										req.user.friends.some(
-											(friend) => friend.user._id.toString() === user._id.toString()
+											(friend) => friend.user._id.toString() == user._id.toString()
 										)
 									) {
 										userObj.relationship = 'friend';
 									} else if (
 										req.user.sentRequests.some(
-											(sentRequest) => sentRequest.user._id.toString() === user._id.toString()
+											(sentRequest) => sentRequest.user._id.toString() == user._id.toString()
 										)
 									) {
 										userObj.relationship = 'sent';
 									} else if (
 										req.user.friendRequests.some(
-											(friendRequest) => friendRequest.user._id.toString() === user._id.toString()
+											(friendRequest) => friendRequest.user._id.toString() == user._id.toString()
 										)
 									) {
 										userObj.relationship = 'received';
@@ -600,7 +600,7 @@ class UserController {
 			const uniqueFriendsOfFriends = [...new Set(friendsOfFriends)];
 
 			const friendsOfFriendsFilter = uniqueFriendsOfFriends.filter(
-				(friendId) => friendId.toString() !== req.user._id.toString() && !req.user.followings.includes(friendId)
+				(friendId) => friendId.toString() != req.user._id.toString() && !req.user.followings.includes(friendId)
 			);
 
 			const query = [{ _id: { $in: friendsOfFriendsFilter } }];
@@ -667,11 +667,11 @@ class UserController {
 
 			const { type } = req.params;
 			let query = [];
-			if (type === 'all') {
+			if (type == 'all') {
 				query = SearchAllUsers(req);
-			} else if (type === 'friends') {
+			} else if (type == 'friends') {
 				let listFriendsOfUser = [];
-				if (sort === 'desc') {
+				if (sort == 'desc') {
 					listFriendsOfUser = req.user.friends.sort((a, b) => b.date - a.date);
 				} else {
 					listFriendsOfUser = req.user.friends.sort((a, b) => a.date - b.date);
@@ -689,9 +689,9 @@ class UserController {
 						},
 					}
 				);
-			} else if (type === 'requests') {
+			} else if (type == 'requests') {
 				let listRequestOfUser = [];
-				if (sort === 'desc') {
+				if (sort == 'desc') {
 					req.user.friendRequests.sort((a, b) => b.date - a.date);
 				} else {
 					req.user.friendRequests.sort((a, b) => a.date - b.date);
@@ -709,7 +709,7 @@ class UserController {
 						},
 					}
 				);
-			} else if (type === 'suggests') {
+			} else if (type == 'suggests') {
 				query = await SearchSuggestFriends(req, next);
 			} else {
 				return res.status(404).json('Không tìm thấy!!!');
@@ -738,7 +738,6 @@ class UserController {
 				.limit(limit)
 				.exec((err, data) => {
 					if (err) {
-						console.log(err);
 						return next(
 							createError.InternalServerError(
 								`${err.message} in method: ${req.method} of ${req.originalUrl}`
@@ -763,7 +762,7 @@ class UserController {
 						let { totalCount } = result[0] ? result[0] : { totalCount: 0 };
 						let listUsers = data;
 
-						if (type === 'suggests' && totalCount === 0) {
+						if (type == 'suggests' && totalCount == 0) {
 							const userId = req.user._id;
 							const user = await User.findById(userId);
 							const listFriendsOfUser = user.friends.map((friend) => friend.user);
@@ -803,7 +802,7 @@ class UserController {
 
 									const similarityHobbies = usersHobbies.map((hobbies) => {
 										const maxLength = Math.max(hobbies.length ?? 0, userHobbies.length ?? 0);
-										if (maxLength === 0) return 0;
+										if (maxLength == 0) return 0;
 										const paddedUserHobbies = userHobbies.concat(
 											Array(maxLength - userHobbies.length).fill('')
 										);
@@ -842,13 +841,13 @@ class UserController {
 								}
 								let users = result;
 								const usersList = [];
-								if (type === 'all') {
+								if (type == 'all') {
 									users.forEach((user) => {
 										const userObj = user;
 										if (
 											req.user.friends.some(
 												(friend) =>
-													friend.user && friend.user._id.toString() === user._id.toString()
+													friend.user && friend.user._id.toString() == user._id.toString()
 											)
 										) {
 											userObj.relationship = 'friend';
@@ -856,7 +855,7 @@ class UserController {
 											req.user.sentRequests.some(
 												(sentRequest) =>
 													sentRequest.user &&
-													sentRequest.user._id.toString() === user._id.toString()
+													sentRequest.user._id.toString() == user._id.toString()
 											)
 										) {
 											userObj.relationship = 'sent';
@@ -864,7 +863,7 @@ class UserController {
 											req.user.friendRequests.some(
 												(friendRequest) =>
 													friendRequest.user &&
-													friendRequest.user._id.toString() === user._id.toString()
+													friendRequest.user._id.toString() == user._id.toString()
 											)
 										) {
 											userObj.relationship = 'received';
@@ -1065,18 +1064,18 @@ class UserController {
 
 	async sendFriendRequest(req, res, next) {
 		try {
-			if (req.params.id.toString() !== req.user._id.toString()) {
+			if (req.params.id.toString() != req.user._id.toString()) {
 				const user = await User.findById(req.params.id);
 				const currentUser = await User.findById(req.user._id);
 
-				if (currentUser.friends.some((friend) => friend.user.toString() === req.params.id)) {
+				if (currentUser.friends.some((friend) => friend.user.toString() == req.params.id)) {
 					res.status(403).json('Hai người đã là bạn bè!!!');
 				} else if (
-					currentUser.friendRequests.some((friendRequest) => friendRequest.user.toString() === req.params.id)
+					currentUser.friendRequests.some((friendRequest) => friendRequest.user.toString() == req.params.id)
 				) {
 					res.status(403).json('Nguời này đã gửi yêu cầu kết bạn cho bạn rồi. Vui lòng chấp nhận yêu cầu!!!');
 				} else if (
-					!currentUser.sentRequests.some((sentRequest) => sentRequest.user.toString() === req.params.id)
+					!currentUser.sentRequests.some((sentRequest) => sentRequest.user.toString() == req.params.id)
 				) {
 					await user.updateOne({
 						$push: { friendRequests: { user: currentUser._id }, followers: { user: currentUser._id } },
@@ -1118,11 +1117,11 @@ class UserController {
 
 	async acceptFriendRequest(req, res, next) {
 		try {
-			if (req.params.id.toString() !== req.user._id.toString()) {
+			if (req.params.id.toString() != req.user._id.toString()) {
 				const user = await User.findById(req.params.id);
 				const currentUser = await User.findById(req.user._id);
 				if (
-					currentUser.friendRequests.some((friendRequest) => friendRequest.user.toString() === req.params.id)
+					currentUser.friendRequests.some((friendRequest) => friendRequest.user.toString() == req.params.id)
 				) {
 					await user.updateOne({ $pull: { sentRequests: { user: currentUser._id } } });
 					await user.updateOne({
@@ -1160,11 +1159,11 @@ class UserController {
 
 	async rejectFriendRequest(req, res, next) {
 		try {
-			if (req.params.id.toString() !== req.user._id.toString()) {
+			if (req.params.id.toString() != req.user._id.toString()) {
 				const user = await User.findById(req.params.id);
 				const currentUser = await User.findById(req.user._id);
 				if (
-					currentUser.friendRequests.some((friendRequest) => friendRequest.user.toString() === req.params.id)
+					currentUser.friendRequests.some((friendRequest) => friendRequest.user.toString() == req.params.id)
 				) {
 					await user.updateOne({
 						$pull: { sentRequests: { user: currentUser._id }, followings: { user: currentUser._id } },
@@ -1193,10 +1192,10 @@ class UserController {
 
 	async unfriend(req, res, next) {
 		try {
-			if (req.params.id.toString() !== req.user._id.toString()) {
+			if (req.params.id.toString() != req.user._id.toString()) {
 				const user = await User.findById(req.params.id);
 				const currentUser = await User.findById(req.user._id);
-				if (currentUser.friends.some((friend) => friend.user.toString() === req.params.id)) {
+				if (currentUser.friends.some((friend) => friend.user.toString() == req.params.id)) {
 					await user.updateOne({
 						$pull: {
 							friends: { user: currentUser._id },
@@ -1294,7 +1293,7 @@ class UserController {
 			if (!user) {
 				return next(createError.NotFound('Tài khoản không toàn tại'));
 			}
-			if (user.isPermanentlyLocked === true) {
+			if (user.isPermanentlyLocked == true) {
 				return next(createError.BadRequest(`Tài khoản đã bị khóa cho đến ${user.lockTime}`));
 			}
 
@@ -1322,7 +1321,7 @@ class UserController {
 			if (!user) {
 				return next(createError.NotFound('Tài khoản không toàn tại'));
 			}
-			if (user.isPermanentlyLocked === true) {
+			if (user.isPermanentlyLocked == true) {
 				return next(createError.BadRequest(`Tài khoản đã bị khóa cho đến ${user.lockTime}`));
 			}
 
@@ -1351,7 +1350,7 @@ class UserController {
 			if (!user) {
 				return next(createError.NotFound('User not found'));
 			}
-			if (user.isPermanentlyLocked === true || user.lockTime > Date.now()) {
+			if (user.isPermanentlyLocked == true || user.lockTime > Date.now()) {
 				user.isPermanentlyLocked = false;
 				user.lockTime = Date.now() - 5 * 60 * 60 * 1000;
 				user.loginAttempts = 0;

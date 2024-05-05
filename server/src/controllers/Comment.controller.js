@@ -34,7 +34,7 @@ class CommentController {
 				},
 			});
 
-			if (req.user.role.name !== 'ADMIN' && req.user._id.toString() !== comment.author._id.toString()) {
+			if (req.user.role.name != 'ADMIN' && req.user._id.toString() != comment.author._id.toString()) {
 				comment = await Comment.findById(req.params.id).populate({
 					path: 'author',
 					select: '_id fullname profilePicture isOnline',
@@ -213,10 +213,10 @@ class CommentController {
 				await notificationTagComment(savedComment, req.user);
 
 				await createActivityWithReplyComment(savedComment, req.user);
-				if (savedComment.author.toString() !== req.user._id.toString()) {
+				if (savedComment.author.toString() != req.user._id.toString()) {
 					const user = await User.findById(req.user._id);
 					user.friends.forEach((friend, index, arr) => {
-						if (friend.user._id.toString() === savedComment.author.toString()) {
+						if (friend.user._id.toString() == savedComment.author.toString()) {
 							arr[index].interactionScore += 2;
 						}
 					});
@@ -294,10 +294,10 @@ class CommentController {
 				await notificationCreateComment(post, savedComment, req.user);
 				await notificationTagComment(savedComment, req.user);
 
-				if (savedComment.author.toString() !== req.user._id.toString()) {
+				if (savedComment.author.toString() != req.user._id.toString()) {
 					const user = await User.findById(req.user._id);
 					user.friends.forEach((friend, index, arr) => {
-						if (friend.user._id.toString() === savedComment.author.toString()) {
+						if (friend.user._id.toString() == savedComment.author.toString()) {
 							arr[index].interactionScore += 2;
 						}
 					});
@@ -348,7 +348,7 @@ class CommentController {
 			}
 			const comment = await Comment.findById(req.params.id);
 			if (!comment) return next(createError(404, 'Bình luận không tồn tại'));
-			if (comment.author.toString() === req.user._id.toString()) {
+			if (comment.author.toString() == req.user._id.toString()) {
 				const commentUpdated = await Comment.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
 					.populate({
 						path: 'author',
@@ -379,7 +379,7 @@ class CommentController {
 			const comment = await Comment.findById(req.params.id);
 			if (comment) {
 				const reactOfUser = await React.findOne({ user: req.user._id, comment: req.params.id });
-				if (reactOfUser && reactOfUser.type.toString() === req.body.type.toString()) {
+				if (reactOfUser && reactOfUser.type.toString() == req.body.type.toString()) {
 					await React.findByIdAndDelete(reactOfUser._id);
 					await Comment.findByIdAndUpdate(req.params.id, { $inc: { numberReact: -1 } });
 
@@ -400,7 +400,7 @@ class CommentController {
 					const commentWithReactUser = commentUpdated.toObject();
 					commentWithReactUser.reactOfUser = 'none';
 					res.status(200).json(commentWithReactUser);
-				} else if (reactOfUser && reactOfUser.type.toString() !== req.body.type.toString()) {
+				} else if (reactOfUser && reactOfUser.type.toString() != req.body.type.toString()) {
 					await React.findByIdAndUpdate(reactOfUser._id, { $set: { type: req.body.type } });
 
 					const commentUpdated = await Comment.findById(req.params.id)
@@ -428,10 +428,10 @@ class CommentController {
 					await notificationReactComment(comment, req.user);
 
 					await createActivityWithReactComment(comment, req.user);
-					if (comment.author.toString() !== req.user._id.toString()) {
+					if (comment.author.toString() != req.user._id.toString()) {
 						const user = await User.findById(req.user._id);
 						user.friends.forEach((friend, index, arr) => {
-							if (friend.user._id.toString() === comment.author.toString()) {
+							if (friend.user._id.toString() == comment.author.toString()) {
 								arr[index].interactionScore += 2;
 							}
 						});
@@ -482,9 +482,9 @@ class CommentController {
 			const post = await Post.findById(req.params.postId);
 			if (comment) {
 				if (
-					comment.author._id.toString() === req.user._id.toString() ||
-					post.author.toString() === req.user._id.toString() ||
-					req.user.role.name === 'ADMIN'
+					comment.author._id.toString() == req.user._id.toString() ||
+					post.author.toString() == req.user._id.toString() ||
+					req.user.role.name == 'ADMIN'
 				) {
 					await comment.delete();
 					const index = post.lastestFiveComments.indexOf(req.params.id);
@@ -527,9 +527,9 @@ class CommentController {
 			const post = await Post.findById(req.params.postId);
 			if (comment) {
 				if (
-					comment.author._id.toString() === req.user._id.toString() ||
-					post.author.toString() === req.user._id.toString() ||
-					req.user.role.name === 'ADMIN'
+					comment.author._id.toString() == req.user._id.toString() ||
+					post.author.toString() == req.user._id.toString() ||
+					req.user.role.name == 'ADMIN'
 				) {
 					await comment.delete();
 					const index = post.lastestFiveComments.indexOf(req.params.id);

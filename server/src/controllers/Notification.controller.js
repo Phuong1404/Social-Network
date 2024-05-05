@@ -37,7 +37,7 @@ class NotificationController {
 					data.docs.forEach((notification) => {
 						const notificationObject = notification.toObject();
 						notificationObject.isRead = notification.readBy.some(
-							(reader) => reader.readerId._id.toString() === req.user._id.toString()
+							(reader) => reader.readerId._id.toString() == req.user._id.toString()
 						);
 						listNotifications.push(notificationObject);
 					});
@@ -130,14 +130,14 @@ class NotificationController {
 			if (
 				!notification.receiver
 					.map((receiver) => receiver._id.toString())
-					.some((receiverId) => receiverId === req.user._id.toString())
+					.some((receiverId) => receiverId == req.user._id.toString())
 			) {
 				return responseError(res, 403, 'Bạn không phải là người nhận thông báo này');
 			}
 			if (
 				notification.readBy
 					.map((item) => item.readerId.toString())
-					.some((readerId) => readerId === req.user._id.toString())
+					.some((readerId) => readerId == req.user._id.toString())
 			) {
 				return responseError(res, 403, 'Bạn đã đọc thông báo này rồi');
 			}
@@ -172,7 +172,7 @@ class NotificationController {
 					},
 				},
 			});
-			if (notifications.length === 0) {
+			if (notifications.length == 0) {
 				return responseError(res, 404, 'Thông báo không được tìm thấy');
 			}
 			const notificationIds = notifications.map((notification) => notification._id);
@@ -211,7 +211,7 @@ class NotificationController {
 			if (!notification) {
 				return responseError(res, 404, `Thông báo không được tìm thấy với id:${req.params.notificationId}`);
 			}
-			if (notification.receiver.some((mem) => mem.toString() === req.user._id.toString())) {
+			if (notification.receiver.some((mem) => mem.toString() == req.user._id.toString())) {
 				const result = await Notification.findByIdAndUpdate(
 					req.params.notificationId,
 					{ $pull: { receiver: req.user._id } },

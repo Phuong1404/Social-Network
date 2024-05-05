@@ -24,7 +24,7 @@ class PostController {
 
 		try {
 
-			if (req.user.role.name !== 'ADMIN') return next(createError.Forbidden('Bạn không có quyền truy cập'));
+			if (req.user.role.name != 'ADMIN') return next(createError.Forbidden('Bạn không có quyền truy cập'));
 			let query = {};
 			if (q) {
 				query = { $text: { $search: q } };
@@ -426,7 +426,7 @@ class PostController {
 					const interactionScoreA = friendScores[a.author._id.toString()];
 					const interactionScoreB = friendScores[b.author._id.toString()];
 
-					if (interactionScoreA === interactionScoreB) {
+					if (interactionScoreA == interactionScoreB) {
 
 						return b.updatedAt - a.updatedAt;
 					}
@@ -434,10 +434,6 @@ class PostController {
 
 					return friendScores[b.author] - friendScores[a.author];
 				});
-
-
-
-
 				const listPostsFilter = await getAllPostWithPrivacy(sortedPosts, req);
 
 				const listPostsPaginate = listPostsFilter.slice(offset, offset + limit);
@@ -538,7 +534,7 @@ class PostController {
 					select: '_id link description',
 				});
 
-			if (req.user && req.user.role.name !== 'ADMIN' && req.user._id.toString() !== post.author._id.toString()) {
+			if (req.user && req.user.role.name != 'ADMIN' && req.user._id.toString() != post.author._id.toString()) {
 				post = await Post.findById(req.params.id)
 					.populate({
 						path: 'lastestFiveComments',
@@ -605,7 +601,7 @@ class PostController {
 					reactOfUser = react.type;
 				}
 			} else {
-				if (post.privacy.value !== 'public') {
+				if (post.privacy.value != 'public') {
 					return responseError(res, 401, 'Bạn không có quyền xem bài viết này');
 				}
 			}
@@ -893,7 +889,7 @@ class PostController {
 				return next(createError.BadRequest(error.details[0].message));
 			}
 			const post = await Post.findById(req.params.id);
-			if (post.author.toString() === req.user._id.toString()) {
+			if (post.author.toString() == req.user._id.toString()) {
 
 				await Promise.all(
 					req.body.media.map(async (file) => {
@@ -975,7 +971,7 @@ class PostController {
     async delete(req, res, next) {
 		try {
 			const post = await Post.findById(req.params.id);
-			if (post.author.toString() === req.user._id.toString() || req.user.role.name === 'ADMIN') {
+			if (post.author.toString() == req.user._id.toString() || req.user.role.name == 'ADMIN') {
 				await post.delete();
 
 				await Comment.deleteMany({ post: req.params.id });
@@ -1010,7 +1006,7 @@ class PostController {
     async deletePost(req, res, next) {
 		try {
 			const post = await Post.findById(req.params.id);
-			if (post.author.toString() === req.user._id.toString() || req.user.role.name === 'ADMIN') {
+			if (post.author.toString() == req.user._id.toString() || req.user.role.name == 'ADMIN') {
 				await post.delete();
 
 				await Comment.deleteMany({ post: req.params.id });
@@ -1081,8 +1077,8 @@ class PostController {
 
 
 			const listReactOfPost = await React.find({ post: req.params.id });
-			const userReacted = listReactOfPost.find((react) => react.user.toString() === req.user._id.toString());
-			if (userReacted && userReacted.type.toString() === req.body.type.toString()) {
+			const userReacted = listReactOfPost.find((react) => react.user.toString() == req.user._id.toString());
+			if (userReacted && userReacted.type.toString() == req.body.type.toString()) {
 
 				await React.findByIdAndDelete(userReacted._id);
 
@@ -1138,7 +1134,7 @@ class PostController {
 				const postReturn = postUpdated.toObject();
 				postReturn.reactOfUser = 'none';
 				return res.status(200).json(postReturn);
-			} else if (userReacted && userReacted.type.toString() !== req.body.type.toString()) {
+			} else if (userReacted && userReacted.type.toString() != req.body.type.toString()) {
 
 				userReacted.type = req.body.type;
 				await userReacted.save();
@@ -1206,12 +1202,12 @@ class PostController {
 				await Post.findByIdAndUpdate(req.params.id, { $inc: { numberReact: 1 } });
 
 
-				if (post.author._id.toString() !== req.user._id.toString()) {
+				if (post.author._id.toString() != req.user._id.toString()) {
 					await notificationForReactPost(post, req.user);
 
 					const user = await User.findById(req.user._id);
 					user.friends.forEach((friend, index, arr) => {
-						if (friend.user._id.toString() === post.author._id.toString()) {
+						if (friend.user._id.toString() == post.author._id.toString()) {
 							arr[index].interactionScore += 1;
 						}
 					});
@@ -1307,7 +1303,7 @@ class PostController {
 
 			await Post.findByIdAndUpdate(req.params.id, { $inc: { numberShare: 1 } });
 
-			if (post.author.toString() !== req.user._id.toString()) {
+			if (post.author.toString() != req.user._id.toString()) {
 				await notificationForSharedPost(savedPost, req.user);
 			}
 
@@ -1340,12 +1336,12 @@ class PostController {
 				},
 			});
 
-			const listLike = listReact.filter((react) => react.type === 'like');
-			const listLove = listReact.filter((react) => react.type === 'love');
-			const listHaha = listReact.filter((react) => react.type === 'haha');
-			const listWow = listReact.filter((react) => react.type === 'wow');
-			const listSad = listReact.filter((react) => react.type === 'sad');
-			const listAngry = listReact.filter((react) => react.type === 'angry');
+			const listLike = listReact.filter((react) => react.type == 'like');
+			const listLove = listReact.filter((react) => react.type == 'love');
+			const listHaha = listReact.filter((react) => react.type == 'haha');
+			const listWow = listReact.filter((react) => react.type == 'wow');
+			const listSad = listReact.filter((react) => react.type == 'sad');
+			const listAngry = listReact.filter((react) => react.type == 'angry');
 			res.status(200).send({
 				total: listReact,
 				like: listLike,

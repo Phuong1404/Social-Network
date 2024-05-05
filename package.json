@@ -4,7 +4,7 @@
   "repository": "",
   "scripts": {
     "lint": "eslint ./",
-    "lint --fix":"eslint --fix",
+    "lint --fix": "eslint --fix",
     "format": "prettier --write \"**/*.{js,jsx}\"",
     "postinstall": "husky install"
   },
@@ -35,5 +35,8 @@
       "npm run format",
       "git add ."
     ]
+  },
+  "dependencies": {
+    "socket.io": "^4.7.5"
   }
 }

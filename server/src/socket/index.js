@@ -1,4 +1,4 @@
-const AccessController = require('../app/controllers/AccessController');
+const AccessController = require('../controllers/Access.controller');
 const { User } = require('../models/User.model');
 const SocketManager = require('./socket.manager.socket');
 const RoomMagager = require('./room.manager.socket');

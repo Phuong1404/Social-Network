@@ -30,7 +30,7 @@ const filter = (req, file, callback) => {
 		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 		'application/zip',
 	];
-	if (math.indexOf(file.mimetype) === -1) {
+	if (math.indexOf(file.mimetype) == -1) {
 		const errorMess = `File <strong>${file.originalname}</strong> không hợp lệ. Chỉ cho phép tải cái file dạng: ppt, pptx, xls, xlsx, png, jpg, jpeg, mp3, mp4, mkv, doc, docx, pdf, zip.`;
 		req.errorMess = errorMess;
 		return callback(errorMess, false, new Error(errorMess));
@@ -49,13 +49,13 @@ module.exports = (req, res, next) =>
 	uploadFileMiddleware(req, res, (err) => {
 		if (!err) return next();
 
-		if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+		if (err.code == 'LIMIT_UNEXPECTED_FILE') {
 			return res.status(400).send({
 				message: 'Chỉ cho phép tải lên tối đa 1 files.',
 			});
 		}
 
-		if (err.code === 'LIMIT_FILE_SIZE') {
+		if (err.code == 'LIMIT_FILE_SIZE') {
 			return res.status(400).send({
 				message: 'Chỉ cho phép tải lên tối đa 20MB.',
 			});

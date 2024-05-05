@@ -30,7 +30,7 @@ const filter = (req, file, callback) => {
 		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 		'application/zip',
 	];
-	if (math.indexOf(file.mimetype) === -1) {
+	if (math.indexOf(file.mimetype) == -1) {
 		const errorMess = `File <strong>${file.originalname}</strong> không hợp lệ. Chỉ cho phép tải cái file dạng: ppt, pptx, xls, xlsx, png, jpg, jpeg, mp3, mp4, mkv, doc, docx, pdf, zip.`;
 		req.errorMess = errorMess;
 		return callback(errorMess, false, new Error(errorMess));

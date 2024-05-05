@@ -5,7 +5,7 @@ const limiter = async (req, res, next) => {
 		const ipUser = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 		const numRequest = await incr(ipUser);
 		let timeLeft;
-		if (numRequest === 1) {
+		if (numRequest == 1) {
 			await expire(ipUser, 60);
 			timeLeft = 60;
 		} else {

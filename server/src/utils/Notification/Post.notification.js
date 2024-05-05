@@ -24,7 +24,7 @@ async function notificationForFriends(post, user) {
 
 async function notificationForTags(post, user) {
 	const { tags } = post;
-	if (!tags || tags.length === 0) return;
+	if (!tags || tags.length == 0) return;
 
 	const notification = await new Notification({
 		type: 'post',

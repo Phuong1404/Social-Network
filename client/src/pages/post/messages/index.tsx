@@ -1,3 +1,3 @@
-import MessagePage from '@/modules/messages/pages/MessagePage';
+import MessagePage from '@/views/messages/pages/MessagePage';
 
 export default MessagePage;

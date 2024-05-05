@@ -1,9 +1,21 @@
 const http = require('http');
 require('dotenv').config();
+const socketio = require('socket.io');
 
 const app = require('./app');
 const server = http.createServer(app);
+const HOSTS = require('./configs/cors');
 
+// socket
+const io = socketio(server, {
+	cors: {
+		origin: HOSTS,
+	},
+});
+
+const Socket = require('./socket/index');
+
+Socket(io);
 
 const db = require('./configs/db/index');
 db.connectMongoDB();

@@ -1,5 +1,5 @@
-import ProviderAuthPage from '@/modules/auth/pages/ProviderAuthPage';
-import { authProviders } from '@/modules/auth/data';
+import ProviderAuthPage from '@/views/auth/pages/ProviderAuthPage';
+import { authProviders } from '@/views/auth/data';
 
 export const getStaticPaths = async () => ({
 	paths: authProviders.map((provider) => ({ params: { providerId: provider.id } })),

@@ -94,7 +94,7 @@ class ListController {
 
 			const isMongoId = Types.ObjectId.isValid(id);
 			const query = isMongoId ? { _id: id } : { key: id };
-			if (!user || user.role.name !== 'ADMIN') query.isPrivate = false;
+			if (!user || user.role.name != 'ADMIN') query.isPrivate = false;
 
 			const list = await List.findOne(query);
 			if (!list) return responseError(res, 404, 'Không tìm thấy danh sách!');
@@ -145,7 +145,7 @@ class ListController {
 			const { items } = req.body;
 
 			if (!Array.isArray(items)) return responseError(res, 400, 'Dữ liệu phải là một mảng!');
-			if (items.some((item) => typeof item !== 'string'))
+			if (items.some((item) => typeof item != 'string'))
 				return responseError(res, 400, 'Dữ liệu phải là một mảng các chuỗi!');
 
 			const isMongoId = Types.ObjectId.isValid(id);
@@ -176,7 +176,7 @@ class ListController {
 			const { items } = req.body;
 
 			if (!Array.isArray(items)) return responseError(res, 400, 'Dữ liệu phải là một mảng!');
-			if (items.some((item) => typeof item !== 'string'))
+			if (items.some((item) => typeof item != 'string'))
 				return responseError(res, 400, 'Dữ liệu phải là một mảng các chuỗi!');
 
 			const isMongoId = Types.ObjectId.isValid(id);

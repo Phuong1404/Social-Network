@@ -33,7 +33,7 @@ class ConversationController {
 	async getConversationById(req, res) {
 		try {
 			const conversation = await populateConversation(req.params.id);
-			if (conversation.members.some((member) => member.user._id.toString() === req.user._id.toString())) {
+			if (conversation.members.some((member) => member.user._id.toString() == req.user._id.toString())) {
 				return res.status(200).json(conversation);
 			} else {
 				return responseError(res, 401, 'Bạn không có trong conversation này');
@@ -364,7 +364,7 @@ class ConversationController {
 			return next(createError.BadRequest(error.details[0].message));
 		}
 
-		if (req.body.members.length === 1) {
+		if (req.body.members.length == 1) {
 			req.body.name = undefined;
 		}
 
@@ -372,7 +372,7 @@ class ConversationController {
 			if (req.body.members.length < 1) {
 				return responseError(res, 400, 'Cuộc hội thoại phải có ít nhất 2 thành viên');
 			}
-			if (req.body.members.length === 1) {
+			if (req.body.members.length == 1) {
 				const conv = await Conversation.aggregate([
 					{
 						$match: {
@@ -512,19 +512,19 @@ class ConversationController {
 			}
 
 			const conversation = await Conversation.findById(req.params.id);
-			if (conversation.members.some((member) => member.user.toString() === req.user._id.toString())) {
+			if (conversation.members.some((member) => member.user.toString() == req.user._id.toString())) {
 				let contentMessage = '';
 
 				for (const key of Object.keys(req.body)) {
-					if (key === 'avatar') {
+					if (key == 'avatar') {
 						contentMessage += 'đã đổi avatar cho cuộc hội thoại này';
 						conversation[key] = req.body[key];
-					} else if (key === 'name' && conversation.members.length > 2) {
+					} else if (key == 'name' && conversation.members.length > 2) {
 						contentMessage += `đã đổi tên cuộc hội thoại này thành <b>${req.body[key]}</b>`;
 						conversation[key] = req.body[key];
-					} else if (key === 'name' && conversation.members.length === 2) {
+					} else if (key == 'name' && conversation.members.length == 2) {
 						const member = conversation.members.find(
-							(member) => member.user.toString() !== req.user._id.toString()
+							(member) => member.user.toString() != req.user._id.toString()
 						);
 
 						contentMessage += `đã đổi biệt danh của ${member.nickname} thành ${req.body[key]}`;
@@ -578,9 +578,9 @@ class ConversationController {
 				return res.status(404).json('Không tìm thấy cuộc hội thoại');
 			}
 			const adminOfConversation = conversation.members
-				.filter((member) => member.role === 'admin')
+				.filter((member) => member.role == 'admin')
 				.map((member) => member.user.toString());
-			if (adminOfConversation.includes(req.user._id.toString()) || req.user.role.name === 'ADMIN') {
+			if (adminOfConversation.includes(req.user._id.toString()) || req.user.role.name == 'ADMIN') {
 				await conversation.delete();
 
 				await Message.deleteMany({ conversation: req.params.id });
@@ -609,9 +609,9 @@ class ConversationController {
 				return res.status(404).json('Không tìm thấy cuộc hội thoại');
 			}
 			const adminOfConversation = conversation.members
-				.filter((member) => member.role === 'admin')
+				.filter((member) => member.role == 'admin')
 				.map((member) => member.user.toString());
-			if (adminOfConversation.includes(req.user._id.toString()) || req.user.role.name === 'ADMIN') {
+			if (adminOfConversation.includes(req.user._id.toString()) || req.user.role.name == 'ADMIN') {
 				await conversation.delete();
 
 				await Message.deleteMany({ conversation: req.params.id });
@@ -642,14 +642,14 @@ class ConversationController {
 			}
 			const { limit, offset } = getPagination(req.query.page, req.query.size, req.query.offset);
 			const memberOfConversation = conversations.members.filter(
-				(member) => member.user.toString() === req.user._id.toString()
+				(member) => member.user.toString() == req.user._id.toString()
 			);
 			if (memberOfConversation.length > 0) {
 				const query = [{ conversation: req.params.id }];
 				const mimeTypeOfMedia = ['image/png', 'image/jpeg', 'video/mp4', 'video/x-matroska'];
-				if (req.params.type === 'media') {
+				if (req.params.type == 'media') {
 					query.push({ type: { $in: mimeTypeOfMedia } });
-				} else if (req.params.type === 'other') {
+				} else if (req.params.type == 'other') {
 					query.push({ type: { $nin: mimeTypeOfMedia } });
 				} else {
 					return responseError(res, 404, 'Không tìm thấy');
@@ -701,13 +701,13 @@ class ConversationController {
 	async updateMembers(req, res, next) {
 		try {
 			const conversation = await Conversation.findById(req.params.id);
-			if (conversation.members.some((member) => member.user.toString() === req.user._id.toString())) {
+			if (conversation.members.some((member) => member.user.toString() == req.user._id.toString())) {
 				const adminOfConversation = conversation.members
-					.filter((member) => member.role === 'admin')
+					.filter((member) => member.role == 'admin')
 					.map((member) => member.user.toString());
 				let contentMessage = '';
 
-				if (req.params.type === 'add') {
+				if (req.params.type == 'add') {
 					const schema = Joi.object({
 						newMembers: Joi.array()
 							.items(
@@ -734,7 +734,7 @@ class ConversationController {
 						member.addedBy = req.user._id;
 					});
 
-					if (conversation.members.length === 2 && conversation.type === 'direct') {
+					if (conversation.members.length == 2 && conversation.type == 'direct') {
 						const newConversation = new Conversation({
 							members: conversation.members.concat(req.body.newMembers),
 							name: req.body.name,
@@ -760,14 +760,14 @@ class ConversationController {
 					conversation.members = conversation.members.concat(req.body.newMembers);
 
 					const user = await User.findById(req.body.newMembers[0].user);
-					if (req.body.newMembers.length === 1) {
+					if (req.body.newMembers.length == 1) {
 						contentMessage = `đã thêm <b>${user.fullname}</b> vào cuộc hội thoại này`;
 					} else {
 						contentMessage = `đã thêm <b>${user.fullname}</b> và <b>${
 							req.body.newMembers.length - 1
 						}</b> thành viên khác vào cuộc hội thoại này`;
 					}
-				} else if (req.params.type === 'remove') {
+				} else if (req.params.type == 'remove') {
 					const schema = Joi.object({
 						userID: Joi.string().required(),
 					}).unknown();
@@ -777,7 +777,7 @@ class ConversationController {
 					}
 
 					if (adminOfConversation.includes(req.user._id.toString())) {
-						if (conversation.members.length === 2 && conversation.type === 'direct') {
+						if (conversation.members.length == 2 && conversation.type == 'direct') {
 							return responseError(
 								res,
 								403,
@@ -786,7 +786,7 @@ class ConversationController {
 						}
 
 						let nickname = conversation.members
-							.filter((member) => member.user.toString() === req.body.userID.toString())
+							.filter((member) => member.user.toString() == req.body.userID.toString())
 							.map((member) => member.nickname);
 						if (!nickname) {
 							const user = await User.findById(req.body.userID).select('fullname');
@@ -794,12 +794,12 @@ class ConversationController {
 						}
 						contentMessage = `đã xóa ${nickname} khỏi cuộc hội thoại này`;
 						conversation.members = conversation.members.filter(
-							(member) => member.user.toString() !== req.body.userID.toString()
+							(member) => member.user.toString() != req.body.userID.toString()
 						);
 					} else {
 						return responseError(res, 403, 'Bạn không có quyền xóa thành viên');
 					}
-				} else if (req.params.type === 'changeRole') {
+				} else if (req.params.type == 'changeRole') {
 					const schema = Joi.object({
 						userID: Joi.string().required(),
 						role: Joi.string().valid('admin', 'member').required(),
@@ -809,16 +809,16 @@ class ConversationController {
 						return responseError(res, 400, error.details[0].message);
 					}
 
-					if (conversation.members.length === 2 && conversation.type === 'direct') {
+					if (conversation.members.length == 2 && conversation.type == 'direct') {
 						return responseError(res, 400, 'Không thể thay đổi quyền trong cuộc trò chuyện giữa 2 người');
 					}
 
 					if (adminOfConversation.includes(req.user._id.toString())) {
 						const index = conversation.members.findIndex(
-							(member) => member.user.toString() === req.body.userID.toString()
+							(member) => member.user.toString() == req.body.userID.toString()
 						);
 
-						if (req.body.userID.toString() === req.user._id.toString()) {
+						if (req.body.userID.toString() == req.user._id.toString()) {
 							return responseError(res, 403, 'Bạn không thể thay đổi vai trò của chính mình');
 						}
 
@@ -827,14 +827,14 @@ class ConversationController {
 							const user = await User.findById(req.body.userID).select('fullname');
 							nickname = user.fullname;
 						}
-						if (index > -1 && conversation.members[index].role !== req.body.role) {
+						if (index > -1 && conversation.members[index].role != req.body.role) {
 							conversation.members[index].role = req.body.role;
 							contentMessage = `đã thay đổi vai trò của <b>${nickname}</b> thành <b>${req.body.role}</b>`;
 						}
 					} else {
 						return responseError(res, 403, 'Bạn không có quyền thay đổi vai trò thành viên');
 					}
-				} else if (req.params.type === 'changeNickname') {
+				} else if (req.params.type == 'changeNickname') {
 					const schema = Joi.object({
 						userID: Joi.string().required(),
 						nickname: Joi.string().min(0).max(50),
@@ -845,7 +845,7 @@ class ConversationController {
 					}
 
 					const index = conversation.members.findIndex(
-						(member) => member.user.toString() === req.body.userID.toString()
+						(member) => member.user.toString() == req.body.userID.toString()
 					);
 					const { nickname } = conversation.members[index];
 					if (!nickname) {
@@ -862,7 +862,7 @@ class ConversationController {
 					return responseError(res, 404, 'Không tìm thấy phương thức');
 				}
 
-				if (contentMessage !== '') {
+				if (contentMessage != '') {
 					conversation.history.push({
 						editor: req.user._id,
 						content: `<b>${req.user.fullname}</b> ${contentMessage}`,
@@ -902,12 +902,12 @@ class ConversationController {
 	async userDeletedAllMessages(req, res, next) {
 		try {
 			const conversation = await Conversation.findById(req.params.id);
-			if (conversation.members.some((member) => member.user.toString() === req.user._id.toString())) {
+			if (conversation.members.some((member) => member.user.toString() == req.user._id.toString())) {
 				let index = -1;
 				index = conversation.user_deleted.findIndex(
-					(item) => item.userId.toString() === req.user._id.toString()
+					(item) => item.userId.toString() == req.user._id.toString()
 				);
-				if (index !== -1) {
+				if (index != -1) {
 					conversation.user_deleted[index].deletedAt = Date.now();
 				} else {
 					conversation.user_deleted.push({ userId: req.user._id });
@@ -938,18 +938,18 @@ class ConversationController {
 				return responseError(res, 404, 'Không tìm thấy cuộc trò chuyện');
 			}
 
-			if (conversation.members.length === 2) {
+			if (conversation.members.length == 2) {
 				return responseError(res, 400, 'Không thể rời khỏi cuộc trò chuyện 2 người');
 			}
 
 			let index = -1;
-			index = conversation.members.findIndex((item) => item.user.toString() === req.user._id.toString());
-			if (index !== -1) {
-				const adminOfConversation = conversation.members.filter((member) => member.role === 'admin');
+			index = conversation.members.findIndex((item) => item.user.toString() == req.user._id.toString());
+			if (index != -1) {
+				const adminOfConversation = conversation.members.filter((member) => member.role == 'admin');
 				conversation.members.splice(index, 1);
 				if (
-					adminOfConversation.length === 1 &&
-					adminOfConversation[0].user.toString() === req.user._id.toString()
+					adminOfConversation.length == 1 &&
+					adminOfConversation[0].user.toString() == req.user._id.toString()
 				) {
 					conversation.members.forEach((member) => {
 						member.role = 'admin';

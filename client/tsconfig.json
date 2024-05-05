@@ -2,12 +2,24 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/modules/*": ["src/modules/*"],
-      "@/assets/*": ["src/assets/*"],
-      "@/common/*": ["src/common/*"],
-      "@/layout/*": ["src/layout/*"],
-      "@/pages/*": ["src/pages/*"],
-      "@/styles/*": ["src/styles/*"],
+      "@/views/*": [
+        "src/views/*"
+      ],
+      "@/assets/*": [
+        "src/assets/*"
+      ],
+      "@/common/*": [
+        "src/common/*"
+      ],
+      "@/layout/*": [
+        "src/layout/*"
+      ],
+      "@/pages/*": [
+        "src/pages/*"
+      ],
+      "@/styles/*": [
+        "src/styles/*"
+      ]
     },
     "lib": [
       "dom",
@@ -24,8 +36,9 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve"
+    // "isolatedviews": true,
+    "jsx": "preserve",
+    "isolatedModules": true
   },
   "include": [
     "next-env.d.ts",
@@ -33,6 +46,6 @@
     "src/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_views"
   ]
 }

@@ -1,11 +1,11 @@
-import { useAuth } from '@/modules/auth/hooks';
+import { useAuth } from '@/views/auth/hooks';
 import { useTheme } from '@/layout/hooks';
 import { Avatar, Badge, Button, Dropdown } from 'antd';
 import { HiLogout } from 'react-icons/hi';
 import { HiBell, HiCog6Tooth, HiExclamationTriangle, HiMoon, HiSun, HiUser } from 'react-icons/hi2';
 import { HeaderRight } from '../Header.component';
-import { useReport } from '@/modules/report/hooks/useReport'
-import { NotificationPopover } from '@/modules/notification/components';
+import { useReport } from '@/views/report/hooks/useReport'
+import { NotificationPopover } from '@/views/notification/components';
 
 import Link from 'next/link';
 
@@ -59,7 +59,7 @@ export function NavBarRight() {
 
 			<Dropdown menu={{ items: avatarDropdownItems }} arrow trigger={['click']}>
 				<Button shape="circle" size="large">
-					<Avatar src={authUser?.profilePicture.link} />
+					<Avatar src={authUser?.profilePicture?.link} />
 				</Button>
 			</Dropdown>
 		</HeaderRight>

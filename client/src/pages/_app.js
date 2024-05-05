@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { io } from 'socket.io-client';
-import { useAuth } from '@/modules/auth/hooks';
+import { useAuth } from '@/views/auth/hooks';
 import { Analytics } from '@vercel/analytics/react';
 import { App, ConfigProvider, theme } from 'antd';
 

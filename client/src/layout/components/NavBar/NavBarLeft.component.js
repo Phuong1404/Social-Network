@@ -1,4 +1,4 @@
-import { useAuth } from '@/modules/auth/hooks';
+import { useAuth } from '@/views/auth/hooks';
 import { Avatar, Button, Input } from 'antd';
 import Link from 'next/link';
 import { HeaderLeft } from '../Header.component';

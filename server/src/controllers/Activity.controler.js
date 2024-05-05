@@ -131,7 +131,7 @@ class ActivityController {
 			const activity = await Activity.findById(req.params.id);
 			if (!activity) {
 				responseError(res, 404, `Activity không tìm thấy với id ${req.params.id}`);
-			} else if (activity.user.toString() === req.user._id.toString()) {
+			} else if (activity.user.toString() == req.user._id.toString()) {
 				const result = await Activity.findByIdAndDelete(req.params.id);
 				res.status(200).json({
 					activity: result,

@@ -89,10 +89,10 @@ class FileController {
 
 					data.docs = data.docs.filter((file) => {
 						if (!req.user) {
-							if (file.album || (file.album && file.album.privacy.value === 'private')) {
+							if (file.album || (file.album && file.album.privacy.value == 'private')) {
 								return null;
 							}
-							if (!file.post || (file.post && file.post.privacy.value === 'private')) {
+							if (!file.post || (file.post && file.post.privacy.value == 'private')) {
 								return null;
 							}
 							return file;
@@ -214,7 +214,7 @@ class FileController {
 	async updateFile(req, res, next) {
 		try {
 			const file = await File.findById(req.params.id);
-			if (file.creator.toString() !== req.user._id.toString())
+			if (file.creator.toString() != req.user._id.toString())
 				return responseError(res, 403, 'Bạn không có quyền chỉnh sửa file này');
 
 			const schema = Joi.object({
@@ -245,15 +245,15 @@ class FileController {
 				return responseError(res, 404, 'Không tìm thấy file');
 			}
 
-			if (file.creator.toString() === req.user._id.toString()) {
+			if (file.creator.toString() == req.user._id.toString()) {
 				if (file.album) {
 					const album = await Album.findById(file.album);
-					if (album.cover.toString() === file._id.toString()) {
+					if (album.cover.toString() == file._id.toString()) {
 						const files = await File.find({ album: file.album }).sort({ createdAt: -1 });
 
 						if (files.length > 1) {
 							album.cover = files[1]._id;
-						} else if (files.length === 1) {
+						} else if (files.length == 1) {
 							album.cover = null;
 						}
 

@@ -4,7 +4,7 @@ const { eventName, notificationType } = require('../../socket/constant.socket');
 const { populateNotification } = require('../Populate/Notification.populate');
 
 async function notificationReactComment(comment, user) {
-	if (user._id.toString() === comment.author.toString()) return;
+	if (user._id.toString() == comment.author.toString()) return;
 	const receiver = [comment.author];
 	const notification = await new Notification({
 		type: 'comment',
@@ -23,7 +23,7 @@ async function notificationReactComment(comment, user) {
 }
 
 async function notificationCreateComment(post, comment, user) {
-	if (post.author.toString() === user._id.toString()) return;
+	if (post.author.toString() == user._id.toString()) return;
 	const receiver = [post.author];
 	const notification = await new Notification({
 		type: 'comment',
@@ -42,7 +42,7 @@ async function notificationCreateComment(post, comment, user) {
 }
 
 async function notificationReplyComment(commentSource, commentReply, user) {
-	if (commentSource.author.toString() === user._id.toString()) return;
+	if (commentSource.author.toString() == user._id.toString()) return;
 	const receiver = [commentSource.author];
 	const notification = await new Notification({
 		type: 'comment',
@@ -62,7 +62,7 @@ async function notificationReplyComment(commentSource, commentReply, user) {
 
 async function notificationTagComment(comment, user) {
 	const tagsInComment = comment.tags;
-	if (!tagsInComment || tagsInComment.length === 0) return;
+	if (!tagsInComment || tagsInComment.length == 0) return;
 	const notification = await new Notification({
 		type: 'comment',
 		content: `${user.fullname} đã gắn thẻ bạn trong một bình luận`,

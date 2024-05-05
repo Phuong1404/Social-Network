@@ -45,11 +45,11 @@ class AdminController {
 			}
 
 
-			if (user.role.name !== 'ADMIN') {
+			if (user.role.name != 'ADMIN') {
 				return responseError(res, 401, 'Bạn không có quyền truy cập tính năng này.');
 			}
 
-			if (user.password === null) {
+			if (user.password == null) {
 				return responseError(
 					res,
 					401,
@@ -68,7 +68,7 @@ class AdminController {
 			if (!isPasswordValid) {
 				user.loginAttempts++;
 
-				if (user.loginAttempts === 3) {
+				if (user.loginAttempts == 3) {
 					user.lockTime = Date.now() + 5 * 60 * 1000;
 					await user.save();
 					return responseError(res, 401, 'Tài khoản đã bị khóa. Vui lòng thử lại sau 5 phút!!!');
@@ -168,11 +168,11 @@ class AdminController {
 	async statictisUserPieChart(req, res, next) {
 		try {
 			const statictisBy = req.query.by;
-			if (statictisBy === 'age') {
+			if (statictisBy == 'age') {
 				const statictisByAge = await UserController.statisticsUserByAge(req, res, next);
 				return res.status(200).json(statictisByAge);
 			}
-			if (statictisBy === 'gender') {
+			if (statictisBy == 'gender') {
 				const statictisByGender = await UserController.statisticsUserByGender(req, res, next);
 				return res.status(200).json(statictisByGender);
 			}

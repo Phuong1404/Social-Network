@@ -42,7 +42,7 @@ class AuthController {
 				return responseError(res, 400, 'OTP không tồn tại!');
 			}
 
-			if (req.body.otp !== otp) {
+			if (req.body.otp != otp) {
 				return responseError(res, 400, 'OTP không chính xác!');
 			}
 
@@ -77,7 +77,7 @@ class AuthController {
 				user: newUser,
 			});
 		} catch (err) {
-			if (err.code === 11000) {
+			if (err.code == 11000) {
 				return responseError(res, 400, 'Email đã tồn tại!');
 			}
 			return next(createError.InternalServerError(err.message));
@@ -95,7 +95,7 @@ class AuthController {
 			const refreshToken = await authMethod.generateToken(dataToken, refreshTokenSecret, refreshTokenLife);
 
 			const userSave = await User.findById(user._id);
-			if (user.lockTime - Date.now() > 0 || user.isPermanentlyLocked === true) {
+			if (user.lockTime - Date.now() > 0 || user.isPermanentlyLocked == true) {
 				if (user.isPermanentlyLocked) return responseError(res, 401, 'Tài khoản của bạn đã bị khóa vĩnh viễn');
 				return responseError(
 					res,
@@ -131,14 +131,14 @@ class AuthController {
 				return responseError(res, 401, 'Email không tồn tại.');
 			}
 
-			if (user.password === null) {
+			if (user.password == null) {
 				return responseError(
 					res,
 					401,
 					'Tài khoản chưa đặt mật khẩu. Vui lòng đăng nhập bằng Google, và đặt mật khẩu mới!!!'
 				);
 			}
-			if (user.lockTime - Date.now() > 0 || user.isPermanentlyLocked === true) {
+			if (user.lockTime - Date.now() > 0 || user.isPermanentlyLocked == true) {
 				if (user.isPermanentlyLocked) return responseError(res, 401, 'Tài khoản của bạn đã bị khóa vĩnh viễn');
 				return responseError(
 					res,
@@ -151,7 +151,7 @@ class AuthController {
 			if (!isPasswordValid) {
 				user.loginAttempts++;
 
-				if (user.loginAttempts === 3) {
+				if (user.loginAttempts == 3) {
 					user.lockTime = Date.now() + 5 * 60 * 1000;
 					await user.save();
 					return responseError(res, 401, 'Tài khoản đã bị khóa. Vui lòng thử lại sau 5 phút!!!');
@@ -230,7 +230,7 @@ class AuthController {
 				);
 			}
 
-			if (user.refreshToken !== refreshTokenFromBody) {
+			if (user.refreshToken != refreshTokenFromBody) {
 				return responseError(res, 401, 'Refresh token không hợp lệ hoặc đã hết hạn');
 			}
 			const dataToken = {
@@ -362,7 +362,7 @@ class AuthController {
 			}
 
 
-			if (req.body.newPassword !== req.body.confirmPassword) {
+			if (req.body.newPassword != req.body.confirmPassword) {
 				return responseError(res, 400, 'Mật khẩu mới và xác nhận mật khẩu không khớp');
 			}
 
@@ -377,7 +377,7 @@ class AuthController {
 			}
 
 
-			const isVerify = otp.toString() === req.body.otp.toString();
+			const isVerify = otp.toString() == req.body.otp.toString();
 			if (!isVerify) {
 				return responseError(res, 400, 'Mã OTP không đúng');
 			}
@@ -466,7 +466,7 @@ class AuthController {
 				return responseError(res, 400, 'Mật khẩu cũ không đúng');
 			}
 
-			if (req.body.newPassword !== req.body.confirmPassword) {
+			if (req.body.newPassword != req.body.confirmPassword) {
 				return responseError(res, 400, 'Mật khẩu mới và xác nhận mật khẩu không khớp');
 			}
 

@@ -1,3 +1,3 @@
-import ForgotPasswordPage from '@/modules/auth/pages/ForgotPasswordPage';
+import ForgotPasswordPage from '@/views/auth/pages/ForgotPasswordPage';
 
 export default ForgotPasswordPage;

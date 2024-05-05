@@ -29,13 +29,13 @@ class ReportController {
 				query = { type };
 
 				if (req.query.id) {
-					if (type === 'post') {
+					if (type == 'post') {
 						query = { ...query, post: req.query.id };
-					} else if (type === 'comment') {
+					} else if (type == 'comment') {
 						query = { ...query, comment: req.query.id };
-					} else if (type === 'user') {
+					} else if (type == 'user') {
 						query = { ...query, user: req.query.id };
-					} else if (type === 'conversation') {
+					} else if (type == 'conversation') {
 						query = { ...query, conversation: req.query.id };
 					}
 				}
@@ -197,22 +197,22 @@ class ReportController {
 				return responseError(res, 400, error.details[0].message);
 			}
 			// check object reported exist?
-			if (req.body.type === 'user') {
+			if (req.body.type == 'user') {
 				const user = await User.findById(req.body.user);
 				if (!user) {
 					return responseError(res, 404, 'User không tồn tại');
 				}
-			} else if (req.body.type === 'post') {
+			} else if (req.body.type == 'post') {
 				const post = await Post.findById(req.body.post);
 				if (!post) {
 					return responseError(res, 404, 'Bài viết không tồn tại');
 				}
-			} else if (req.body.type === 'comment') {
+			} else if (req.body.type == 'comment') {
 				const comment = await Comment.findById(req.body.comment);
 				if (!comment) {
 					return responseError(res, 404, 'Bình luận không tồn tại');
 				}
-			} else if (req.body.type === 'conversation') {
+			} else if (req.body.type == 'conversation') {
 				const conversation = await Conversation.findById(req.body.conversation);
 				if (!conversation) {
 					return responseError(res, 404, 'Cuộc trò chuyện không tồn tại');
@@ -310,23 +310,23 @@ class ReportController {
 			}
 
 			if (report.type) {
-				if (report.type === 'post') {
+				if (report.type == 'post') {
 					req.params.id = report.post._id;
 					// delete post and notification to author
 					await PostController.deletePost(req, res, next);
 					await notificationToAuthorOfPost(report.post, req.user);
-				} else if (report.type === 'comment') {
+				} else if (report.type == 'comment') {
 					req.params.id = report.comment._id;
 					req.params.postId = report.comment.post._id;
 					// delete comment and notification to author
 					await CommentController.deleteComment(req, res, next);
 					await notificationToAuthorOfComment(report.comment.post, report.comment, req.user);
-				} else if (report.type === 'conversation') {
+				} else if (report.type == 'conversation') {
 					req.params.id = report.conversation._id;
 					// delete conversation and notification to members
 					await ConversationController.deleteConversation(req, res, next);
 					await notificationToMembersOfConv(report.conversation, req.user);
-				} else if (report.type === 'user') {
+				} else if (report.type == 'user') {
 					// delete user and notification to user
 					req.params.id = report.user._id;
 					await UserController.lock(req, res, next);

@@ -28,12 +28,12 @@ class MessageController {
 
 			const conversation = await Conversation.findById(req.params.conversationId);
 			let index = -1;
-			index = conversation.user_deleted.findIndex((item) => item.userId.toString() === req.user._id.toString());
+			index = conversation.user_deleted.findIndex((item) => item.userId.toString() == req.user._id.toString());
 			let deletedDate = new Date(-1);
-			if (index !== -1) {
+			if (index != -1) {
 				deletedDate = conversation.user_deleted[index].deletedAt;
 			}
-			if (conversation.members.some((mem) => mem.user.toString() === req.user._id.toString())) {
+			if (conversation.members.some((mem) => mem.user.toString() == req.user._id.toString())) {
 				Message.paginate(
 					{ conversation: req.params.conversationId, createdAt: { $gte: deletedDate } },
 					{
@@ -102,7 +102,7 @@ class MessageController {
 			}
 
 			const conversation = await Conversation.findById(req.params.conversationId);
-			if (conversation.members.some((mem) => mem.user.toString() === req.user._id.toString())) {
+			if (conversation.members.some((mem) => mem.user.toString() == req.user._id.toString())) {
 				const iv = crypto.randomBytes(16);
 
 				const cipher = crypto.createCipheriv(algorithm, 'social-network', iv);
@@ -134,7 +134,7 @@ class MessageController {
 				message.text = req.body.text;
 
 				const userIds = conversation.members
-					.filter((member) => member.user.toString() !== message.sender._id.toString())
+					.filter((member) => member.user.toString() != message.sender._id.toString())
 					.map((menber) => menber.user.toString());
 
 				SocketManager.sendToList(userIds, eventName.SEND_MESSAGE, message);
@@ -179,7 +179,7 @@ class MessageController {
 	async delete(req, res, next) {
 		try {
 			const message = await Message.findById(req.params.id);
-			if (message.sender.toString() === req.user._id.toString()) {
+			if (message.sender.toString() == req.user._id.toString()) {
 				await message.delete();
 				res.status(200).json(message);
 			} else {

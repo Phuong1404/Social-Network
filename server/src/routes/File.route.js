@@ -7,12 +7,12 @@ const AuthoMiddleware = require('../middlewares/Auth.middleware');
 router.post('/upload', AuthoMiddleware.isAuth, (req, res, next) => {
 	uploadFiles(req, res, (err) => {
 		if (err) {
-			if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+			if (err.code == 'LIMIT_UNEXPECTED_FILE') {
 				return res.status(400).send({
 					message: 'Chỉ cho phép tải lên tối đa 10 files.',
 				});
 			}
-			if (err.code === 'LIMIT_FILE_SIZE') {
+			if (err.code == 'LIMIT_FILE_SIZE') {
 				return res.status(400).send({
 					message: 'Chỉ cho phép tải lên tối đa 10MB.',
 				});

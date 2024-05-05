@@ -1,3 +1,3 @@
-import RegisterPage from '@/modules/auth/pages/RegisterPage';
+import RegisterPage from '@/views/auth/pages/RegisterPage';
 
 export default RegisterPage;
