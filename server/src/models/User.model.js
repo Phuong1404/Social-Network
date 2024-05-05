@@ -210,7 +210,7 @@ const UserSchema = new mongoose.Schema(
 		role: {
 			type: mongoose.SchemaTypes.ObjectId,
 			ref: 'Role',
-
+			default: '663783a35fb83083f60765e1', // USER
 		},
 		refreshToken: {
 			type: String,

@@ -1,4 +1,4 @@
-import { apiClient } from '@common/api';
+import { apiClient } from '@/common/api';
 
 export const reactToCommentApi = (postId, commentId, reaction) =>
 	apiClient

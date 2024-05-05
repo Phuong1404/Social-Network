@@ -57,7 +57,7 @@ export function PasswordForm({ data }) {
 							<CountdownButton
 								type="primary"
 								size="small"
-
+								milliseconds={5 * 60 * 1000} 
 								afterChildren="Gửi lại"
 								onClick={sendOTP}
 								loading={sending}

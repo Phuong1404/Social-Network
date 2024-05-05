@@ -1,7 +1,7 @@
 const authMethod = require('../auth/auth.method');
 const { populateUser } = require('../utils/Populate/User.populate');
 
-const accessTokenSecret = process.env.TOKEN_SECRET;
+const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
 exports.isAuth = async (req, res, next) => {
 	try {

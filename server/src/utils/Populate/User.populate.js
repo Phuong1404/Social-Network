@@ -2,7 +2,7 @@ const moongose = require('mongoose');
 const { User } = require('../../models/User.model');
 
 exports.populateImage = async (userID) => {
-	const user = await User.findById(moongose.Types.ObjectId(userID))
+	const user = await User.findById(new moongose.Types.ObjectId(userID))
 		.populate({ path: 'profilePicture', select: '_id link' })
 		.populate({ path: 'coverPicture', select: '_id link' })
 		.populate({ path: 'role', select: '_id name' });
@@ -10,7 +10,7 @@ exports.populateImage = async (userID) => {
 };
 
 exports.populateUser = async (userID) => {
-	const user = await User.findById(moongose.Types.ObjectId(userID))
+	const user = await User.findById(new moongose.Types.ObjectId(userID))
 		.populate({ path: 'profilePicture', select: '_id link' })
 		.populate({ path: 'coverPicture', select: '_id link' })
 		.populate({ path: 'friends.user', select: '_id fullname profilePicture isOnline' })
@@ -85,7 +85,7 @@ exports.populateUser = async (userID) => {
 };
 
 exports.populateUserForOther = async (userId) => {
-	const user = await User.findById(moongose.Types.ObjectId(userId))
+	const user = await User.findById(new moongose.Types.ObjectId(userId))
 		.populate({ path: 'profilePicture', select: '_id link' })
 		.populate({ path: 'coverPicture', select: '_id link' })
 		.populate({ path: 'friends.user', select: '_id fullname profilePicture isOnline' })

@@ -1,16 +1,10 @@
 import React from 'react';
-import { NotificationType } from '../types';
 import Link from 'next/link';
 import { Badge, Button, Space, Typography } from 'antd';
-import { UserAvatar } from '@modules/user/components';
-import { dateUtil } from '@common/utils';
+import { UserAvatar } from '@/modules/user/components';
+import { dateUtil } from '@/common/utils';
 
-interface Props {
-	noti: NotificationType;
-	onClick?: () => void;
-}
-
-export default function NotificationItem({ noti, onClick }: Props) {
+export default function NotificationItem({ noti, onClick }) {
 	return (
 		<Link href={noti.link} style={{ display: 'block' }} passHref>
 			<Button

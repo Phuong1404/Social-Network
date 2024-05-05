@@ -1,12 +1,12 @@
-import { uploadMultiFileApi } from '@common/api';
-import { useFetcher } from '@common/hooks';
-import { randomUtil, stringUtil } from '@common/utils';
-import { useAuth } from '@modules/auth/hooks';
-import { sendMessageApi } from '@modules/messages/api';
-import { ConversationAvatar, MessageItem } from '@modules/messages/components';
-import { useConversationContext } from '@modules/messages/hooks';
-import { conversationConfig } from '@modules/messages/utils';
-import { UserAvatar } from '@modules/user/components';
+import { uploadMultiFileApi } from '@/common/api';
+import { useFetcher } from '@/common/hooks';
+import { randomUtil, stringUtil } from '@/common/utils';
+import { useAuth } from '@/modules/auth/hooks';
+import { sendMessageApi } from '@/modules/messages/api';
+import { ConversationAvatar, MessageItem } from '@/modules/messages/components';
+import { useConversationContext } from '@/modules/messages/hooks';
+import { conversationConfig } from '@/modules/messages/utils';
+import { UserAvatar } from '@/modules/user/components';
 import {
 	App,
 	Avatar,

@@ -1,9 +1,8 @@
 import Layout, { withLayout } from '@/layout/components';
-import { Button, Form, Steps } from 'antd';
+import { Button, Form, Steps, Space, } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import SEO from '@/common/components/SEO';
-import { IRegisterData } from '@/modules/auth/types';
 import { toast } from 'react-hot-toast';
 import { registerApi, sendOtpRegisterApi } from '@/modules/auth/api';
 import { useAuth } from '@/modules/auth/hooks';
@@ -19,7 +18,7 @@ function RegisterPage() {
 
 
 	const { authUser, updateAuthUser, login } = useAuth();
-	const [data, setData] = useState<Partial<IRegisterData>>({});
+	const [data, setData] = useState({});
 	const [step, setStep] = useState(ACCOUNT_STEP);
 
 	useEffect(() => {
@@ -69,7 +68,7 @@ function RegisterPage() {
 
 	return (
 		<>
-			<SEO title="TaNa - Đăng ký" robot />
+			<SEO title="Social Network - Đăng ký" robot />
 
 			<Layout.Content style={{ margin: 'auto', flex: 1, height: '100%' }}>
 				<Form.Provider

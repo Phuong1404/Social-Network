@@ -4,7 +4,8 @@ import { Avatar, Badge, Button, Dropdown } from 'antd';
 import { HiLogout } from 'react-icons/hi';
 import { HiBell, HiCog6Tooth, HiExclamationTriangle, HiMoon, HiSun, HiUser } from 'react-icons/hi2';
 import { HeaderRight } from '../Header.component';
-
+import { useReport } from '@/modules/report/hooks/useReport'
+import { NotificationPopover } from '@/modules/notification/components';
 
 import Link from 'next/link';
 

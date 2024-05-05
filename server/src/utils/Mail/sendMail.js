@@ -219,17 +219,18 @@ const emailTemplate = (link, name) => `<body
 
 const sendEmail = async (email, subject, link, user) => {
 	try {
-		const transporter = nodemailer.createTransport({
-			host: process.env.HOST,
-			// service: process.env.SERVICE,
-			port: 587,
-			secure: true,
-			auth: {
-				user: process.env.USER,
+        const transporter = nodemailer.createTransport({
+            host: process.env.HOST, 
+            secureConnection: false, 
+            port: 587, 
+            auth: {
+                user: process.env.USER,
 				pass: process.env.PASS,
-			},
-		});
-
+            },
+            // tls: {
+            //     ciphers:'SSLv3'
+            // }
+        });
 		await transporter.sendMail({
 			from: process.env.FROM,
 			to: email,
@@ -248,16 +249,17 @@ const isEmailValid = (email) => emailValidator.validate(email);
 const sendEmailVerify = async (email, subject, link, user) => {
 	try {
 		const transporter = nodemailer.createTransport({
-			host: process.env.HOST,
-			// service: process.env.SERVICE,
-			port: 587,
-			secure: true,
-			auth: {
-				user: process.env.USER,
+            host: process.env.HOST, 
+            secureConnection: false, 
+            port: 587, 
+            auth: {
+                user: process.env.USER,
 				pass: process.env.PASS,
-			},
-		});
-
+            },
+            // tls: {
+            //     ciphers:'SSLv3'
+            // }
+        });
 		await transporter.sendMail({
 			from: process.env.FROM,
 			to: email,
@@ -274,15 +276,17 @@ const sendEmailVerify = async (email, subject, link, user) => {
 const sendMailOTP = async (email, subject, otp, name) => {
 	try {
 		const transporter = nodemailer.createTransport({
-			host: process.env.HOST,
-			// service: process.env.SERVICE,
-			port: 587,
-			secure: true,
-			auth: {
-				user: process.env.USER,
+            host: process.env.HOST, 
+            secureConnection: false, 
+            port: 587, 
+            auth: {
+                user: process.env.USER,
 				pass: process.env.PASS,
-			},
-		});
+            },
+            // tls: {
+            //     ciphers:'SSLv3'
+            // }
+        });
 
 		await transporter.sendMail({
 			from: process.env.FROM,

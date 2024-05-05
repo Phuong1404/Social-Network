@@ -98,13 +98,13 @@ export function LoginForm() {
 					</Link>
 				</Form.Item>
 
-				<Form.Item>
+				{/* <Form.Item>
 					<Link href={`${SERVER_URL}/auth/github`} target="_self">
 						<Button icon={<Avatar src={GithubIcon.src} />} block>
 							Đăng nhập bằng Github
 						</Button>
 					</Link>
-				</Form.Item>
+				</Form.Item> */}
 
 				<Form.Item style={{ textAlign: 'center' }}>
 					Chưa có tài khoản?

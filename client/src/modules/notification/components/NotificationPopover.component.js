@@ -1,25 +1,20 @@
-import { useFetcher } from '@common/hooks';
-import { useAuth } from '@modules/auth/hooks';
-import { readAllNotificationApi, readNotificationApi } from '@modules/notification/api';
-import { INotiPaginationRespone, NotificationType } from '@modules/notification/types';
-import { App, Button, List, Popover, PopoverProps, Space, Typography } from 'antd';
-import { ReactNode, useEffect, useState } from 'react';
-import NotificationItem from './NotificationItem';
+import { useFetcher } from '@/common/hooks';
+import { useAuth } from '@/modules/auth/hooks';
+import { readAllNotificationApi, readNotificationApi } from '@/modules/notification/api';
+import { App, Button, List, Popover, Space, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import NotificationItem from './NotificationItem.component';
 import styles from './NotificationPopover.module.scss';
 
-interface Props {
-	renderChildren: (numberUnread: number) => ReactNode;
-}
-
-export function NotificationPopover({ renderChildren, ...props }: Props & PopoverProps) {
-	const notiFetcher = useFetcher<NotificationType, INotiPaginationRespone>({ api: `/users/notifications` });
+export function NotificationPopover({ renderChildren, ...props }) {
+	const notiFetcher = useFetcher({ api: `/users/notifications` });
 	const _numberUnread = notiFetcher.listRes?.[0].numberUnread || 0;
 	const [numberUnread, setNumberUnread] = useState(_numberUnread);
 	useEffect(() => {
 		setNumberUnread(_numberUnread);
 	}, [_numberUnread]);
 
-	const handleReadNotification = (noti: NotificationType) => {
+	const handleReadNotification = (noti) => {
 		if (noti.isRead) return;
 
 		readNotificationApi(noti._id);
@@ -45,7 +40,7 @@ export function NotificationPopover({ renderChildren, ...props }: Props & Popove
 	const { notification } = App.useApp();
 	useEffect(() => {
 		if (authUser?._id) {
-			window.socket.on('notification', ({ data: noti }: { data: NotificationType }) => {
+			window.socket.on('notification', ({ data: noti }) => {
 				notiFetcher.addData(noti, true);
 				setNumberUnread((prev) => prev + 1);
 

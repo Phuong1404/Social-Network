@@ -340,7 +340,6 @@ class UserController {
 				.populate({ path: 'role', select: '_id name' });
 			res.status(200).json(user);
 		} catch (err) {
-			console.log(err);
 			return next(
 				createError.InternalServerError(
 					`${err.message}\nin method: ${req.method} of ${req.originalUrl}\nwith body: ${JSON.stringify(

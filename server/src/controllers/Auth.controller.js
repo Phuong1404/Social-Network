@@ -7,7 +7,7 @@ const speakeasy = require('speakeasy');
 const mongoose = require('mongoose');
 const { responseError } = require('../utils/Response/error');
 const redisClient = require('../configs/redis/index');
-const { User, labelOfGender } = require('../models/User.model');
+const { User } = require('../models/User.model');
 const Token = require('../models/Token.model');
 const authMethod = require('../auth/auth.method');
 const { populateUserByEmail } = require('../utils/Populate/User.populate');
@@ -53,10 +53,7 @@ class AuthController {
 				fullname: req.body.fullname,
 				email: req.body.email,
 				password: hashedPassword,
-				gender: {
-					value: req.body.gender.value,
-					label: labelOfGender[req.body.gender.value],
-				},
+				gender: req.body.gender.value
 			});
 
 			const dataToken = {
@@ -174,7 +171,6 @@ class AuthController {
 			}
 
 			user.loginAttempts = 0;
-
 			const dataToken = {
 				userId: user._id,
 				role: user.role.name,
@@ -220,7 +216,8 @@ class AuthController {
 				return responseError(res, 400, 'Refresh token không hợp lệ.');
 			}
 			const { userId } = decoded.payload;
-			const user = await User.findById(mongoose.Types.ObjectId(userId));
+			console.log(userId)
+			const user = await User.findById(new mongoose.Types.ObjectId(userId));
 			if (!user) {
 				return responseError(res, 400, 'Không tìm thấy người dùng.');
 			}
@@ -249,7 +246,6 @@ class AuthController {
 				accessToken,
 			});
 		} catch (err) {
-			console.log(err.message);
 			return next(createError.InternalServerError(err.message));
 		}
 	}

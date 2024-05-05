@@ -31,7 +31,7 @@ function LoginPage() {
 
 	return (
 		<>
-			<SEO title="TaNa - Đăng nhập" robot />
+			<SEO title="Social Network - Đăng nhập" robot />
 
 			<Row style={{ maxWidth: 1200, margin: 'auto', flex: 1, height: '100%' }} align="middle" justify="center">
 				<Col span={12} style={{ height: 'fit-content' }}>

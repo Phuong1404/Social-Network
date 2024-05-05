@@ -18,7 +18,7 @@
 ### Công nghệ sử dụng:
 
   - Backend: **NodeJS(Express)**, **MongoDB**
-  - FrontEnd: **ReactJS**
+  - FrontEnd: **NextJS**
 
 - - -
 

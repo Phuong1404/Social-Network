@@ -16,7 +16,6 @@ function socket(io) {
 				return;
 			}
 			userID = verified.payload.userId;
-			console.log(userID);
 			try {
 				await AccessController.updateAccessInDay();
 
