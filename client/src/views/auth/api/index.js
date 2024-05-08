@@ -1,4 +1,4 @@
-export {forgotPassword } from './forgotPassword.api';
+export {forgotPasswordApi } from './forgotPassword.api';
 export * from './login.api';
 export * from './loginToken.api';
 export * from './register.api';

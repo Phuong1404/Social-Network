@@ -1,2 +1,2 @@
-export { default as Logo } from './tana-logo.svg';
-export { default as LogoText } from './tana-logo-text.svg';
+export { default as Logo } from './logo.svg';
+export { default as LogoText } from './logo-text.svg';

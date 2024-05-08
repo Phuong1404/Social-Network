@@ -10,6 +10,7 @@ import { NavBarRight } from './NavBarRight.component';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { FcSms } from 'react-icons/fc';
+import { MessageItem } from '@/views/messages/components';
 
 
 const items = [

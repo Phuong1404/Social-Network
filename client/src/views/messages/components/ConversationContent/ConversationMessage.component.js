@@ -273,7 +273,7 @@ export function ConversationMessage() {
 								const isSystem = item.isSystem;
 								if (isSystem)
 									return (
-										<Tag color="cyan" className={styles.system_message}>
+										<Tag color="cyan" key={index} className={styles.system_message}>
 											{stringUtil.renderHTML(item.text)}
 										</Tag>
 									);
