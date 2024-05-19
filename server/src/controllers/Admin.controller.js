@@ -216,18 +216,16 @@ class AdminController {
 
 	async searchUser(req, res, next) {
 		try {
-			await UserController.searchUser(req, res);
+			await UserController.searchUser(req, res,next);
 		} catch (error) {
-			console.log(error);
 			return next(createError.InternalServerError(error.message));
 		}
 	}
 
 	async searchAdmin(req, res, next) {
 		try {
-			await UserController.searchAdmin(req, res);
+			await UserController.searchAdmin(req, res,next);
 		} catch (error) {
-			console.log(error);
 			return next(createError.InternalServerError(error.message));
 		}
 	}

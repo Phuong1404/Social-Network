@@ -1,4 +1,10 @@
-import { Line } from '@ant-design/plots';
+import dynamic from 'next/dynamic';
+const Line = dynamic(
+	() => import("@ant-design/plots").then((item) => item.Line),
+	{
+	  ssr: false,
+	}
+  )
 import { Card, DatePicker, Select, Space, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { useState } from 'react';

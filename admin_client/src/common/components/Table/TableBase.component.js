@@ -1,10 +1,17 @@
 import { swrFetcher } from '@/common/api';
-import { Button, Table, Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd';
 import { IoRefresh } from 'react-icons/io5';
 import useSWR from 'swr';
 import styles from './Table.module.scss';
 import { stringUtil } from '@/common/utils';
 import Icon from '@ant-design/icons';
+import dynamic from 'next/dynamic';
+const Table = dynamic(
+	() => import('antd').then((item) => item.Table),
+	{
+	  ssr: false,
+	}
+  )
 
 export const useTableBase = ({ endpoint, params }) => {
 	if (params?.page) {

@@ -1,19 +1,12 @@
 import useSWR from 'swr';
-import dynamic from 'next/dynamic';
 import Icon from '@ant-design/icons';
 import { swrFetcher } from '@/common/api';
 import { Card, Col, Row, Statistic } from 'antd';
 import { IoPeopleOutline } from 'react-icons/io5';
 
-const LineChart = dynamic(() => import('@/modules/dashboard/components').then((mod) => mod.LineChart), {
-	ssr: false,
-});
-const PieChart = dynamic(() => import('@/modules/dashboard/components').then((mod) => mod.PieChart), {
-	ssr: false,
-});
-const UserTable = dynamic(() => import('@/modules/dashboard/components').then((mod) => mod.UserTable), {
-	ssr: false,
-});
+import LineChart from '../components/LineChart.component';
+import PieChart from '../components/PieChart.component';
+import UserTable from '../components/UserTable.component';
 
 export default function DashboardPage() {
 	const { data, isLoading } = useSWR('/admin/dashboard', swrFetcher, {
@@ -60,7 +53,7 @@ export default function DashboardPage() {
 				<PieChart />
 			</Col>
 
-			<Col xs={24} lg={12}>
+			<Col xs={24} lg={24}>
 				<UserTable />
 			</Col>
 		</Row>

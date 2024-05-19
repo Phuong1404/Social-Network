@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { swrFetcher } from '@/common/api';
 import { FullscreenSpin } from '@/common/components/Loading';
-import { Button, Card, message, Popconfirm, Space, Table, Tag, Typography } from 'antd';
+import { Button, Card, message, Popconfirm, Space, Tag, Typography } from 'antd';
 import Icon, { PlusOutlined } from '@ant-design/icons';
 import { BsPen, BsTrash } from 'react-icons/bs';
 import { useState } from 'react';
@@ -11,6 +11,13 @@ import AddItemModal from '@/modules/list/components/modals/AddItemModal.componen
 import { addListItemsApi } from '@/modules/list/api/addListItems.api';
 import ListFormModal from '@/modules/list/components/modals/ListFormModal.component';
 import { updateListApi } from '@/modules/list/api/updateList.api';
+import dynamic from 'next/dynamic';
+const Table = dynamic(
+	() => import('antd').then((item) => item.Table),
+	{
+	  ssr: false,
+	}
+  )
 
 const ListDetail = () => {
 	const router = useRouter();

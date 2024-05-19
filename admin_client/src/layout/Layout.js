@@ -4,14 +4,27 @@ import { useState, useEffect } from 'react';
 import { IoLogOutOutline, IoMailOutline, IoNotificationsOutline, IoPersonCircleOutline, IoPersonOutline, IoSettingsOutline } from 'react-icons/io5';
 import { RiMoonFill, RiSunFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
 import styles from './styles/Layout.module.scss';
 import { useTheme } from '@/layout/hooks';
-import { getBreadcrumbItems, getLayoutMenuItems } from './utils';
+import { getBreadcrumbItems } from './utils';
 import { useAuth } from '@/modules/auth/hooks';
-
+import { layoutData } from '@/layout/data';
 const { Sider, Header, Content } = AntdLayout;
-const menuItems = getLayoutMenuItems();
+
+function getLayoutMenuItems(data) {
+  const items = [];
+
+  for (const item of data) {
+    items.push({
+      key: item.path,
+      icon: item.icon,
+      label: item.title,
+      children: item.children && getLayoutMenuItems(item.children),
+    });
+  }
+
+  return items;
+}
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth();
@@ -54,12 +67,13 @@ export default function Layout({ children }) {
   const selectedKey = pathname.split('/').slice(1).reverse()[0];
   const onMenuSelect = ({ keyPath }) => {
     const path = '/' + keyPath.reverse().join('/');
-    console.log({ path });
 
     router.push(path);
   };
 
   const breadcrumbItems = getBreadcrumbItems(pathname);
+
+  const menuItems = getLayoutMenuItems(layoutData);
 
   return (
     <AntdLayout className={styles.layout}>

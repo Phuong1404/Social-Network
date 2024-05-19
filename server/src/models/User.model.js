@@ -218,6 +218,13 @@ const UserSchema = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
+UserSchema.plugin(mongooseDelete, {
+	deletedAt: true,
+	overrideMethods: 'all',
+});
+
+
+UserSchema.plugin(mongoosePaginate);
 
 
 const hiddenField = ['password', 'refreshToken'];
@@ -230,15 +237,6 @@ const User = mongoose.model(
 		},
 	})
 );
-
-
-UserSchema.plugin(mongooseDelete, {
-	deletedAt: true,
-	overrideMethods: 'all',
-});
-
-
-UserSchema.plugin(mongoosePaginate);
 
 
 const validate = (user) => {

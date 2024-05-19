@@ -8,11 +8,14 @@ const columns = [
 		key: 'avatar',
 		title: 'Avatar',
 		dataIndex: 'profilePicture',
-		render: (profilePicture, user) => (
-			<Avatar src={profilePicture.link} alt="avatar">
-				{user.fullname}
-			</Avatar>
-		),
+		render: (profilePicture, user) =>{
+			return (
+				
+				<Avatar src={profilePicture && profilePicture.link} alt="avatar">
+					{user.fullname}
+				</Avatar>
+			)
+		} 
 	},
 	{
 		key: 'fullname',

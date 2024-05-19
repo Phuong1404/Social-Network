@@ -44,7 +44,7 @@ export default function LoginPage() {
 		<Layout style={{ height: '100vh' }}>
 			<Layout.Header className={styles.header} style={{ backgroundColor: colorBgBase }}>
 				<img src="/tana.svg" alt="logo" className={styles.logo} />
-				<Typography.Title className={styles.title}>TaNa Admin</Typography.Title>
+				<Typography.Title className={styles.title}>Social Admin</Typography.Title>
 			</Layout.Header>
 
 			<Layout.Content className={styles.content}>
