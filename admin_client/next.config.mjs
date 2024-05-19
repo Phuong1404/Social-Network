@@ -1,4 +1,21 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+import removeImports from 'next-remove-imports';
+import withBundleAnalyzer from '@next/bundle-analyzer';
 
-export default nextConfig;
+const removeImportFunc = removeImports();
+
+const withBundleAnalyzerFunc = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
+
+const config = {
+	images: {
+		domains: ['res.cloudinary.com', 'via.placeholder.com'],
+	},
+	env: {
+		SERVER_URL: process.env.SERVER_URL,
+		BASE_URL: process.env.BASE_URL,
+	},
+	transpilePackages:['antd', 'rc-util', 'rc-pagination', 'rc-picker', '@ant-design/icons', '@ant-design/icons-svg'],
+};
+
+const constConfig = removeImportFunc(withBundleAnalyzerFunc(config));
+
+export default constConfig;
