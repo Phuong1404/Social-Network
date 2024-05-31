@@ -2,7 +2,7 @@ import { layoutData } from '@/layout/data';
 import Link from 'next/link';
 
 const findLayoutItem = (path, parentChildren) => {
-	const item = parentChildren?.find((item) => item.path === path);
+	const item = parentChildren?.find((item) => item.path == path);
 
 	return item || null;
 };
@@ -16,11 +16,11 @@ export function getBreadcrumbItems(pathname) {
 
 	for (let i = 0; i < length; i++) {
 		const path = paths[i];
-		const parent = i === 0 ? layoutData : layoutItems[i - 1].children;
+		const parent = i == 0 ? layoutData : layoutItems[i - 1].children;
 		const layoutItem = findLayoutItem(path, parent);
 		if (!layoutItem) continue;
 
-		const isLast = i === length - 1;
+		const isLast = i == length - 1;
 		const breadcrumbPath = '/' + paths.slice(0, i + 1).join('/');
 		const breadcrumbItem = {
 			key: breadcrumbPath,

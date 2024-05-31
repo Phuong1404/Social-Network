@@ -6,11 +6,11 @@ import { Button, Card, message, Popconfirm, Space, Tag, Typography } from 'antd'
 import Icon, { PlusOutlined } from '@ant-design/icons';
 import { BsPen, BsTrash } from 'react-icons/bs';
 import { useState } from 'react';
-import { removeListItemsApi } from '@/modules/list/api/removeListItems.api';
-import AddItemModal from '@/modules/list/components/modals/AddItemModal.component';
-import { addListItemsApi } from '@/modules/list/api/addListItems.api';
-import ListFormModal from '@/modules/list/components/modals/ListFormModal.component';
-import { updateListApi } from '@/modules/list/api/updateList.api';
+import { removeListItemsApi } from '@/views/list/api/removeListItems.api';
+import AddItemModal from '@/views/list/components/modals/AddItemModal.component';
+import { addListItemsApi } from '@/views/list/api/addListItems.api';
+import ListFormModal from '@/views/list/components/modals/ListFormModal.component';
+import { updateListApi } from '@/views/list/api/updateList.api';
 import dynamic from 'next/dynamic';
 const Table = dynamic(
 	() => import('antd').then((item) => item.Table),
@@ -126,9 +126,9 @@ const ListDetail = () => {
 				</Space>
 			}
 		>
-			<AddItemModal open={modal === "ADD_ITEM"} onClose={closeModal} onAdd={handleAddItems} />
+			<AddItemModal open={modal == "ADD_ITEM"} onClose={closeModal} onAdd={handleAddItems} />
 			<ListFormModal
-				open={modal === "EDIT_LIST"}
+				open={modal == "EDIT_LIST"}
 				onClose={closeModal}
 				onSubmit={handleEditList}
 				list={list}

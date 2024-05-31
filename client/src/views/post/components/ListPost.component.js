@@ -1,4 +1,3 @@
-import { FetcherType } from '@/common/hooks';
 import { ListComment } from '@/views/comment/components';
 import { Collapse } from '@mui/material';
 import { Card, List } from 'antd';

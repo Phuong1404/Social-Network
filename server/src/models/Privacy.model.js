@@ -49,5 +49,5 @@ const PrivacyModel = mongoose.model('Privacy', PrivacySchema);
 
 module.exports = {
 	PrivacyModel,
-	validate,
+	validatePrivacy,
 };

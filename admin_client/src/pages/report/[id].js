@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import ReportDetail from '@/modules/report/pages/ReportDetail.page';
+import ReportDetail from '@/views/report/pages/ReportDetail.page';
 
 const ReportDetailPage = () => {
   const router = useRouter();

@@ -1,7 +1,7 @@
 import { Descriptions, Space } from 'antd';
 import { capitalize } from 'lodash';
 import { timeUtil } from '@/common/utils';
-import UserStatusTag from '@/modules/user/components/UserStatusTag.component';
+import UserStatusTag from '@/views/user/components/UserStatusTag.component';
 
 function ProfileTab({ user }) {
 	return (

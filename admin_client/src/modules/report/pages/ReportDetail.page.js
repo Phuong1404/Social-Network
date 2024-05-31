@@ -4,10 +4,10 @@ import { swrFetcher } from '@/common/api';
 import { FullscreenSpin } from '@/common/components/Loading';
 import { Button, Card, Image, message, Space, Typography } from 'antd';
 import { timeUtil } from '@/common/utils';
-import { ReportStatusTag } from '@/modules/report/components';
-import { approveReportApi } from '@/modules/report/api';
+import { ReportStatusTag } from '@/views/report/components';
+import { approveReportApi } from '@/views/report/api';
 import { useState } from 'react';
-import { ReportTypeTag } from '@/modules/report/components/ReportTypeTag.component';
+import { ReportTypeTag } from '@/views/report/components/ReportTypeTag.component';
 import Link from 'next/link';
 
 function ReportDetail() {
@@ -71,7 +71,7 @@ function ReportDetail() {
 			title="Chi tiết báo cáo"
 			loading={isLoading}
 			extra={
-				report.status === 'pending' && (
+				report.status == 'pending' && (
 					<Space split>
 						<Button
 							type="primary"

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import styles from './styles/Layout.module.scss';
 import { useTheme } from '@/layout/hooks';
 import { getBreadcrumbItems } from './utils';
-import { useAuth } from '@/modules/auth/hooks';
+import { useAuth } from '@/views/auth/hooks';
 import { layoutData } from '@/layout/data';
 const { Sider, Header, Content } = AntdLayout;
 
@@ -117,7 +117,7 @@ export default function Layout({ children }) {
               className={styles.theme_switch}
               checkedChildren={<Icon component={RiMoonFill} className={styles.theme_icon} />}
               unCheckedChildren={<Icon component={RiSunFill} className={styles.theme_icon} />}
-              checked={mode === 'dark'}
+              checked={mode == 'dark'}
               onChange={toggleTheme}
             />
 

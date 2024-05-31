@@ -3,11 +3,11 @@ import { IoListOutline, IoPeopleOutline, IoPersonOutline } from 'react-icons/io5
 import { RiHome4Line, RiShieldUserLine } from 'react-icons/ri';
 import { BsExclamationTriangle } from 'react-icons/bs';
 
-import UserPage from '@/modules/user/pages/UserPage.page';
-import AdminPage from '@/modules/admin/pages/AdminPage.page';
-import DashboardPage from '@/modules/dashboard/pages/Dashboard.page';
-import ReportPage from '@/modules/report/pages/ReportPage.page';
-import ListPage from '@/modules/list/pages/ListPage.page';
+import UserPage from '@/views/user/pages/UserPage.page';
+import AdminPage from '@/views/admin/pages/AdminPage.page';
+import DashboardPage from '@/views/dashboard/pages/Dashboard.page';
+import ReportPage from '@/views/report/pages/ReportPage.page';
+import ListPage from '@/views/list/pages/ListPage.page';
 
 export const layoutData = [
 	{

@@ -2,19 +2,13 @@ import { useFetcher } from '@/common/hooks';
 import Layout, { withLayout } from '@/layout/components';
 import { withAuth } from '@/views/auth/components';
 import SEO from '@/common/components/SEO';
-import dynamic from 'next/dynamic';
-
-const CreatePost = dynamic(() => import('@/views/post/components').then((mod) => mod.CreatePost));
-const ListPost = dynamic(() => import('@/views/post/components').then((mod) => mod.ListPost));
-
-const QuickContact = dynamic(() => import('@/views/home/components').then((mod) => mod.QuickContact));
-const ShortCut = dynamic(() => import('@/views/home/components').then((mod) => mod.ShortCut));
-
+import {CreatePost,ListPost} from '@/views/post/components'
+import {QuickContact,ShortCut} from '@/views/home/components'
 function HomePage() {
 	const postFetch = useFetcher({ api: 'posts/home' });
 
 	return (
-		<>
+		<div>
 			<SEO title="Trang chủ" />
 
 			<Layout.Sider align="left">
@@ -30,7 +24,7 @@ function HomePage() {
 			<Layout.Sider align="right">
 				<QuickContact />
 			</Layout.Sider>
-		</>
+		</div>
 	);
 }
 

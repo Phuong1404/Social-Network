@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import UserDetail from '@/modules/user/pages/UserDetail';
+import UserDetail from '@/views/user/pages/UserDetail';
 
 const UserDetailPage = () => {
   const router = useRouter();

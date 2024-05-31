@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { Typography } from 'antd';
-import { ReportStatusTag } from '@/modules/report/components';
-import { ReportTypeTag } from '@/modules/report/components/ReportTypeTag.component';
+import { ReportStatusTag } from '@/views/report/components';
+import { ReportTypeTag } from '@/views/report/components/ReportTypeTag.component';
 const PageTableBase = dynamic(() => import('@/common/components/PageTableBase').then((mod) => mod.PageTableBase), {
 	ssr: false,
 });

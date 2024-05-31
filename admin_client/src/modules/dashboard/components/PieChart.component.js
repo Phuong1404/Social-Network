@@ -27,7 +27,7 @@ export default function PieChart() {
 				fontSize: 14,
 				textAlign: 'center',
 			},
-			formatter: (datum) => `${datum && datum._id ? datum._id : 'Unknown'}: ${datum && datum.total !== undefined ? datum.total : 'Unknown'}`,
+			formatter: (datum) => `${datum && datum._id ? datum._id : 'Unknown'}: ${datum && datum.total != undefined ? datum.total : 'Unknown'}`,
 		},
 		interactions: [
 			{

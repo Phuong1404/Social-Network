@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import ListDetail from '@/modules/list/pages/ListDetail.page';
+import ListDetail from '@/views/list/pages/ListDetail.page';
 
 const ListDetailPage = () => {
   const router = useRouter();

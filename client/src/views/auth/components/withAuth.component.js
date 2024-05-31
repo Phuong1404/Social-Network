@@ -21,10 +21,9 @@ export function withAuth(Component) {
 
 					login()
 						.then(() => {
-							console.log('Login successfully!');
+							// console.log('Login successfully!');
 						})
 						.catch((reason) => {
-							console.log('Login failed! Redirecting to login page...', reason);
 
 							return router.replace(
 								{

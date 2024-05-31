@@ -4,11 +4,9 @@ import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { HiMapPin, HiPhoto, HiPlayCircle } from 'react-icons/hi2';
 import { createPostApi } from '@/views/post/api';
-import dynamic from 'next/dynamic';
 
-const PostModal = dynamic(() => import('./PostModal.component').then((mod) => mod.PostModal));
-const UserAvatar = dynamic(() => import('@/views/user/components').then((mod) => mod.UserAvatar));
-
+import { PostModal } from './PostModal.component';
+import { UserAvatar } from '@/views/user/components';
 
 export function CreatePost({ fetcher, ...cardProps }) {
 	const { authUser } = useAuth();

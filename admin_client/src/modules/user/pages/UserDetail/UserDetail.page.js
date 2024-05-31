@@ -2,10 +2,10 @@ import useSWR from 'swr';
 import { Card, Form, Input, Button, message, Typography, Avatar, Alert } from 'antd';
 import { FullscreenSpin } from '@/common/components/Loading';
 import React, { useState } from 'react';
-import ProfileTab from '@/modules/user/pages/UserDetail/tabs/ProfileTab.page';
-import HistoryTab from '@/modules/user/pages/UserDetail/tabs/HistoryTab.page';
+import ProfileTab from '@/views/user/pages/UserDetail/tabs/ProfileTab.page';
+import HistoryTab from '@/views/user/pages/UserDetail/tabs/HistoryTab.page';
 import dayjs from 'dayjs';
-import { lockUserApi, unlockUserApi } from '@/modules/user/api';
+import { lockUserApi, unlockUserApi } from '@/views/user/api';
 import { useRouter } from 'next/router';
 
 export default function UserDetail() {
@@ -128,7 +128,7 @@ export default function UserDetail() {
             )}
 
             {tabList.map((tabItem) => (
-                <div key={tabItem.key} style={{ display: activeTab === tabItem.key ? 'block' : 'none' }}>
+                <div key={tabItem.key} style={{ display: activeTab == tabItem.key ? 'block' : 'none' }}>
                     {tabItem.content}
                 </div>
             ))}

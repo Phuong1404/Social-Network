@@ -40,7 +40,7 @@ function AddItemModal({ open, onClose, onAdd }) {
 			open={open}
 			onCancel={onClose}
 			onOk={handleOk}
-			okButtonProps={{ loading: submitting, disabled: items.length === 0 }}
+			okButtonProps={{ loading: submitting, disabled: items.length == 0 }}
 		>
 			<Form form={form} onFinish={onFormFinish}>
 				<Form.Item
