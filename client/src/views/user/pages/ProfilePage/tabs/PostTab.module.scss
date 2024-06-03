@@ -4,14 +4,16 @@
 	.cover_container {
 		position: relative;
 		width: 100%;
-		aspect-ratio: 16/9;
 		border-radius: 0.5rem;
+		height: 200px;
 		overflow: hidden;
+		box-shadow: rgba(0, 119, 182, 0.25) 0px 0px 4px;
 
 		.cover {
 			width: 100%;
-			aspect-ratio: 16/9;
 			object-fit: cover;
+			height: 200px;
+			background-color: white;
 		}
 
 		.cover_action {

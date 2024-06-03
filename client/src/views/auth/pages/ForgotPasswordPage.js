@@ -48,7 +48,7 @@ const ForgotPasswordPage = () => {
 					title={
 						<Typography.Title
 							level={2}
-							style={{ color: token.colorPrimary, margin: 0, textAlign: 'center' }}
+							style={{ color: '#03045E', margin: 0, textAlign: 'center' }}
 						>
 							Quên mật khẩu
 						</Typography.Title>

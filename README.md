@@ -1,7 +1,7 @@
 <p align="center" >
   <img style="width:150px; height:150px; " src='https://cdn-icons-png.flaticon.com/512/4187/4187272.png' alt='logo'/>
 </p>
-<h1 align="center"> Social network </h1>
+<h1 align="center"> Soul Connect </h1>
 <h2 align="center"> Mạng xã hội: kết nối và phát triển </h2>
 
 

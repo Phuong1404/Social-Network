@@ -75,7 +75,7 @@ export default function NavBar() {
 						const classes = [styles.nav_button];
 						if (isCurrentPage) classes.push(styles.nav_button_active);
 						return (
-							<Tooltip key={page.path} title={page.label} mouseEnterDelay={1}>
+							<Tooltip key={page.path} title={page.label} mouseEnterDelay={1} >
 								<Button
 									size="large"
 									onClick={() => router.push(page.path)}
@@ -83,14 +83,14 @@ export default function NavBar() {
 									className={classes.join(' ')}
 									type="text"
 									style={{
-										color: isCurrentPage ? token.colorPrimary : token.colorBorder,
+										color: isCurrentPage ? '#03045E' : '#90E0EF',
 									}}
 								/>
 							</Tooltip>
 						);
 					})
 				) : (
-					<Typography.Title level={2} style={{ margin: 0, color: token.colorPrimary }}>
+					<Typography.Title level={2} style={{ margin: 0, color: '#03045E' }}>
 						Social - Kết nối và sáng tạo
 					</Typography.Title>
 				)}
@@ -99,13 +99,35 @@ export default function NavBar() {
 			{authUser ? (
 				<NavBarRight />
 			) : (
-				<HeaderRight>
+				<HeaderRight> 
 					<Link href="/auth/login" draggable>
-						<Button type="primary">Đăng nhập</Button>
+						<Button 
+							type="primary"
+							style={{
+								height: 34, 
+								borderRadius: 10, 
+								backgroundColor: '#0077B6',
+								boxShadow: 'rgba(3, 4, 94, 0.25) 0px 4px 4px'
+							}}
+						>
+							Đăng nhập
+						</Button>
 					</Link>
 
 					<Link href="/auth/register" draggable>
-						<Button>Đăng ký</Button>
+						<Button 
+							type="text"
+							style={{
+								height: 34, 
+								borderRadius: 10, 
+								borderColor: '#0077B6',
+								borderWidth: 1,
+								boxShadow: 'rgba(3, 4, 94, 0.25) 0px 4px 4px',
+								color: '#0077B6'
+							}}
+						>
+							Đăng ký
+						</Button>
 					</Link>
 				</HeaderRight>
 			)}

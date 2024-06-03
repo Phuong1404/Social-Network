@@ -188,6 +188,7 @@ export function PostTab() {
 						className={styles.cover}
 						fallback="http://via.placeholder.com/1600x900?text=Không có ảnh bìa"
 						preview={!!user.coverPicture}
+						width={'100%'}
 					/>
 
 					{/* Action */}
@@ -214,7 +215,7 @@ export function PostTab() {
 					<div className={styles.avatar_container}>
 						<Image
 							wrapperClassName={styles.avatar_wrapper}
-							wrapperStyle={{ borderColor: token.colorBgLayout }}
+							wrapperStyle={{ borderColor: '#edfafd' }}
 							src={user.profilePicture?.link}
 							alt="avatar"
 							fallback="http://via.placeholder.com/160x160?text=Avatar"
@@ -232,7 +233,7 @@ export function PostTab() {
 					{/* Content */}
 					<div className={styles.content}>
 						{/* Name */}
-						<Typography.Title level={3} className={styles.name}>
+						<Typography.Title level={3} className={styles.name} style={{color: '#03045E'}}>
 							{user.fullname}
 						</Typography.Title>
 
@@ -243,7 +244,7 @@ export function PostTab() {
 			</div>
 
 			{/* Body */}
-			{isCurrentUser && <CreatePost fetcher={postsFetcher} />}
+			{isCurrentUser && <CreatePost fetcher={postsFetcher} style={{boxShadow: 'rgba(0, 119, 182, 0.25) 0px 0px 4px',}}/>}
 
 			{/* Content */}
 			<ListPost fetcher={postsFetcher} />

@@ -96,8 +96,8 @@ export function ShortCut() {
 				<List
 					key={index}
 					header={
-						<Divider orientation="left" style={{ margin: 0 }}>
-							<Typography.Title level={4} style={{ margin: 0 }}>
+						<Divider orientation="left" style={{ margin: 0, outlineColor: 'red', lightingColor: 'red' }}>
+							<Typography.Title level={4} style={{ margin: 0, color: '#03045E' }}>
 								{list.title}
 							</Typography.Title>
 						</Divider>
@@ -105,7 +105,7 @@ export function ShortCut() {
 					split={false}
 					dataSource={list.data}
 					renderItem={(item) => (
-						<List.Item style={{ padding: '4px 0' }}>
+						<List.Item style={{ padding: '0 0 0 10px' }}>
 							{item.href ? (
 								<Link href={item.href} draggable style={{ width: '100%' }}>
 									<Button

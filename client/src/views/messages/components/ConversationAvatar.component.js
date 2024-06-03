@@ -61,7 +61,7 @@ export function ConversationAvatar({ conversation, size = DF_SIZE }) {
 				height: size,
 				borderRadius: '50%',
 				border: '1px solid',
-				borderColor: token.colorBorder,
+				borderColor: '#90E0EF',
 				overflow: 'hidden',
 			}}
 		>

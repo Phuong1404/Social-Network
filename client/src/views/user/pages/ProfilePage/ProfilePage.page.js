@@ -92,13 +92,13 @@ function Index() {
 			<SEO title={[user.fullname, tabItem?.label].filter(Boolean).join(' - ')} />
 
 			<Layout.Sider align="left">
-				<Card bodyStyle={{ padding: 8 }}>
+				<Card bodyStyle={{ padding: 8, boxShadow: 'rgba(0, 119, 182, 0.25) 0px 0px 4px', borderRadius: 8 }}>
 					<Menu
 						mode="vertical"
-						style={{ width: '100%', border: 'none' }}
+						style={{ width: '100%', border: 'none', paddingTop: 8 }}
 						items={tabList.map(({ tab, label, Icon }) => ({
 							key: tab,
-							icon: <Icon size={20} />,
+							icon: <Icon />,
 							label: label,
 						}))}
 						selectedKeys={[tab]}

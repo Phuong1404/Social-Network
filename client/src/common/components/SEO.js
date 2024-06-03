@@ -4,9 +4,9 @@ import { urlUtil } from '@/common/utils';
 
 
 export default function SEO({
-	title = 'SocialNetwork - Kết nối và sáng tạo',
-	description = 'Sáng tạo và kết nối cùng SocialNetwork - Nơi gặp gỡ những tài năng đầy tiềm năng!',
-	images = [{ url: urlUtil.getFullUrl('/seo.png'), alt: 'SocialNetwork - Kết nối và sáng tạo', width: 1865, height: 937 }],
+	title = 'Soul Connect - Kết nối và sáng tạo',
+	description = 'Sáng tạo và kết nối cùng Soul Connect - Nơi gặp gỡ những tài năng đầy tiềm năng!',
+	images = [{ url: urlUtil.getFullUrl('/seo.png'), alt: 'Soul Connect - Kết nối và sáng tạo', width: 1865, height: 937 }],
 
 	url ='',
 	children,
@@ -35,8 +35,8 @@ function renderFavicon() {
 			<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" key="favicon-16x16" />
 			<link rel="manifest" href="/site.webmanifest" key="site.webmanifest" />
 			<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" key="safari-pinned-tab" />
-			<meta name="apple-mobile-web-app-title" content="SocialNetwork" key="apple-mobile-web-app-title" />
-			<meta name="application-name" content="SocialNetwork" key="application-name" />
+			<meta name="apple-mobile-web-app-title" content="Soul Connect" key="apple-mobile-web-app-title" />
+			<meta name="application-name" content="Soul Connect" key="application-name" />
 			<meta name="msapplication-TileColor" content="#ffffff" key="msapplication-TileColor" />
 			<meta name="theme-color" content="#ffffff" key="theme-color" />
 		</>
@@ -90,7 +90,7 @@ function renderOpenGraphTags(title, description, images, url) {
 			))}
 
 			<meta property="og:url" content={url} key="og-url" />
-			<meta property="og:site_name" content="SocialNetwork - Kết nối và sáng tạo" key="og-site_name" />
+			<meta property="og:site_name" content="Soul Connect - Kết nối và sáng tạo" key="og-site_name" />
 			<meta property="og:type" content="website" key="og-type" />
 			<meta property="og:locale" content="vi_VN" key="og-locale" />
 		</>
@@ -101,7 +101,7 @@ function renderTwitterTags(title, description, images) {
 	return (
 		<>
 			<meta name="twitter:card" content={description} key="twitter-card" />
-			<meta name="twitter:creator" content="@SocialNetwork" key="twitter-creator" />
+			<meta name="twitter:creator" content="@Soul Connect" key="twitter-creator" />
 			<meta name="twitter:title" content={title} key="twitter-title" />
 			<meta name="twitter:description" content={description} key="twitter-description" />
 			{images.map(({ url, alt, width, height }, index) => (

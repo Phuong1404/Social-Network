@@ -20,7 +20,7 @@ export function InfoForm() {
 	return (
 		<Card
 			title={
-				<Typography.Title level={2} style={{ color: token.colorPrimary, margin: 0, textAlign: 'center' }}>
+				<Typography.Title level={2} style={{ color: '#03045E', margin: 0, textAlign: 'center' }}>
 					Thêm thông tin
 				</Typography.Title>
 			}

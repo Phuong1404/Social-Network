@@ -18,13 +18,13 @@ function FriendPage() {
 			<SEO title={title} />
 
 			<Layout.Sider align="left">
-				<Card title="Danh sách" headStyle={{ padding: '0 16px' }} bodyStyle={{ padding: 8 }}>
+				<Card title="Danh sách" headStyle={{ padding: '0 16px', fontSize: 16, color: '#023E8A', fontWeight: '700' }} bodyStyle={{ padding: 8 }}>
 					<Menu
 						mode="vertical"
 						style={{ width: '100%', border: 'none' }}
 						items={friendTypeList.map((item) => ({
 							key: item.type,
-							icon: <item.Icon size={20} />,
+							icon: <item.Icon />,
 							label: item.title,
 						}))}
 						selectedKeys={[type]}

@@ -61,6 +61,13 @@ function MyApp({ Component, pageProps }) {
 					borderRadius: 12,
 				},
 				algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+				components: {
+					Menu:{
+						iconSize: 30,
+						itemColor: 'yellow',
+						itemSelectedColor: 'black'
+					}
+				}
 			}}
 			input={{ autoComplete: 'off' }}
 			select={{ showSearch: true }}

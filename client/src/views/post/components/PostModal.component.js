@@ -4,10 +4,11 @@ import { Collapse } from '@mui/material';
 import { Button, Card, Form, Modal, Space, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { HiMapPin, HiPhoto, HiPlayCircle } from 'react-icons/hi2';
+import { HiMapPin, HiPlayCircle } from 'react-icons/hi2';
 import { PostMedia } from './PostCard';
 import { randomUtil } from '@/common/utils';
 import { uploadMultiFileApi } from '@/common/api';
+import { FcPicture } from "react-icons/fc";
 
 export const PostModal = ({ data, open, onClose, onCreate, onUpdate }) => {
 	const { token } = theme.useToken();
@@ -110,7 +111,7 @@ export const PostModal = ({ data, open, onClose, onCreate, onUpdate }) => {
 			]}
 		>
 			<Form form={form} layout="vertical" onFinish={onSubmit}>
-				<Form.Item name="content" rules={[{ required: true, message: 'Nội dung không được để trống' }]}>
+				<Form.Item name="content" rules={[{ required: true, message: 'Nội dung không được để trống' }]} style={{marginTop: 10}}>
 					<RichTextInput
 						placeholder="Bạn đang nghĩ gì?"
 						extra={
@@ -137,7 +138,8 @@ export const PostModal = ({ data, open, onClose, onCreate, onUpdate }) => {
 			/>
 
 			<Card
-				headStyle={{ padding: 16 }}
+				style={{boxShadow: 'rgba(0, 119, 182, 0.25) 0px 0px 5px'}}
+				headStyle={{ padding: '0px 15px', minHeight: 46 }}
 				bodyStyle={{ padding: 0 }}
 				title="Thêm ảnh, video, vị trí,..."
 				extra={
@@ -145,7 +147,7 @@ export const PostModal = ({ data, open, onClose, onCreate, onUpdate }) => {
 						<Button
 							type="text"
 							shape="circle"
-							icon={<HiPhoto color={token.colorSuccess} />}
+							icon={<FcPicture color={token.colorSuccess} size={24}/>}
 							onClick={() => mediaInputRef.current?.click()}
 							style={{ marginLeft: 'auto' }}
 						/>
@@ -153,14 +155,14 @@ export const PostModal = ({ data, open, onClose, onCreate, onUpdate }) => {
 						<Button
 							type="text"
 							shape="circle"
-							icon={<HiPlayCircle color={token.colorPrimary} />}
+							icon={<HiPlayCircle color={'#03045E'} size={24} />}
 							onClick={() => mediaInputRef.current?.click()}
 						/>
 
 						<Button
 							type="text"
 							shape="circle"
-							icon={<HiMapPin color={token.colorWarning} />}
+							icon={<HiMapPin color={token.colorWarning} size={24} />}
 							onClick={() => alert('Chức năng đang phát triển')}
 						/>
 					</Space>
@@ -172,7 +174,7 @@ export const PostModal = ({ data, open, onClose, onCreate, onUpdate }) => {
 						onDelete={handleDeleteMedia}
 						onEdit={handleEditMedia}
 						showAll
-						style={{ padding: 16 }}
+						style={{ padding: 10 }}
 					/>
 				</Collapse>
 			</Card>

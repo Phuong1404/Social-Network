@@ -18,7 +18,7 @@ export default function MessageInput({ onSend }) {
 
 	return (
 		<Form form={form} name="inputForm" onFinish={onFinish} className={styles.input_container}>
-			<Space className={styles.input} style={{ borderColor: token.colorBorder }}>
+			<Space className={styles.input} style={{ borderColor: '#90E0EF' }}>
 				<Tooltip title="Đính kèm">
 					<Button shape="circle" icon={<HiPaperClip />} />
 				</Tooltip>

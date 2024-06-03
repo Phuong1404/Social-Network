@@ -52,10 +52,9 @@ export function PostMedia({ media, showAll = false, onDelete, onEdit, ...props }
 									<Button
 										className={styles.post_media_item_delete}
 										onClick={() => onDelete(_id)}
-										danger
 										shape="circle"
 										size="small"
-										icon={<HiX />}
+										icon={<HiX color='#023E8A'/>}
 									/>
 								)}
 

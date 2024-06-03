@@ -64,7 +64,7 @@ export function NotificationPopover({ renderChildren, ...props }) {
 				<Space style={{ width: '100%' }}>
 					<Typography.Text strong>Thông báo</Typography.Text>
 
-					<Button type="link" onClick={handleReadAllNotification} style={{ marginLeft: 'auto', padding: 0 }}>
+					<Button type="link" onClick={handleReadAllNotification} style={{ marginLeft: 'auto', padding: 0, color: '#00B4D8' }}>
 						Đánh dấu tất cả đã đọc
 					</Button>
 				</Space>

@@ -41,15 +41,15 @@ export function CreatePost({ fetcher, ...cardProps }) {
 					...cardProps?.headStyle,
 				}}
 				actions={[
-					<Button key="photo" type="text" icon={<HiPhoto color={token.colorSuccess} />}>
+					<Button key="photo" type="text" icon={<HiPhoto color={token.colorSuccess} size={24}/>}>
 						Ảnh
 					</Button>,
 
-					<Button key="video" type="text" icon={<HiPlayCircle color={token.colorPrimary} />}>
+					<Button key="video" type="text" icon={<HiPlayCircle color={'#03045E'} size={24} />}>
 						Video
 					</Button>,
 
-					<Button key="location" type="text" icon={<HiMapPin color={token.colorWarning} />}>
+					<Button key="location" type="text" icon={<HiMapPin color={token.colorWarning} size={24} />}>
 						Vị trí
 					</Button>,
 
@@ -62,6 +62,7 @@ export function CreatePost({ fetcher, ...cardProps }) {
 					title={
 						<Input.TextArea placeholder="Bạn đang nghĩ gì?" bordered={false} rows={2} readOnly autoSize />
 					}
+					style={{paddingTop: 20}}
 				/>
 			</Card>
 		</>
