@@ -18,7 +18,11 @@ function FriendPage() {
 			<SEO title={title} />
 
 			<Layout.Sider align="left">
-				<Card title="Danh sách" headStyle={{ padding: '0 16px', fontSize: 16, color: '#023E8A', fontWeight: '700' }} bodyStyle={{ padding: 8 }}>
+				<Card title="Danh sách" 
+					headStyle={{ padding: '0 16px', fontSize: 16, color: '#023E8A', fontWeight: '700' }} 
+					bodyStyle={{ padding: 8 }} 
+					style={{boxShadow: 'rgba(0, 119, 182, 0.25) 0px 0px 5px'}}
+				>
 					<Menu
 						mode="vertical"
 						style={{ width: '100%', border: 'none' }}

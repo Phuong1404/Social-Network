@@ -73,7 +73,9 @@ export default function NextApp({ Component, pageProps }) {
 						itemHeight: 36,					
 					},
 					Input: {
-						colorTextPlaceholder: '#0077B6'
+						colorTextPlaceholder: '#0077B6',
+						colorBorder: '#0077B6',
+						borderRadius: 10,
 					},
 					Tooltip: {
 						colorBgSpotlight: '#03045E',
@@ -97,10 +99,22 @@ export default function NextApp({ Component, pageProps }) {
 						actionsLiMargin: '7px 0',
 						colorTextHeading: '#0077B6',
 						headerFontSize: 14,
-						headerHeight: 50,
+						headerHeight: 45,
 					},
 					Popover: {
 						boxShadow: 'rgba(0, 119, 182, 0.25) 0px 0px 5px',
+					},
+					Form: {
+						labelColor: '#023E8A',
+					},
+					Select: {
+						colorBorder: '#0077B6',
+						colorText: '#023E8A',
+						boxShadow: 'rgba(0, 119, 182, 0.25) 0px 0px 5px !important',
+						borderRadius: '8px !important'
+					},
+					Steps: {
+						colorSplit: '#90E0EF',
 					}
 				},
 				algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,

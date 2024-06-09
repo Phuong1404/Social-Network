@@ -39,6 +39,7 @@ export function LoginForm() {
 					Đăng nhập
 				</Typography.Title>
 			}
+			bodyStyle={{paddingBottom: 0}}
 			style={{ width: 430, margin: 'auto', borderBottom: 0, boxShadow: 'rgba(0, 119, 182, 0.1) 0px 10px 50px', borderRadius: 15 }}
 		>
 			<Form layout="vertical" form={form} onFinish={onFinish} style={{margin: '30px 20px 0px 20px', paddingBottom: '0px'}}>

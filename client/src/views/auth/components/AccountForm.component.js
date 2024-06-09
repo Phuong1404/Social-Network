@@ -17,7 +17,8 @@ export function AccountForm({ data }) {
 					Đăng ký tài khoản
 				</Typography.Title>
 			}
-			style={{ width: 440, margin: '40px 0px', borderBottom: 0, boxShadow: 'rgba(0, 119, 182, 0.1) 0px 10px 50px', borderRadius: 15, alignSelf: 'center' }}
+			style={{ width: 440, margin: '30px 0px', borderBottom: 0, boxShadow: 'rgba(0, 119, 182, 0.1) 0px 10px 50px', borderRadius: 15, alignSelf: 'center' }}
+			bodyStyle={{paddingBottom: 0}}
 		>
 			<Form layout="vertical" form={form} name="account" style={{margin: '30px 20px 0px 20px', paddingBottom: '0px'}}>
 				<Form.Item

@@ -34,13 +34,14 @@ export function PasswordForm({ data }) {
 	return (
 		<Card
 			title={
-				<Typography.Title level={2} style={{ color: '#03045E', margin: 0, textAlign: 'center' }}>
+				<Typography.Title level={2} style={{ color: '#03045E', marginTop: 20, textAlign: 'center', fontWeight: '1000' }}>
 					Đăng ký tài khoản
 				</Typography.Title>
 			}
-			style={{ width: 480, margin: 'auto' }}
+			bodyStyle={{paddingBottom: 0}}
+			style={{ width: 440, margin: '30px 0px', borderBottom: 0, boxShadow: 'rgba(0, 119, 182, 0.1) 0px 10px 50px', borderRadius: 15, alignSelf: 'center' }}
 		>
-			<Form layout="vertical" form={form} name="password">
+			<Form layout="vertical" form={form} name="password" style={{margin: '30px 20px 0px 20px', paddingBottom: '0px'}}>
 				<Form.Item
 					label="Mã xác nhận"
 					name="otp"
@@ -51,6 +52,7 @@ export function PasswordForm({ data }) {
 							message: 'Mã xác nhận phải có 6 số!',
 						},
 					]}
+					style={{fontWeight: '600', color: '#023E8A'}}
 				>
 					<Input
 						suffix={
@@ -66,6 +68,7 @@ export function PasswordForm({ data }) {
 								Gửi mã
 							</CountdownButton>
 						}
+						style={{ height: 40, borderRadius: 10, borderColor: '#00B4D8', boxShadow: 'rgba(72, 202, 228, 0.3) 0px 2px 10px 0px'}}
 					/>
 				</Form.Item>
 
@@ -82,8 +85,9 @@ export function PasswordForm({ data }) {
 							message: 'Mật khẩu phải có ít nhất 6 ký tự!',
 						},
 					]}
+					style={{fontWeight: '600', color: '#023E8A'}}
 				>
-					<Input.Password />
+					<Input.Password style={{ height: 40, borderRadius: 10, borderColor: '#00B4D8', boxShadow: 'rgba(72, 202, 228, 0.3) 0px 2px 10px 0px'}}/>
 				</Form.Item>
 
 				<Form.Item
@@ -104,16 +108,33 @@ export function PasswordForm({ data }) {
 							},
 						},
 					]}
+					style={{fontWeight: '600', color: '#023E8A'}}
 				>
-					<Input.Password />
+					<Input.Password style={{ height: 40, borderRadius: 10, borderColor: '#00B4D8', boxShadow: 'rgba(72, 202, 228, 0.3) 0px 2px 10px 0px'}}/>
 				</Form.Item>
 
-				<Button type="primary" htmlType="submit" style={{ float: 'right' }}>
-					Đăng ký
-				</Button>
+				<Form.Item style={{ display: 'flex', justifyContent: 'center', marginBottom: 0 }}>
+					<Button 
+						type="primary" 
+						htmlType="submit"
+						style={{
+							display: 'flex', 
+							height: 40, 
+							width: 300, 
+							borderRadius: 30, 
+							backgroundImage: 'linear-gradient(to right, #023E8A, #48CAE4)',
+							fontWeight: '600',
+							fontSize: '16px',
+							boxShadow: 'rgba(3, 4, 94, 0.25) 0px 4px 4px'
+						}}>
+						Đăng ký
+					</Button>
+				</Form.Item>
 
-				<Form.Item>
+				<Form.Item style={{ float: 'left', marginTop: 20 }}>
 					Đã có tài khoản?
+				</Form.Item>
+				<Form.Item style={{ float: 'right', marginTop: 20 }}>
 					<Link href="/auth/login">
 						<Button type="link">Đăng nhập ngay!</Button>
 					</Link>
