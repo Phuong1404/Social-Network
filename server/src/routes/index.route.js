@@ -25,6 +25,8 @@ function route(app) {
 		const allowedOrigins = [
 			'http://localhost:3000',
 			'http://localhost:8000',
+			'http://localhost:4000',
+			'https://datn-social-network.xyz/',
 		];
 		const { origin } = req.headers;
 		if (allowedOrigins.includes(origin)) {
@@ -37,23 +39,25 @@ function route(app) {
 		}
 		next();
 	});
-
-	app.use('/search', Search);
-	app.use('/badwords', BadWord);
-	app.use('/albums', Album);
-	app.use('/admin', Admin);
-	app.use('/files', File);
-	app.use('/conversations/:conversationId/messages', Message);
-	app.use('/conversations', Conversation);
-	app.use('/posts/:postId/comments', Comment);
-	app.use('/posts', Post);
-	app.use('/users', User);
-	app.use('/roles', Role);
-	app.use('/auth', Auth);
-	app.use('/notifications', Notification);
-	app.use('/reports', Report);
-	app.use('/hobbies', Hobby);
-	app.use('/list', List);
+	// app.get('/api/v1/', (req, res, next) => {
+	// 	res.send('USER')
+	//   })
+	app.use('/api/v1/search', Search);
+	app.use('/api/v1/badwords', BadWord);
+	app.use('/api/v1/albums', Album);
+	app.use('/api/v1/admin', Admin);
+	app.use('/api/v1/files', File);
+	app.use('/api/v1/conversations/:conversationId/messages', Message);
+	app.use('/api/v1/conversations', Conversation);
+	app.use('/api/v1/posts/:postId/comments', Comment);
+	app.use('/api/v1/posts', Post);
+	app.use('/api/v1/users', User);
+	app.use('/api/v1/roles', Role);
+	app.use('/api/v1/auth', Auth);
+	app.use('/api/v1/notifications', Notification);
+	app.use('/api/v1/reports', Report);
+	app.use('/api/v1/hobbies', Hobby);
+	app.use('/api/v1/list', List);
 
 
 
