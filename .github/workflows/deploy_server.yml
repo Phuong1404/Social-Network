@@ -13,7 +13,7 @@ jobs:
     - name: Setup SSH key
       run: |
         echo "$SSH_PRIVATE_KEY" > private_key
-        chmod 600 private_key
+        chmod 400 private_key
 
     - name: Deploy to server
       run: |
