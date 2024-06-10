@@ -17,7 +17,7 @@ const Album = require('./Album.route');
 const BadWord = require('./Badwork.route');
 const List = require('./List.route');
 
-const logEvents = require('../Helpers/logEvents');
+// const logEvents = require('../Helpers/logEvents');
 // const bot = require('../utils/SlackLogger/bot');
 
 function route(app) {

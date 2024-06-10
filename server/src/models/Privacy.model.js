@@ -27,7 +27,7 @@ const PrivacySchema = mongoose.Schema(
 );
 
 
-const validate = () => {
+const validatePrivacy = () => {
 	const schema = Joi.object({
 		value: Joi.string().valid('public', 'private', 'friends', 'includes', 'excludes').required(),
 		excludes: Joi.when('value', {
