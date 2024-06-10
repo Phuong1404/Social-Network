@@ -24,7 +24,7 @@ export function UserAvatar({
 	useEffect(() => {
 		if (user)
 			window.socket?.on(`online:${user?._id}`, (user) => {
-				console.log('online', user);
+				// console.log('online', user);
 				setUser(user);
 			});
 

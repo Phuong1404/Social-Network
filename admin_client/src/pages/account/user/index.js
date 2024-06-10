@@ -1,4 +1,4 @@
-import UserPage from '@/modules/user/pages/UserPage.page';
+import UserPage from '@/views/user/pages/UserPage.page';
 const UserPageRoute = () => {
   return <UserPage/>;
 };

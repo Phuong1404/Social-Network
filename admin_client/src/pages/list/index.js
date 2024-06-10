@@ -1,4 +1,4 @@
-import ListPage from '@/modules/list/pages/ListPage.page';
+import ListPage from '@/views/list/pages/ListPage.page';
 
 const ListPageRoute = () => {
   return <ListPage/>;

@@ -1,7 +1,7 @@
 import { Avatar } from 'antd';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import UserStatusTag from '@/modules/user/components/UserStatusTag.component';
+import UserStatusTag from '@/views/user/components/UserStatusTag.component';
 
 const PageTableBase = dynamic(() => import('@/common/components/PageTableBase').then((mod) => mod.PageTableBase), {
 	ssr: false,

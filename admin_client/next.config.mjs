@@ -3,7 +3,7 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 
 const removeImportFunc = removeImports();
 
-const withBundleAnalyzerFunc = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
+const withBundleAnalyzerFunc = withBundleAnalyzer({ enabled: process.env.ANALYZE == 'true' });
 
 const config = {
 	images: {

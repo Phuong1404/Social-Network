@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import { Button, message, Popconfirm, Space, Tag } from 'antd';
 import Icon, { PlusOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import ListFormModal from '@/modules/list/components/modals/ListFormModal.component';
-import { createListApi } from '@/modules/list/api/createList.api';
-import { updateListApi } from '@/modules/list/api/updateList.api';
+import ListFormModal from '@/views/list/components/modals/ListFormModal.component';
+import { createListApi } from '@/views/list/api/createList.api';
+import { updateListApi } from '@/views/list/api/updateList.api';
 import { BsPen, BsTrash } from 'react-icons/bs';
-import { deleteListApi } from '@/modules/list/api/deleteList.api';
+import { deleteListApi } from '@/views/list/api/deleteList.api';
 const PageTableBase = dynamic(() => import('@/common/components/PageTableBase').then((mod) => mod.PageTableBase), {
 	ssr: false,
 });
@@ -132,7 +132,7 @@ export default function ListPage() {
 	return (
 		<>
 			<ListFormModal
-				open={modal === "LIST_FORM"}
+				open={modal == "LIST_FORM"}
 				onClose={closeModal}
 				list={list}
 				onSubmit={handleSubmit}

@@ -18,7 +18,7 @@ export const stringUtil = {
 			}
 
 			value ??= '';
-			if (value !== '') urlParams.append(key, String(value));
+			if (value != '') urlParams.append(key, String(value));
 		};
 
 		Object.entries(params).forEach(([key, value]) => append(key, value));

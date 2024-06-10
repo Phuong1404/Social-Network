@@ -16,7 +16,7 @@ export function useReport({ type, id }) {
 	const [form] = Form.useForm();
 
 	const onFinish = async (values) => {
-		console.log({ values });
+		// console.log({ values });
 
 		const toastId = toast.loading('Đang gửi báo cáo...');
 		try {

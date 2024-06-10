@@ -1,4 +1,4 @@
-import ReportPage from '@/modules/report/pages/ReportPage.page';
+import ReportPage from '@/views/report/pages/ReportPage.page';
 const ReportPageRoute = () => {
   return <ReportPage/>;
 };

@@ -6,7 +6,7 @@ import 'dayjs/locale/vi';
 import Layout from '@/layout/Layout';
 import { useEffect, useState } from 'react';
 import { useTheme } from '@/layout/hooks';
-import { useAuth } from '@/modules/auth/hooks';
+import { useAuth } from '@/views/auth/hooks';
 import { useRouter } from 'next/router';
 dayjs.locale('vi');
 
@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
 				}}
 			/>
 		);
-	if (router.pathname === '/login') {
+	if (router.pathname == '/login') {
 		return (
 			<ConfigProvider
 				locale={viVn}
@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }) {
 					token: {
 						borderRadius: 12,
 					},
-					algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+					algorithm: mode == 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
 				}}
 				input={{ autoComplete: 'off' }}
 				select={{ showSearch: true }}
@@ -60,7 +60,7 @@ function MyApp({ Component, pageProps }) {
 				token: {
 					borderRadius: 12,
 				},
-				algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+				algorithm: mode == 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
 			}}
 			input={{ autoComplete: 'off' }}
 			select={{ showSearch: true }}

@@ -20,7 +20,7 @@ dayjs.locale('vi');
 export default function NextApp({ Component, pageProps }) {
 	const { authUser, login } = useAuth();
 	const { mode, getTheme } = useTheme();
-	const { token } = theme.useToken();
+	// const { token } = theme.useToken();
 
 	useEffect(() => {
 		getTheme();
