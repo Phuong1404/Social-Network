@@ -3,25 +3,21 @@ name: Deploy to VPS
 on: [workflow_dispatch]
 
 jobs:
-  deploy:
+  build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Setup SSH key
-      run: |
-        echo "$SSH_PRIVATE_KEY" > private_key
-        chmod 400 private_key
-
-    - name: Deploy to server
-      run: |
-        ssh -o StrictHostKeyChecking=no -i private_key phuong1404@34.125.134.251 << 'EOF'
+    - name: Deploy using ssh
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
           cd server
           git pull origin master
           npm install
-          npm run serve &
-        EOF
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          npm run serve
