@@ -38,8 +38,8 @@ export function MessageItem({ message, prevCombine, nextCombine, onRetry }) {
 				direction="vertical"
 				className={styles.container}
 				style={{
-					backgroundColor: isMine ? token.colorBorder : undefined,
-					borderColor: message.error ? token.colorError : token.colorBorder,
+					backgroundColor: isMine ? '#90E0EF' : undefined,
+					borderColor: message.error ? token.colorError : '#90E0EF',
 				}}
 			>
 				{message.media?.length > 0 && (

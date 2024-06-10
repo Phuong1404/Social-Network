@@ -62,8 +62,8 @@ export const RichTextInput = ({ value = '', onChange, placeholder, ...props }) =
 
 	return (
 		<Card
-			headStyle={{ padding: 16 }}
-			bodyStyle={{ padding: 16 }}
+			headStyle={{ padding: '10px 15px' }}
+			bodyStyle={{ padding: '10px 16px', marginTop: 10 }}
 			title={
 				<Space>
 					{styles.map((s) => (

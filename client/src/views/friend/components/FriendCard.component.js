@@ -126,7 +126,7 @@ export function FriendCard({ user }) {
 					height={100}
 
 					alt={user.fullname}
-					style={{ objectFit: 'cover', background: token.colorBgLayout }}
+					style={{ objectFit: 'cover', background: "#edfafd" }}
 				/>
 			}
 			actions={[

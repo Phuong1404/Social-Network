@@ -315,7 +315,7 @@ export function ConversationMessage() {
 					className={classnames(styles.typing, { [styles.show]: typingList.length > 0 })}
 					style={{
 						backgroundColor: token.colorBgContainer,
-						borderColor: token.colorBorder,
+						borderColor: '#90E0EF',
 						boxShadow: token.boxShadow,
 					}}
 				>
@@ -339,7 +339,7 @@ export function ConversationMessage() {
 				>
 					<Form.Item name="files" hidden />
 					<input {...getInputProps()} ref={inputFilesRef} />
-					<div className={styles.dropzone_content} style={{ borderColor: token.colorPrimary }}>
+					<div className={styles.dropzone_content} style={{ borderColor: '#03045E' }}>
 						<Typography.Text strong>Gửi file</Typography.Text>
 
 						<Typography.Text type="secondary">Thả file vào đây để gửi</Typography.Text>
@@ -349,7 +349,7 @@ export function ConversationMessage() {
 			</div>
 
 			<div className={styles.input_container}>
-				<Space className={styles.input} style={{ borderColor: token.colorBorder }}>
+				<Space className={styles.input} style={{ borderColor: '#90E0EF' }}>
 					<Form.Item
 						name="text"
 						rules={[

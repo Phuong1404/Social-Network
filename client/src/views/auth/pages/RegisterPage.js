@@ -68,7 +68,7 @@ function RegisterPage() {
 
 	return (
 		<>
-			<SEO title="Social Network - Đăng ký" robot />
+			<SEO title="Soul Connect - Đăng ký" robot />
 
 			<Layout.Content style={{ margin: 'auto', flex: 1, height: '100%' }}>
 				<Form.Provider

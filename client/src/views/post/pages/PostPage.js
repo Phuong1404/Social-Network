@@ -106,7 +106,7 @@ export function PostSEO({ post, id, error }) {
 						},
 						publisher: {
 							'@type': 'Organization',
-							name: 'Social Network - Kết nối và sáng tạo',
+							name: 'Soul Connect - Kết nối và sáng tạo',
 							logo: {
 								'@type': 'ImageObject',
 								url: '/logo.png',

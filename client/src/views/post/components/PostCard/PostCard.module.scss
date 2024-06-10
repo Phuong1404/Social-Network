@@ -38,10 +38,10 @@
 }
 
 .post_media {
-	margin-top: 16px;
 
 	.post_media_card {
 		position: relative;
+		border-width: 0;
 
 		textarea {
 			width: 100%;
@@ -50,13 +50,14 @@
 
 		.post_media_item_delete {
 			position: absolute;
-			top: 0;
-			right: 0;
+			top: 5px;
+			right: 5px;
 			z-index: 2;
 		}
 	}
 
 	.post_media_item {
+		margin-bottom: 7px !important;
 		position: relative;
 		margin: auto;
 

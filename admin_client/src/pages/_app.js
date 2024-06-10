@@ -60,7 +60,14 @@ function MyApp({ Component, pageProps }) {
 				token: {
 					borderRadius: 12,
 				},
-				algorithm: mode == 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+				algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+				components: {
+					Menu:{
+						iconSize: 30,
+						itemColor: 'yellow',
+						itemSelectedColor: 'black'
+					}
+				}
 			}}
 			input={{ autoComplete: 'off' }}
 			select={{ showSearch: true }}

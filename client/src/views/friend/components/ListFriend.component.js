@@ -19,29 +19,36 @@ export function ListFriend({ api, title = 'Danh sách bạn bè' }) {
 	};
 
 	return (
-		<Card title={title} headStyle={{ padding: '0 16px' }} bodyStyle={{ padding: 8 }}>
-			<Space direction="vertical" style={{ width: '100%' }}>
-				<Input.Search placeholder="Tìm kiếm bạn bè" onChange={handleSearch} />
+		<Card title={title} 
+			headStyle={{ padding: '0 20px', height: '40px !important', fontSize: 16, color: '#023E8A', fontWeight: '700' }} 
+			bodyStyle={{ padding: 20 }}
+			style={{boxShadow: 'rgba(0, 119, 182, 0.25) 0px 0px 5px'}}
+		>
+			<Space direction="vertical" style={{ width: '100%', marginTop: 16 }}>
+				<Input.Search 
+					placeholder="Tìm kiếm bạn bè" onChange={handleSearch} 
+					style={{boxShadow: 'rgba(0, 119, 182, 0.25) 0px 0px 5px', borderRadius: 10}}
+				/>
 
 				<Form
 					layout="inline"
-					style={{ float: 'right' }}
+					style={{ float: 'right', marginTop: 8 }}
 					size="small"
 					initialValues={{ sort: 'desc', gender: '' }}
 					onValuesChange={(_, values) => setFilter({ ...filter, ...values })}
 				>
-					<Form.Item label="Sắp xếp" name="sort">
+					<Form.Item label="Sắp xếp" name="sort" style={{fontWeight: 'bold'}}>
 						<Select
 							options={[
 								{ label: 'Mới nhất', value: 'desc' },
 								{ label: 'Cũ nhất', value: 'asc' },
 							]}
 							showSearch={false}
-							style={{ width: 120 }}
+							style={{ width: 120}}
 						/>
 					</Form.Item>
 
-					<Form.Item label="Giới tính" name="gender">
+					<Form.Item label="Giới tính" name="gender" style={{fontWeight: 'bold'}}>
 						<Select
 							options={[
 								{ label: 'Tất cả', value: '' },

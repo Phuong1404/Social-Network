@@ -203,7 +203,7 @@ const emailTemplate = (link, name) => `<body
                                     text-decoration: none;
                                 "
                             >
-                                &copy; <strong>Social network</strong>
+                                &copy; <strong>Soul Connect</strong>
                             </a>
                         </td>
                     </tr>
@@ -227,9 +227,10 @@ const sendEmail = async (email, subject, link, user) => {
                 user: process.env.USER,
 				pass: process.env.PASS,
             },
-            // tls: {
-            //     ciphers:'SSLv3'
-            // }
+            tls: {
+                // ciphers:'SSLv3',
+                rejectUnauthorized: false
+            }
         });
 		await transporter.sendMail({
 			from: process.env.FROM,
@@ -256,9 +257,10 @@ const sendEmailVerify = async (email, subject, link, user) => {
                 user: process.env.USER,
 				pass: process.env.PASS,
             },
-            // tls: {
-            //     ciphers:'SSLv3'
-            // }
+            tls: {
+                // ciphers:'SSLv3',
+                rejectUnauthorized: false
+            }
         });
 		await transporter.sendMail({
 			from: process.env.FROM,
@@ -283,9 +285,10 @@ const sendMailOTP = async (email, subject, otp, name) => {
                 user: process.env.USER,
 				pass: process.env.PASS,
             },
-            // tls: {
-            //     ciphers:'SSLv3'
-            // }
+            tls: {
+                // ciphers:'SSLv3',
+                rejectUnauthorized: false
+            }
         });
 
 		await transporter.sendMail({
