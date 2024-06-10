@@ -27,7 +27,7 @@ jobs:
 
     - name: Deploy Server to VPS
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa user@your_vps_ip << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa t.xuanphuong1404@gmail.com@34.125.134.251 << 'EOF'
           cd server
           git pull origin ${{ github.event.inputs.branch }}
           npm install
