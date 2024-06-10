@@ -1,0 +1,35 @@
+name: Deploy Server to VPS
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: true
+        default: 'main'
+
+jobs:
+  deploy_server:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.inputs.branch }}
+
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan your_vps_ip >> ~/.ssh/known_hosts
+
+    - name: Deploy Server to VPS
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa user@your_vps_ip << 'EOF'
+          cd /path/to/your/project/server
+          git pull origin ${{ github.event.inputs.branch }}
+          npm install
+          npm run serve &
+        EOF
