@@ -14,7 +14,7 @@ const { getPagination } = require('../utils/mongoose.utils');
 const { responseError } = require('../utils/Response/error');
 const { getListData } = require('../utils/Response/listData');
 
-const key = process.env.DECODE_KEY;
+const key = crypto.createHash('sha256').update('social-network').digest();
 const apiKey = process.env.API_KEY_VIDEOCALL;
 
 class ConversationController {
@@ -145,7 +145,6 @@ class ConversationController {
 	async getConversationOfUser(req, res, next) {
 		const { limit, offset } = getPagination(req.query.page, req.query.size, req.query.offset);
 		const q = req.query.key ?? '';
-
 		try {
 			Conversation.paginate(
 				{

@@ -17,6 +17,7 @@ const acceptedFileTypes = [
 	...acceptedDocumentTypes,
 	...acceptedArchiveTypes,
 ];
+const MAX_FILE_SIZE= 20971520
 
 export const fileUtil = {
 	acceptedImageTypes,

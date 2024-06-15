@@ -756,7 +756,7 @@ class PostController {
 	}
 
     async add(req, res, next) {
-		try {
+		// try {
 
 			const schema = Joi.object({
 				content: Joi.string().required(),
@@ -851,10 +851,10 @@ class PostController {
 			await createActivityWithPost(post, req.user);
 
 			res.status(200).json(post);
-		} catch (e) {
-			console.error(e);
-			return next(createError.InternalServerError(`${e.message} in method: ${req.method} of ${req.originalUrl}`));
-		}
+		// } catch (e) {
+		// 	console.error(e);
+		// 	return next(createError.InternalServerError(`${e.message} in method: ${req.method} of ${req.originalUrl}`));
+		// }
 	}
 
     async update(req, res, next) {

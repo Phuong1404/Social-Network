@@ -59,7 +59,8 @@ class MessageController {
 						data.docs.forEach((message) => {
 							if (message.iv) {
 								const iv = Buffer.from(message.iv, 'base64');
-								const decipher = crypto.createDecipheriv(algorithm, 'social-network', iv);
+								const key = crypto.createHash('sha256').update('social-network').digest();
+								const decipher = crypto.createDecipheriv(algorithm, key, iv);
 								let decryptedData = decipher.update(message.text, 'hex', 'utf-8');
 								decryptedData += decipher.final('utf-8');
 								message.text = decryptedData;
@@ -104,8 +105,8 @@ class MessageController {
 			const conversation = await Conversation.findById(req.params.conversationId);
 			if (conversation.members.some((mem) => mem.user.toString() == req.user._id.toString())) {
 				const iv = crypto.randomBytes(16);
-
-				const cipher = crypto.createCipheriv(algorithm, 'social-network', iv);
+				const key = crypto.createHash('sha256').update('social-network').digest();
+				const cipher = crypto.createCipheriv(algorithm,key, iv);
 				let encryptedData = cipher.update(req.body.text, 'utf-8', 'hex');
 				encryptedData += cipher.final('hex');
 

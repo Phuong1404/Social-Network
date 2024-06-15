@@ -9,7 +9,7 @@ import SEO from '@/common/components/SEO';
 function FriendPage() {
 	const router = useRouter();
 	const type = (router.query.type ) || 'friends';
-	const title = friendTypeList.find((item) => item.type === type)?.title;
+	const title = friendTypeList.find((item) => item.type == type)?.title;
 
 	const changeType = (type) => router.push({ pathname: router.pathname, query: { type } });
 

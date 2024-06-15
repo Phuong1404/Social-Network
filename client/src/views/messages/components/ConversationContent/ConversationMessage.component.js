@@ -176,7 +176,7 @@ export function ConversationMessage() {
 
 	const { getRootProps, getInputProps, isDragAccept, isDragReject } = dropzone;
 
-	const typingRef = useRef<any>(null);
+	const typingRef = useRef(null);
 
 	const emitStopTyping = () => {
 
