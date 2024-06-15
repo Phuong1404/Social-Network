@@ -22,7 +22,7 @@ export function FriendCard({ user }) {
 	const { token } = theme.useToken();
 
 	const { authUser } = useAuth();
-	const isAuthUser = authUser?._id === user._id;
+	const isAuthUser = authUser?._id == user._id;
 
 	const router = useRouter();
 	const type = (router.query.type) || 'friends';
@@ -121,12 +121,10 @@ export function FriendCard({ user }) {
 		<Card
 			hoverable
 			cover={
-				<Image
-					width={200}
-					height={100}
-
-					alt={user.fullname}
-					style={{ objectFit: 'cover', background: "#edfafd" }}
+				<img
+				src={user.imageUrl}
+				alt={user.fullname}
+				style={{ width: '100%', height: '100px', objectFit: 'cover', background: "#edfafd" }}
 				/>
 			}
 			actions={[
