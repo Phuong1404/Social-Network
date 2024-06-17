@@ -13,7 +13,7 @@ const columns = [
 		title: 'Avatar',
 		dataIndex: 'profilePicture',
 		render: (profilePicture, user) => (
-			<Avatar src={profilePicture.link} alt="avatar">
+			<Avatar src={profilePicture?.link} alt="avatar">
 				{user.fullname}
 			</Avatar>
 		),

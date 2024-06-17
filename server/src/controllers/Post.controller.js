@@ -483,7 +483,7 @@ class PostController {
 
     async get(req, res, next) {
 		try {
-			let post = await Post.findOneWithDeleted({
+			let post = await Post.findOne({
 				_id: req.params.id,
 			})
 				.populate({
@@ -585,7 +585,7 @@ class PostController {
 					});
 			}
 
-			if (!post) return next(createError.NotFound('Post not found'));
+			if (!post) return res.status(404).json('Bài viết không tồn tại hoặc đã bị xóa');
 
 			let reactOfUser = 'none';
 
@@ -890,22 +890,23 @@ class PostController {
 			}
 			const post = await Post.findById(req.params.id);
 			if (post.author.toString() == req.user._id.toString()) {
+				if (req.body.media){
+					await Promise.all(
+						req.body.media.map(async (file) => {
+							const fileUpdated = await File.findByIdAndUpdate(
+								file._id,
+								{
+									description: file.description,
+									post: post._id,
+								},
+								{ new: true }
+							);
+							return fileUpdated;
+						})
+					);
+				}
 
-				await Promise.all(
-					req.body.media.map(async (file) => {
-						const fileUpdated = await File.findByIdAndUpdate(
-							file._id,
-							{
-								description: file.description,
-								post: post._id,
-							},
-							{ new: true }
-						);
-						return fileUpdated;
-					})
-				);
-
-				const files = req.body.media.map((file) => file._id);
+				const files = req.body.media?.map((file) => file._id);
 				const postUpdated = await Post.findByIdAndUpdate(
 					req.params.id,
 					{

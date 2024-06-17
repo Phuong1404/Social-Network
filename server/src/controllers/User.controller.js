@@ -1378,7 +1378,7 @@ class UserController {
 				fullname: req.body.fullname,
 				email: req.body.email,
 			});
-			user.role = mongoose.Types.ObjectId('63896676b7991bdd049870fe');
+			user.role = mongoose.Types.ObjectId('663783335fb83083f60765e0');
 
 			const salt = await bcrypt.genSalt(10);
 			const hashedPassword = await bcrypt.hash(req.body.password, salt);

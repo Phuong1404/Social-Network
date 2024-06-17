@@ -74,13 +74,13 @@ export default function LineChart() {
 						Lọc:
 					</Typography.Title>
 
-					<Select value={type} onChange={setType}>
+					{/* <Select value={type} onChange={setType}>
 						<Select.Option value="date">Ngày</Select.Option>
 						<Select.Option value="week">Tuần</Select.Option>
 						<Select.Option value="month">Tháng</Select.Option>
 						<Select.Option value="quarter">Quý</Select.Option>
 						<Select.Option value="year">Năm</Select.Option>
-					</Select>
+					</Select> */}
 
 					<DatePicker
 						picker={type}

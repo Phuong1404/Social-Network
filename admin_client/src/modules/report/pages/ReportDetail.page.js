@@ -5,7 +5,7 @@ import { FullscreenSpin } from '@/common/components/Loading';
 import { Button, Card, Image, message, Space, Typography } from 'antd';
 import { timeUtil } from '@/common/utils';
 import { ReportStatusTag } from '@/views/report/components';
-import { approveReportApi } from '@/views/report/api';
+import { approveReportApi,rejectReportApi } from '@/views/report/api';
 import { useState } from 'react';
 import { ReportTypeTag } from '@/views/report/components/ReportTypeTag.component';
 import Link from 'next/link';
@@ -52,7 +52,7 @@ function ReportDetail() {
 		message.loading({ content: 'Đang từ chối báo cáo...', key });
 
 		try {
-			await approveReportApi(report._id);
+			await rejectReportApi(report._id);
 
 			await mutate({ ...report, status: 'rejected' }, false);
 
@@ -102,7 +102,7 @@ function ReportDetail() {
 
 				<Typography.Paragraph>
 					<b>Người báo cáo: </b>
-					<Link href={`/account/user/${reporter._id}`} passHref>
+					<Link href={`/account/user/${reporter._id}`} legacyBehavior passHref>
 						<a onClick={(e) => e.stopPropagation()}>{reporter.fullname}</a>
 					</Link>
 				</Typography.Paragraph>

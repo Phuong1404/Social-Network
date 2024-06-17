@@ -310,30 +310,37 @@ class ReportController {
 			}
 
 			if (report.type) {
-				if (report.type == 'post') {
-					req.params.id = report.post._id;
-					// delete post and notification to author
-					await PostController.deletePost(req, res, next);
-					await notificationToAuthorOfPost(report.post, req.user);
-				} else if (report.type == 'comment') {
-					req.params.id = report.comment._id;
-					req.params.postId = report.comment.post._id;
-					// delete comment and notification to author
-					await CommentController.deleteComment(req, res, next);
-					await notificationToAuthorOfComment(report.comment.post, report.comment, req.user);
-				} else if (report.type == 'conversation') {
-					req.params.id = report.conversation._id;
-					// delete conversation and notification to members
-					await ConversationController.deleteConversation(req, res, next);
-					await notificationToMembersOfConv(report.conversation, req.user);
-				} else if (report.type == 'user') {
-					// delete user and notification to user
-					req.params.id = report.user._id;
-					await UserController.lock(req, res, next);
-					await notificationToUser(report.user, req.user);
-				} else {
-					throw new Error('Report type not found');
-				}
+					if (report.type == 'post') {
+						if (report.post){
+							req.params.id = report.post._id;
+							// delete post and notification to author
+							await PostController.deletePost(req, res, next);
+							await notificationToAuthorOfPost(report.post, req.user);
+						}
+					} else if (report.type == 'comment') {
+						if (report.comment && report.comment.post){
+							req.params.id = report.comment._id;
+							req.params.postId = report.comment.post._id;
+							// delete comment and notification to author
+							await CommentController.deleteComment(req, res, next);
+							await notificationToAuthorOfComment(report.comment.post, report.comment, req.user);
+						}
+					} else if (report.type == 'conversation') {
+						if(report.conversation)
+						{
+							req.params.id = report.conversation._id;
+							// delete conversation and notification to members
+							await ConversationController.deleteConversation(req, res, next);
+							await notificationToMembersOfConv(report.conversation, req.user);
+						}
+					} else if (report.type == 'user') {
+						// delete user and notification to user
+						req.params.id = report.user._id;
+						await UserController.lock(req, res, next);
+						await notificationToUser(report.user, req.user);
+					} else {
+						throw new Error('Report type not found');
+					}
 			}
 
 			report.status = 'approved';
