@@ -49,7 +49,7 @@ const PostItem = (props) => {
 	const toggleComment = () => setShowComment(!showComment);
 
 	return (
-		<List.Item>
+		<List.Item style={{padding: '0 0 12px 0'}}>
 			<Card bodyStyle={{ padding: 0 }} style={{ width: '100%' }}>
 				<PostCard {...props} onCommentClick={toggleComment} />
 

@@ -82,14 +82,16 @@ export function CommentItem({ post, comment, onDelete, onReact, isReply = false 
 	return (
 		<>
 			<List.Item
-				style={{ borderBottom: '1px solid #e8e8e8' }}
+				style={{ borderBottom: '1px solid #e8e8e8'}}
 				actions={actions}
 				extra={<span className="time-ago">{dateUtil.getTimeAgo(comment.createdAt)}</span>}
+				styles={{actions: {marginBlockStart: 0}}}
 			>
 				<List.Item.Meta
-					avatar={<UserAvatar user={comment.author} size={48} />}
+					avatar={<UserAvatar user={comment.author} size={35} />}
 					title={comment.author.fullname}
 					description={comment.content}
+					style={{marginBlockEnd: 5}}
 				/>
 			</List.Item>
 

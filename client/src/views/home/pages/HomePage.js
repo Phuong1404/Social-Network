@@ -8,7 +8,7 @@ function HomePage() {
 	const postFetch = useFetcher({ api: 'posts/home' });
 
 	return (
-		<div>
+		<>
 			<SEO title="Trang chủ" />
 
 			<Layout.Sider align="left">
@@ -24,7 +24,7 @@ function HomePage() {
 			<Layout.Sider align="right">
 				<QuickContact />
 			</Layout.Sider>
-		</div>
+		</>
 	);
 }
 
