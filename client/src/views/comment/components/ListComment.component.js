@@ -81,7 +81,7 @@ export function ListComment({ post, comment }) {
 				loadMore={
 					!fetcher.fetching &&
 					fetcher.data.length > 0 && (
-						<div style={{ textAlign: 'center', marginTop: 16 }}>
+						<div style={{ textAlign: 'center', marginTop: 5 }}>
 							<Button
 								onClick={fetcher.loadMore}
 								loading={fetcher.loadingMore}
@@ -102,7 +102,7 @@ export function ListComment({ post, comment }) {
 				>
 					<Input.TextArea
 						placeholder="Viết bình luận"
-						autoSize={{ minRows: 2, maxRows: 4 }}
+						autoSize={{ minRows: 1	, maxRows: 4 }}
 						onPressEnter={(e) => {
 							e.preventDefault();
 							form.submit();

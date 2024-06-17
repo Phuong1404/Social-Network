@@ -11,7 +11,7 @@ const LINE_HEIGHT = 24;
 const MAX_HEIGHT = 5 * LINE_HEIGHT; 
 
 export function PostContent({ post }) {
-	const postContentRef = useRef<HTMLDivElement>(null);
+	const postContentRef = useRef(null);
 	const [hasMore, setHasMore] = useState(false);
 
 	useEffect(() => {

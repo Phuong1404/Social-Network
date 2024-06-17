@@ -108,11 +108,11 @@ export function PrivacyDropdown({
 					items: privacyOptions.map(({ value, label, RIcon }) => ({
 						key: value,
 						label,
-						icon: <RIcon />,
+						icon: <RIcon size={15} />,
 					})),
 				}}
 				arrow
-				trigger={['click']}
+				trigger={['click']}		
 				{...props}
 			>
 				<Tooltip title={privacyOption.label}>
@@ -128,7 +128,7 @@ export function PrivacyDropdown({
 					>
 						<Input />
 					</Form.Item>
-					{render?.(privacyOption) || <Button type="text" icon={<privacyOption.RIcon />} />}
+					{render?.(privacyOption) || <Button type="text" icon={<privacyOption.RIcon color={'#023E8A'} size={20}/>} />}
 				</Tooltip>
 			</Dropdown>
 		</Form>

@@ -14,12 +14,19 @@ import { toast } from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import { dateUtil, randomUtil, urlUtil } from '@/common/utils';
 import { useReport } from '@/views/report/hooks';
+import { PostModal } from '../PostModal.component';
 const { Meta } = Card;
 
 
 export function PostCard({ post: initPost, onUpdate, onDelete, onCommentClick, openNewTab }) {
 	const { modal } = App.useApp();
 	const [post, setPost] = useState(initPost);
+
+	const [openModal, setOpenModal] = useState(false);
+
+	const handleOpenModal = () => setOpenModal(true);
+	const handleCloseModal = () => setOpenModal(false);
+
 	const link = urlUtil.getFullUrl(`/post/${post?._id}`);
 
 	useEffect(() => {
@@ -75,7 +82,7 @@ export function PostCard({ post: initPost, onUpdate, onDelete, onCommentClick, o
 			</Card>
 		);
 
-	const isAuthor = authUser?._id === post.author._id;
+		const isAuthor = authUser?._id === post.author._id;
 	const author = isAuthor ? authUser : post.author;
 
 	// React to the post
@@ -119,13 +126,23 @@ export function PostCard({ post: initPost, onUpdate, onDelete, onCommentClick, o
 		}
 	};
 
+	const handleUpdate = async (id, data) => {
+		try {
+			await updatePostApi(post._id, data);
+			handleCloseModal()
+			toast.success('Đã cập nhật bài viết');
+		} catch (error) {
+			toast.error(error.toString());
+		}
+	};
+
 	if (isAuthor)
 		menuProps.items.push(
 			{
 				key: 'edit',
 				icon: <HiPencil />,
 				label: 'Chỉnh sửa bài viết',
-				disabled: true,
+				onClick: handleOpenModal
 			},
 			{
 				key: 'delete',
@@ -163,7 +180,7 @@ export function PostCard({ post: initPost, onUpdate, onDelete, onCommentClick, o
 
 	return (
 		<Card
-			style={{ width: '100%' }}
+			style={{ width: '100%', boxShadow: 'rgba(0, 119, 182, 0.25) 0px 0px 5px' }}
 			headStyle={{ padding: '0 16px' }}
 			bodyStyle={{ padding: '8px 16px' }}
 			bordered={false}
@@ -171,7 +188,7 @@ export function PostCard({ post: initPost, onUpdate, onDelete, onCommentClick, o
 				<Space>
 					{openNewTab && (
 						<Link href={`/post/${post._id}`} target="_blank" rel="noopener noreferrer" passHref>
-							<Button type="text" icon={<HiOutlineArrowTopRightOnSquare />} />
+							<Button type="text" icon={<HiOutlineArrowTopRightOnSquare size={20} color={'#023E8A'}/>} />
 						</Link>
 					)}
 
@@ -180,7 +197,7 @@ export function PostCard({ post: initPost, onUpdate, onDelete, onCommentClick, o
 					)}
 
 					<Dropdown menu={menuProps} arrow trigger={['click']}>
-						<Button type="text" icon={<HiDotsHorizontal />} />
+						<Button type="text" icon={<HiDotsHorizontal size={20} color={'#023E8A'}/>} />
 					</Dropdown>
 				</Space>
 			}
@@ -192,7 +209,7 @@ export function PostCard({ post: initPost, onUpdate, onDelete, onCommentClick, o
 					trigger={authUser ? 'click' : []}
 					renderChildren={({ reaction, loading }) => (
 						<Button
-							icon={reaction ? <Avatar src={reaction?.img} /> : <HiOutlineHandThumbUp />}
+							icon={reaction ? <Avatar src={reaction?.img}/> : <HiOutlineHandThumbUp size={20}/>}
 							type="text"
 							disabled={!authUser}
 							loading={loading}
@@ -203,7 +220,7 @@ export function PostCard({ post: initPost, onUpdate, onDelete, onCommentClick, o
 				/>,
 				<Button
 					key="comment"
-					icon={<HiOutlineChatBubbleLeft />}
+					icon={<HiOutlineChatBubbleLeft size={20} />}
 					type="text"
 					onClick={onCommentClick}
 					disabled={!authUser} 
@@ -211,7 +228,7 @@ export function PostCard({ post: initPost, onUpdate, onDelete, onCommentClick, o
 					Bình luận
 				</Button>,
 				<SharePopover link={link} key="share">
-					<Button icon={<HiOutlineShare />} type="text">
+					<Button icon={<HiOutlineShare size={20}/>} type="text">
 						Chia sẻ
 					</Button>
 				</SharePopover>,
@@ -232,6 +249,8 @@ export function PostCard({ post: initPost, onUpdate, onDelete, onCommentClick, o
 			{statistics.length > 0 && (
 				<Space style={{ marginTop: 8 }}>{statistics.map((statistic) => statistic)}</Space>
 			)}
+			
+			<PostModal open={openModal} onClose={handleCloseModal} onUpdate={handleUpdate} data={post}/>
 		</Card>
 	);
 }

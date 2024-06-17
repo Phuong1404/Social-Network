@@ -10,7 +10,7 @@ export function NavBarLeft() {
 		<HeaderLeft>
 			<Link href="/" style={{ display: 'flex' }}>
 				<Button shape="circle" size="large">
-					<Avatar src="/logo.png" />
+					<Avatar src={'../../../assets/logo/logo-web.png'} />
 				</Button>
 			</Link>
 

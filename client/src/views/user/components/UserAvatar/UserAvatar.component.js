@@ -8,7 +8,7 @@ export function UserAvatar({
 	user: initUser,
 	nickname,
 	badgeProps,
-	avtSize = 40,
+	avtSize = 35,
 	...avatarProps
 }) {
 	const { token } = theme.useToken();

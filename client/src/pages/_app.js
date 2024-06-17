@@ -115,6 +115,9 @@ export default function NextApp({ Component, pageProps }) {
 					},
 					Steps: {
 						colorSplit: '#90E0EF',
+					},
+					List:{
+						titleMarginBottom: 0,
 					}
 				},
 				algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
