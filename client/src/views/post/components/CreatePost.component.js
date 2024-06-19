@@ -34,6 +34,7 @@ export function CreatePost({ fetcher, ...cardProps }) {
 
 			<Card
 				{...cardProps}
+				style={{marginBlockEnd: 15, boxShadow: 'rgba(0, 119, 182, 0.25) 0px 0px 5px',}}
 				bodyStyle={{
 					padding: 16,
 					...cardProps?.headStyle,

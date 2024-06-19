@@ -1,6 +1,5 @@
 import { UserAvatar } from '@/views/user/components';
-import { Button, Card, Dropdown, Popconfirm, theme, Tooltip, Typography } from 'antd';
-import Image from 'next/image';
+import { Button, Card, Dropdown, Popconfirm, theme, Tooltip, Typography, Image } from 'antd';
 import { useRouter } from 'next/router';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import {
@@ -121,11 +120,12 @@ export function FriendCard({ user }) {
 		<Card
 			hoverable
 			cover={
-				<img
-				src={user.imageUrl}
-				alt={user.fullname}
-				style={{ width: '100%', height: '100px', objectFit: 'cover', background: "#edfafd" }}
-				/>
+				user.imageUrl
+				? <Image
+					src={user.imageUrl}
+					alt={user.fullname}
+					style={{ width: '100%', height: '90px', objectFit: 'cover', background: "#edfafd" }}
+				/> : <div style={{ width: '100%', height: '90px', objectFit: 'cover', background: "#edfafd" }}></div>
 			}
 			actions={[
 				<Tooltip key="profile" title="Trang cá nhân">
@@ -150,6 +150,7 @@ export function FriendCard({ user }) {
 				</Dropdown>,
 			]}
 			bodyStyle={{ padding: 12 }}
+			style={{overflow: 'hidden'}}
 		>
 			<Card.Meta
 				avatar={<UserAvatar user={user} />}

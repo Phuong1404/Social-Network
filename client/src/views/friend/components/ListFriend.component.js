@@ -32,7 +32,7 @@ export function ListFriend({ api, title = 'Danh sách bạn bè' }) {
 
 				<Form
 					layout="inline"
-					style={{ float: 'right', marginTop: 8 }}
+					style={{ float: 'right', margin: '8px 0' }}
 					size="small"
 					initialValues={{ sort: 'desc', gender: '' }}
 					onValuesChange={(_, values) => setFilter({ ...filter, ...values })}
@@ -75,7 +75,7 @@ export function ListFriend({ api, title = 'Danh sách bạn bè' }) {
 					loadMore={
 						!friendFetcher.fetching &&
 						friendFetcher.data.length > 0 && (
-							<div style={{ textAlign: 'center', marginTop: 16 }}>
+							<div style={{ textAlign: 'center', marginTop: 0 }}>
 								<Button
 									size="small"
 									onClick={friendFetcher.loadMore}
