@@ -21,8 +21,8 @@ export function ChangePasswordForm() {
 	};
 
 	return (
-		<Card title="Đổi mật khẩu">
-			<Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} onFinish={onFinish}>
+		<Card title="Đổi mật khẩu" bodyStyle={{ marginTop: 20 }}>
+			<Form form={form} labelCol={{ span: 8 }} wrapperCol={{ span: 12 }} onFinish={onFinish}>
 				<Form.Item
 					label="Mật khẩu cũ"
 					name="oldPassword"
