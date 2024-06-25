@@ -108,7 +108,7 @@ class AuthController {
 			await userSave.save();
 
 			return res.redirect(
-				`${hostClient}/api/v1/auth/google?accessToken=${accessToken}&refreshToken=${refreshToken}`
+				`${hostClient}/auth/login/google?accessToken=${accessToken}&refreshToken=${refreshToken}`
 			);
 		} catch (err) {
 			return next(createError.InternalServerError(err.message));

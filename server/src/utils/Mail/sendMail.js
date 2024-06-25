@@ -220,17 +220,14 @@ const emailTemplate = (link, name) => `<body
 const sendEmail = async (email, subject, link, user) => {
 	try {
         const transporter = nodemailer.createTransport({
-            host: process.env.HOST, 
-            secureConnection: false, 
-            port: 587, 
-            auth: {
-                user: process.env.USER,
-				pass: process.env.PASS,
-            },
-            tls: {
-                // ciphers:'SSLv3',
-                rejectUnauthorized: false
-            }
+            host: 'smtp.gmail.com',
+			service: 'gmail',
+			port: 587,
+			secure: true,
+			auth: {
+				user: 't.xuaphuong1404@gmail.com',
+				pass: 'yyavcrxcenkemkxc',
+			},
         });
 		await transporter.sendMail({
 			from: process.env.FROM,
@@ -250,17 +247,14 @@ const isEmailValid = (email) => emailValidator.validate(email);
 const sendEmailVerify = async (email, subject, link, user) => {
 	try {
 		const transporter = nodemailer.createTransport({
-            host: process.env.HOST, 
-            secureConnection: false, 
-            port: 587, 
-            auth: {
-                user: process.env.USER,
-				pass: process.env.PASS,
-            },
-            tls: {
-                // ciphers:'SSLv3',
-                rejectUnauthorized: false
-            }
+            host: 'smtp.gmail.com',
+			service: 'gmail',
+			port: 587,
+			secure: true,
+			auth: {
+				user: 't.xuaphuong1404@gmail.com',
+				pass: 'yyavcrxcenkemkxc',
+			},
         });
 		await transporter.sendMail({
 			from: process.env.FROM,
@@ -278,18 +272,15 @@ const sendEmailVerify = async (email, subject, link, user) => {
 const sendMailOTP = async (email, subject, otp, name) => {
 	try {
 		const transporter = nodemailer.createTransport({
-            host: process.env.HOST, 
-            secureConnection: false, 
-            port: 587, 
-            auth: {
-                user: process.env.USER,
-				pass: process.env.PASS,
-            },
-            tls: {
-                // ciphers:'SSLv3',
-                rejectUnauthorized: false
-            }
-        });
+            host: 'smtp.gmail.com',
+			service: 'gmail',
+			port: 587,
+			secure: true,
+			auth: {
+				user: 't.xuaphuong1404@gmail.com',
+				pass: 'yyavcrxcenkemkxc',
+			},
+        })
 
 		await transporter.sendMail({
 			from: process.env.FROM,
