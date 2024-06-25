@@ -7,7 +7,7 @@ export function SecurityTab() {
 	const { authUser } = useAuth();
 
 	return (
-		<Card title="Bảo mật">
+		<Card title="Bảo mật" bodyStyle={{ marginTop: 15 }}>
 			<Space direction="vertical" size="large" style={{ width: '100%' }}>
 				{authUser?.shouldSetPassword ? <SetPasswordForm /> : <ChangePasswordForm />}
 			</Space>

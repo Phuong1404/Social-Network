@@ -106,6 +106,7 @@ export default function NextApp({ Component, pageProps }) {
 					},
 					Form: {
 						labelColor: '#023E8A',
+						itemMarginBottom: 14,
 					},
 					Select: {
 						colorBorder: '#0077B6',

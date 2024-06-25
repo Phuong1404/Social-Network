@@ -25,12 +25,12 @@ export function NavBarRight() {
 			label: 'Cài đặt',
 			icon: <HiCog6Tooth />,
 		},
-		{
-			key: 'theme',
-			label: `Chế độ ${mode === 'dark' ? 'sáng' : 'tối'}`,
-			icon: mode === 'dark' ? <HiSun /> : <HiMoon />,
-			onClick: toggleTheme,
-		},
+		// {
+		// 	key: 'theme',
+		// 	label: `Chế độ ${mode === 'dark' ? 'sáng' : 'tối'}`,
+		// 	icon: mode === 'dark' ? <HiSun /> : <HiMoon />,
+		// 	onClick: toggleTheme,
+		// },
 		{
 			key: 'report',
 			label: 'Báo lỗi',

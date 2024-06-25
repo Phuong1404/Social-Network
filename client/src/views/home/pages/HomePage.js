@@ -16,7 +16,7 @@ function HomePage() {
 			</Layout.Sider>
 
 			<Layout.Content>
-				<CreatePost fetcher={postFetch} style={{ marginBottom: 16, boxShadow: 'rgba(0, 119, 182, 0.25) 0px 0px 4px',}} />
+				<CreatePost fetcher={postFetch}/>
 
 				<ListPost fetcher={postFetch} />
 			</Layout.Content>
