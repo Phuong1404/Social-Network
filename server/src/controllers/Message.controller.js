@@ -55,8 +55,20 @@ class MessageController {
 						],
 					}
 				)
-					.then((data) => {
-						data.docs.forEach((message) => {
+					.then(async(data) => {
+						// let message1=data.docs[data.docs.length-1] || False
+						// if (message1){
+						// 	const message = await Message.findById(message1.id);
+						// 	if (!message.reader.includes(req.user._id)) message.reader.push(req.user._id);
+						// 	await message.save();
+						// }
+						await data.docs.forEach(async(message1) => {
+							const message = await Message.findById(message1.id);
+							if (!message.reader.includes(req.user._id)) message.reader.push(req.user._id);
+							await message.save();
+						});
+						// console.log(await data.docs)// console.log(await data.docs)
+						await data.docs.forEach((message) => {
 							if (message.iv) {
 								const iv = Buffer.from(message.iv, 'base64');
 								const key = crypto.createHash('sha256').update('social-network').digest();
@@ -66,7 +78,7 @@ class MessageController {
 								message.text = decryptedData;
 							}
 						});
-						getListData(res, data);
+						await getListData(res, data);
 					})
 					.catch((err) =>
 						responseError(res, 500, err.message ?? 'Some error occurred while retrieving tutorials.')

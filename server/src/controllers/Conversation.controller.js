@@ -176,10 +176,17 @@ class ConversationController {
 					limit,
 					sort: { updatedAt: -1 },
 					populate: [
+						// {
+						// 	path: 'lastest_message',
+						// 	populate: {
+						// 		path: 'sender',
+						// 	},
+						// },
 						{
 							path: 'lastest_message',
 							populate: {
-								path: 'sender',
+								path: 'reader',
+								select: '_id',
 							},
 						},
 						{
