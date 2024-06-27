@@ -9,7 +9,7 @@ const HOSTS = require('./configs/cors');
 // socket
 const io = socketio(server, {
 	cors: {
-		origin: HOSTS,
+		origin: "*",
 	},
 });
 
