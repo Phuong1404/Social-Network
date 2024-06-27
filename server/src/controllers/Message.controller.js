@@ -56,7 +56,8 @@ class MessageController {
 					}
 				)
 					.then((data) => {
-						data.docs.forEach((message) => {
+						data.docs.forEach(async (message) => {
+							await update_read(message.id,req.user._id)
 							if (message.iv) {
 								const iv = Buffer.from(message.iv, 'base64');
 								const decipher = crypto.createDecipheriv(algorithm, 'social-network', iv);
@@ -153,6 +154,17 @@ class MessageController {
 					)}`
 				)
 			);
+		}
+	}
+
+	async update_read(id,user_id){
+		try{
+			const message = await Message.findById(id);
+			if (!message.reader.includes(user_id)) message.reader.push(user_id);
+			await message.save();
+		}
+		catch(err){
+			console.log(err,'=======================')
 		}
 	}
 
