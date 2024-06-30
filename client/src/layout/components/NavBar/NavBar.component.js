@@ -1,6 +1,6 @@
 import Layout from '@/layout/components';
 import { useAuth } from '@/views/auth/hooks';
-import { App, Button, theme, Tooltip, Typography } from 'antd';
+import { App, Button, theme, Tooltip, Typography, Badge } from 'antd';
 import { useRouter } from 'next/router';
 import { FiHome, FiMessageSquare, FiUser, FiUsers } from 'react-icons/fi';
 import styles from '../../styles/Layout.module.scss';
@@ -8,7 +8,7 @@ import { HeaderCenter, HeaderRight } from '../Header.component';
 import { NavBarLeft } from './NavBarLeft.component';
 import { NavBarRight } from './NavBarRight.component';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FcSms } from 'react-icons/fc';
 import { MessageItem } from '@/views/messages/components';
 
@@ -41,9 +41,13 @@ export default function NavBar() {
 	const router = useRouter();
 	const { token } = theme.useToken();
 	const { notification } = App.useApp();
+	const [notiUnread, setNotiUnread] = useState(false)
 	useEffect(() => {
 		if (authUser) {
-			window.socket.on('sendMessage', (data) =>
+			window.socket.on('sendMessage', (data) =>{
+				if (!router.pathname.startsWith('/messages')) {
+					setNotiUnread(true);
+				} 
 				notification.open({
 					icon: <FcSms />,
 					message: 'Tin nhắn mới!',
@@ -55,7 +59,7 @@ export default function NavBar() {
 							pathname: '/messages',
 							query: { id: data.conversation },
 						}),
-				})
+				})}
 			);
 		}
 		return () => {
@@ -79,7 +83,7 @@ export default function NavBar() {
 								<Button
 									size="large"
 									onClick={() => router.push(page.path)}
-									icon={<page.RIcon />}
+									icon={page.path === '/messages' && notiUnread ? <Badge dot={true}><page.RIcon /></Badge>: <page.RIcon /> }
 									className={classes.join(' ')}
 									type="text"
 									style={{

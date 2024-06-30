@@ -49,6 +49,9 @@ export function ConversationMessage() {
 
 	const textInputRef = useRef(null);
 	const sendMessage = async (data) => {
+		if (data?.files?.length === 0 && !data.text) {
+			return;
+		}
 		form.resetFields();
 		setTimeout(() => textInputRef.current?.focus(), 0);
 
@@ -354,7 +357,7 @@ export function ConversationMessage() {
 						name="text"
 						rules={[
 							{
-								required: true,
+								required: false,
 								message: 'Vui lòng nhập tin nhắn',
 							},
 						]}

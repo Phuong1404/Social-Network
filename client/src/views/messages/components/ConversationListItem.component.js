@@ -20,7 +20,7 @@ export function ConversationListItem({ conversation }) {
 
 	const { name } = getConversationInfo(conversation, authUser);
 
-	const unread = lastest_message ? !lastest_message?.reader?.find(({ _id }) => _id === authUser._id) : false;
+	const unread = lastest_message?.reader.length > 0 && lastest_message?.reader?.find(({ _id }) => _id === authUser._id) ? false : true;
 
 	return (
 		<Link href={`/messages?id=${conversation._id}`} draggable className={styles.container}>

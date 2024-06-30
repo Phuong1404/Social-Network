@@ -56,14 +56,14 @@ const ResetPasswordPage = () => {
 					title={
 						<Typography.Title
 							level={2}
-							style={{ color: '#03045E', margin: 0, textAlign: 'center' }}
+							style={{ color: '#03045E', marginTop: 20, textAlign: 'center', fontWeight: '1000' }}
 						>
 							Đặt lại mật khẩu
 						</Typography.Title>
 					}
-					style={{ width: 480, margin: 'auto' }}
+					style={{ width: 430, margin: 'auto', borderBottom: 0, boxShadow: 'rgba(0, 119, 182, 0.1) 0px 10px 50px', borderRadius: 15 }}
 				>
-					<Form layout="vertical" form={form} onFinish={onFinish}>
+					<Form layout="vertical" form={form} onFinish={onFinish} style={{margin: '30px 20px 0px 20px', paddingBottom: '0px'}}>
 						<Form.Item
 							label="Mật khẩu"
 							name="password"
@@ -77,8 +77,9 @@ const ResetPasswordPage = () => {
 									message: 'Mật khẩu phải có ít nhất 6 ký tự!',
 								},
 							]}
+							style={{fontWeight: '600', color: '#023E8A'}}
 						>
-							<Input.Password />
+							<Input.Password style={{ height: 40, borderRadius: 10, borderColor: '#00B4D8', boxShadow: 'rgba(72, 202, 228, 0.3) 0px 2px 10px 0px'}}/>
 						</Form.Item>
 
 						<Form.Item
@@ -99,12 +100,27 @@ const ResetPasswordPage = () => {
 									},
 								},
 							]}
+							style={{fontWeight: '600', color: '#023E8A', marginBottom: 30}}
 						>
-							<Input.Password />
+							<Input.Password style={{ height: 40, borderRadius: 10, borderColor: '#00B4D8', boxShadow: 'rgba(72, 202, 228, 0.3) 0px 2px 10px 0px'}}/>
 						</Form.Item>
 
-						<Form.Item>
-							<Button type="primary" block loading={loading}>
+						<Form.Item style={{ display: 'flex', justifyContent: 'center', marginBottom: 30 }}>
+							<Button 
+								type="primary" 
+								block 
+								loading={loading}
+								htmlType="submit" 
+								style={{
+									display: 'flex', 
+									height: 40, 
+									width: 300, 
+									borderRadius: 30, 
+									backgroundImage: 'linear-gradient(to right, #023E8A, #48CAE4)',
+									fontWeight: '600',
+									fontSize: '16px',
+									boxShadow: 'rgba(3, 4, 94, 0.25) 0px 4px 4px'
+								}}>
 								Đặt lại mật khẩu
 							</Button>
 						</Form.Item>

@@ -35,7 +35,7 @@ export function LoginForm() {
 	return (
 		<Card
 			title={
-				<Typography.Title level={1} style={{ color: '#03045E', marginTop: 15, textAlign: 'center', fontWeight: '1000' }}>
+				<Typography.Title level={1} style={{ color: '#03045E', marginTop: 20, textAlign: 'center', fontWeight: '1000' }}>
 					Đăng nhập
 				</Typography.Title>
 			}
@@ -86,7 +86,7 @@ export function LoginForm() {
 						</Button>
 					</Link>
 				</Form.Item>
-				<Form.Item style={{ display: 'flex', justifyContent: 'center', marginBottom: 0 }}>
+				<Form.Item style={{ display: 'flex', justifyContent: 'center', marginBottom: 30 }}>
 					<Button 
 						type="primary" 
 						htmlType="submit" 
@@ -105,7 +105,7 @@ export function LoginForm() {
 					</Button>
 				</Form.Item>
 
-				<Divider style={{width: 300}}>Hoặc</Divider>
+				{/* <Divider style={{width: 300}}>Hoặc</Divider>
 
 				<Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
 					<Link href={`${SERVER_URL}/auth/google`} target="_self" >
@@ -120,7 +120,7 @@ export function LoginForm() {
 							Đăng nhập bằng Google
 						</Button>
 					</Link>
-				</Form.Item>
+				</Form.Item> */}
 
 				{/* <Form.Item>
 					<Link href={`${SERVER_URL}/auth/github`} target="_self">
