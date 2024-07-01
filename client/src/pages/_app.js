@@ -32,7 +32,7 @@ export default function NextApp({ Component, pageProps }) {
 	}, []);
 
 	useEffect(() => {
-		window.socket = io(SERVER_URL, { autoConnect: false });
+		window.socket = io("http://34.173.140.60", { autoConnect: false });
 		if (authUser) {
 			window.socket.connect();
 			window.socket.on('connect', () => {
