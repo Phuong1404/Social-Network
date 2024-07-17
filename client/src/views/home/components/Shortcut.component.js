@@ -32,41 +32,41 @@ export function ShortCut() {
 
 	const { openReport } = useReport({ type: 'bug' });
 	const listShortCutAction = [
-		{
-			title: 'Cài đặt',
-			icon: FcSettings,
-			href: '/settings',
-		},
-		{
-			title: 'Trợ giúp',
-			icon: FcCustomerSupport,
-			href: '/help',
-		},
+		// {
+		// 	title: 'Cài đặt',
+		// 	icon: FcSettings,
+		// 	href: '/settings',
+		// },
+		// {
+		// 	title: 'Trợ giúp',
+		// 	icon: FcCustomerSupport,
+		// 	href: '/help',
+		// },
 		{
 			title: 'Báo lỗi',
 			icon: FcFeedback,
 			onClick: openReport,
 		},
-		{
-			title: 'Giới thiệu',
-			icon: FcAbout,
-			href: '/about',
-		},
-		{
-			title: 'Điều khoản',
-			icon: FcReading,
-			href: '/terms',
-		},
-		{
-			title: 'Quyền riêng tư',
-			icon: FcInfo,
-			href: '/privacy',
-		},
-		{
-			title: 'Bảo mật',
-			icon: FcPrivacy,
-			href: '/security',
-		},
+		// {
+		// 	title: 'Giới thiệu',
+		// 	icon: FcAbout,
+		// 	href: '/about',
+		// },
+		// {
+		// 	title: 'Điều khoản',
+		// 	icon: FcReading,
+		// 	href: '/terms',
+		// },
+		// {
+		// 	title: 'Quyền riêng tư',
+		// 	icon: FcInfo,
+		// 	href: '/privacy',
+		// },
+		// {
+		// 	title: 'Bảo mật',
+		// 	icon: FcPrivacy,
+		// 	href: '/security',
+		// },
 	];
 
 	const lists = [

@@ -1,8 +1,8 @@
 import { getPrivacyOption, privacyOptions } from '@/assets/data';
-
+import { UserAvatar } from '@/views/user/components';
 import { SelectApi } from '../Input';
 import { useFetcher } from '@/common/hooks';
-import { Button, Dropdown, Form, Input, Modal, Tooltip } from 'antd';
+import { Button, Dropdown, Form, Input, Modal, Tooltip,Typography,Space } from 'antd';
 import { useEffect, useState } from 'react';
 
 
@@ -76,6 +76,13 @@ export function PrivacyDropdown({
 						mode="multiple"
 						fetcher={friendFetcher}
 						toOption={(u) => ({ label: u.fullname, value: u._id })}
+						renderOption={(item) => (
+							<Space align="center">
+								<UserAvatar user={item} avtSize={20} />
+
+								<Typography.Text>{item.fullname}</Typography.Text>
+							</Space>
+						)}
 					/>
 				</Form.Item>
 
@@ -98,6 +105,13 @@ export function PrivacyDropdown({
 						mode="multiple"
 						fetcher={friendFetcher}
 						toOption={(u) => ({ label: u.fullname, value: u._id })}
+						renderOption={(item) => (
+							<Space align="center">
+								<UserAvatar user={item} avtSize={20} />
+
+								<Typography.Text>{item.fullname}</Typography.Text>
+							</Space>
+						)}
 					/>
 				</Form.Item>
 			</Modal>
@@ -112,10 +126,10 @@ export function PrivacyDropdown({
 					})),
 				}}
 				arrow
-				trigger={['click']}		
+				trigger={['click']}
 				{...props}
 			>
-				<Tooltip title={privacyOption.label}>
+				<Tooltip title={privacyOption?.label}>
 					<Form.Item
 						name="value"
 						hidden
